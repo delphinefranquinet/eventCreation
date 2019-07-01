@@ -1,3 +1,39 @@
-<h1>
- Mettre en ligne un nouvel événement
-</h1>
+  <h2><a [routerLink]="['/home']">HOME</a></h2>
+
+
+<form [formGroup]= "eventForm">
+
+   <div>
+     <label for="id">ID:</label>
+     <input type="number" id="id" name="id" formControlName="id"/>
+     <!--<span *ngIf="!name.valid"> Error ! </span>-->
+   </div>
+
+   <div>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" formControlName="name"/>
+     <!-- <span *ngIf="!firstname.valid" >Error !</span>-->
+    </div>
+
+    <div>
+        <label for="category">Category:</label>
+        <input type="text" id="category" name="category" formControlName="category"/>
+        <!--<span *ngIf="email.errors?.mailinator" >Error !</span>?short Expretion email.errors && email.errors.mailinator
+        {{email.errors |json}}-->
+    </div>
+
+   <div>
+      <label for="place">Place:</label>
+      <input type="text" id="place" name="place" formControlName="place"/>
+      <!--<span *ngIf="!message.valid" >Error !</span>-->
+   </div>
+
+   <div>
+      <label for="date">Date:</label>
+      <input type="Date" id="date" name="date" formControlName="date"/>
+    <!-- <span *ngIf="!phone.valid" >Error !</span>-->
+    </div>
+
+    <input type="submit" [disabled]="!contactForm.valid">
+    {{contact |json}}
+    </form>
