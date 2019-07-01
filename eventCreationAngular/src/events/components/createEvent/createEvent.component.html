@@ -1,39 +1,33 @@
   <h2><a [routerLink]="['/home']">HOME</a></h2>
 
 
-<form [formGroup]= "eventForm">
+<form [formGroup]= "eventForm" (ngSubmit)="submitForm()">
 
-   <div>
-     <label for="id">ID:</label>
-     <input type="number" id="id" name="id" formControlName="id"/>
-     <!--<span *ngIf="!name.valid"> Error ! </span>-->
-   </div>
-
-   <div>
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" formControlName="name"/>
+    <div>
+      <label for="nameOfEvent">Name of event:</label>
+      <input type="text" id="nameOfEvent" name="nameOfEvent" formControlName="nameOfEvent"/>
      <!-- <span *ngIf="!firstname.valid" >Error !</span>-->
     </div>
 
     <div>
-        <label for="category">Category:</label>
-        <input type="text" id="category" name="category" formControlName="category"/>
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" formControlName="description"/>
         <!--<span *ngIf="email.errors?.mailinator" >Error !</span>?short Expretion email.errors && email.errors.mailinator
         {{email.errors |json}}-->
     </div>
 
    <div>
-      <label for="place">Place:</label>
-      <input type="text" id="place" name="place" formControlName="place"/>
-      <!--<span *ngIf="!message.valid" >Error !</span>-->
-   </div>
-
-   <div>
-      <label for="date">Date:</label>
-      <input type="Date" id="date" name="date" formControlName="date"/>
+      <label for="begins">Event begins the :</label>
+      <input type="Date" id="begins" name="begins" formControlName="begins"/>
     <!-- <span *ngIf="!phone.valid" >Error !</span>-->
     </div>
 
-    <input type="submit" [disabled]="!contactForm.valid">
-    {{contact |json}}
+    <div>
+      <label for="ends">Event ends the :</label>
+      <input type="Date" id="ends" name="ends" formControlName="ends"/>
+    <!-- <span *ngIf="!phone.valid" >Error !</span>-->
+    </div>
+
     </form>
+
+    <input type="submit" [disabled]="!eventtForm.valid"/>

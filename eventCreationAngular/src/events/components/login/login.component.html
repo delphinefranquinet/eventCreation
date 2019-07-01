@@ -1,0 +1,21 @@
+<h2><a [routerLink]="['/home']">HOME</a></h2>
+
+<div>
+  <label for="firstname">First Name:</label>
+  <input type="text" id="firstname" name="firstname" formControlName="firstname"/>
+ <!-- <span *ngIf="!firstname.valid" >Error !</span>-->
+</div>
+
+<div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" formControlName="name"/>
+    <!--<span *ngIf="email.errors?.mailinator" >Error !</span>?short Expretion email.errors && email.errors.mailinator
+    {{email.errors |json}}-->
+</div>
+
+ <input type="submit" [disabled]="!isConnect()">
+ (update)="onUpdate($event)"
+
+  <a [routerLink]="['/createEvent']"></a>
+
+

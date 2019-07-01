@@ -18,11 +18,12 @@ export class CreateEventComponent implements OnInit {
     this.event = new Event();
 
     this.eventForm = this.fb.group({
-      id: this.fb.control(this.event.id),
-      name: this.fb.control(this.event.name),
-      category: this.fb.control(this.event.category),
-      place: this.fb.control(this.event.place),
-      date: this.fb.control(this.event.date)
+
+      nameOfEvent: this.fb.control(this.event.nameOfEvent),
+      description: this.fb.control(this.event.description),
+      begins: this.fb.control(this.event.begins),
+      ends: this.fb.control(this.event.ends),
+
 
     });
    }
@@ -31,4 +32,15 @@ export class CreateEventComponent implements OnInit {
   ngOnInit() {
   }
 
+  public submitForm(){
+    const newValues = this.eventForm.value;
+
+    const newevent = new Event();
+    newevent.nameOfEvent = newValues.nameOfEvent;
+    newevent.description = newValues.description;
+    newevent.begins = newValues.begins;
+    newevent.ends = newValues.ends;
+    this.event = newevent;
+    console.log('submit!', this.event, newValues);
+ }
 }

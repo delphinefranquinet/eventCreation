@@ -1,8 +1,11 @@
+import { ConvertActionBindingResult } from '@angular/compiler/src/compiler_util/expression_converter';
+import { ContactComponent } from '../../events/components/contact/contact.component';
+
 export class Event {
-  public id: number;
-  public name: string;
-  public category: string;
-  public place: string;
-  public date: Date;
+
+  public nameOfEvent: string;
+  public description: string;
+  public begins: Date;
+  public ends: Date;
 
 }

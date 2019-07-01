@@ -6,6 +6,10 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from 'src/events/components/home/home.component';
 import { CreateEventComponent } from '../events/components/createEvent/createEvent.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from '../events/components/login/login.component';
+import { AuthenticationService } from './services/authentication.service.ts.service';
+import { AuthGuard } from './guards/auth.guard';
+
 
 
 @NgModule({
@@ -13,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppComponent,
     HomeComponent,
     CreateEventComponent,
+    LoginComponent
 
   ],
   imports: [
@@ -21,7 +26,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [ AuthGuard, AuthenticationService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
