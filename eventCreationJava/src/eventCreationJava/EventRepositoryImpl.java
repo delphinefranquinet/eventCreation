@@ -1,5 +1,7 @@
 package eventCreationJava;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class EventRepositoryImpl {
 
@@ -14,7 +16,39 @@ public class EventRepositoryImpl {
 		this.url = url;
 	}
 
-	public boolean CreatePerson(Person person) {
+	public Person connexion(String login, String mot_de_passe) {
+
+		Person person = null;
+
+		String sql = "Select id_person, \"namePerson\", \"firstnamePerson\" From persons Where login = ? AND password = ?";
+		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+				java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
+			query.setString(1, login);
+			query.setString(2, mot_de_passe);
+			try (ResultSet resultSet = query.executeQuery()) {
+				if (resultSet.next()) {
+
+					person = createPerson(resultSet);
+					
+				}
+			}
+		} catch (java.sql.SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+
+		return person;
+	}
+
+	protected Person createPerson(ResultSet rs) throws SQLException {
+
+		Person person = new Person();
+		person.setId(rs.getInt("id_person"));
+		person.setName(rs.getString("namePerson"));
+		person.setFirstname(rs.getString("firstnamePerson"));
+		return person;
+	}
+
+	public boolean CreateNewPerson(Person person) {
 		boolean created = false;
 
 		String sql = "INSERT INTO persons Values (DEFAULT, ?, ?)";
@@ -26,7 +60,7 @@ public class EventRepositoryImpl {
 			query.setString(1, person.getName());
 			query.setString(2, person.getFirstname());
 			query.executeUpdate(); // insert/update/delete
-			int updatedRows = query.getUpdateCount();
+			int updatedRows = query.getUpdateCount(); // combien de ligne ont été mise à jour
 			connection.commit();
 
 			created = updatedRows > 0;
@@ -37,7 +71,7 @@ public class EventRepositoryImpl {
 		return created;
 	}
 
-	public boolean CreateEvent(Event newEvent) {
+	public boolean CreateNewEvent(Event newEvent) {
 
 		boolean created = false;
 
@@ -63,8 +97,8 @@ public class EventRepositoryImpl {
 
 		return created;
 	}
-	
-	public boolean CreateActivity(Activity newActivity) {
+
+	public boolean CreateNewActivity(Activity newActivity) {
 
 		boolean created = false;
 

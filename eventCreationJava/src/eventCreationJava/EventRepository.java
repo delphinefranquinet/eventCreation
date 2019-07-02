@@ -2,8 +2,8 @@ package eventCreationJava;
 
 public interface EventRepository {
 
-	boolean CreatePerson(Person person);
-	boolean CreateEvent(Event newEvent);
-	boolean CreateActivity(Activity newActivity);
+	boolean CreateNewPerson(Person person);
+	boolean CreateNewEvent(Event newEvent);
+	boolean CreateNewActivity(Activity newActivity);
 	
 }
