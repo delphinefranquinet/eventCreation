@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from '../events/components/login/login.component';
 import { AuthenticationService } from './services/authentication.service.ts.service';
 import { AuthGuard } from './guards/auth.guard';
+import { SinInComponent } from '../events/components/signIn/sinIn.component';
+import { SignInLoginComponent } from '../events/components/signInLogin/signInLogin.component';
 
 
 
@@ -17,9 +19,10 @@ import { AuthGuard } from './guards/auth.guard';
     AppComponent,
     HomeComponent,
     CreateEventComponent,
-    LoginComponent
-
-  ],
+    LoginComponent,
+    SinInComponent,
+    SignInLoginComponent,
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule,

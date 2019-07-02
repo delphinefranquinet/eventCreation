@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Contact } from '../../../app/modeles/contact.modele';
 import { AuthenticationService } from '../../../app/services/authentication.service.ts.service';
 import { ActivatedRoute } from '@angular/router';
@@ -13,7 +13,17 @@ export class LoginComponent implements OnInit {
   public contact: Contact;
   public contactForm: FormGroup;
 
-  constructor(private authService: AuthenticationService,  private router: ActivatedRoute) { }
+  constructor(private authService: AuthenticationService,  private router: ActivatedRoute, private fb: FormBuilder) {
+
+    this.contact = new Contact();
+
+    this.contactForm = this.fb.group({
+
+      id: this.fb.control(this.contact.id),
+      name: this.fb.control(this.contact.name),
+      firstName: this.fb.control(this.contact.firstName)
+    });
+  }
 
   ngOnInit() {
   }
@@ -22,16 +32,17 @@ export class LoginComponent implements OnInit {
     console.log('submit!', this.contact);
   }
 
-  public hasNameError() {
-    const control = this.contactForm.get('name');
+  public hasIdError() {
+    const control = this.contactForm.get('id');
     return control.errors && control.errors.required;
   }
 
-  public hasFirstNameError() {
-    const control = this.contactForm.get('firstName');
+  public hasPasswordError() {
+    const control = this.contactForm.get('pwd');
     return control.errors && control.errors.required;
   }
   public isConnect() {
     return this.authService.isConnected();
   }
+
 }

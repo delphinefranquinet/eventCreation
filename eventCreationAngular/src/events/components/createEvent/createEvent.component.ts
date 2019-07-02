@@ -13,7 +13,7 @@ export class CreateEventComponent implements OnInit {
 
   public event: Event;
   public eventForm: FormGroup;
-
+  public now = new Date();
   constructor(private fb: FormBuilder) {
     this.event = new Event();
 
@@ -30,6 +30,26 @@ export class CreateEventComponent implements OnInit {
 
 
   ngOnInit() {
+  }
+
+  public hasnameOfEventError() {
+    const control = this.eventForm.get('nameOfEvent');
+    return control.errors && control.errors.required;
+  }
+
+  public hasbeginsError() {
+    const control = this.eventForm.get('begins');
+    return control.errors && control.errors.required;
+  }
+
+  public hasendsError() {
+    const control = this.eventForm.get('ends');
+    return control.errors && control.errors.required;
+  }
+
+  public hasdescriptionError() {
+    const control = this.eventForm.get('description');
+    return control.errors && control.errors.required;
   }
 
   public submitForm(){

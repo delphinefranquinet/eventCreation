@@ -19,6 +19,7 @@
    <div>
       <label for="begins">Event begins the :</label>
       <input type="Date" id="begins" name="begins" formControlName="begins"/>
+      {{now |date:"MMM d, y, h:mm:ss a"   |json}}
     <!-- <span *ngIf="!phone.valid" >Error !</span>-->
     </div>
 
