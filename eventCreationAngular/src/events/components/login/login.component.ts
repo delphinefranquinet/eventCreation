@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { Contact } from '../../../app/modeles/contact.modele';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthenticationService } from '../../../app/services/authentication.service.ts.service';
-import { ActivatedRoute } from '@angular/router';
+import {  Router } from '@angular/router';
+import { Login } from '../../../app/modeles/login.modele';
+import { LoginService } from '../../../app/services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -10,36 +11,50 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  public contact: Contact;
-  public contactForm: FormGroup;
+  public logins: Login;
+  public loginForm: FormGroup;
 
-  constructor(private authService: AuthenticationService,  private router: ActivatedRoute, private fb: FormBuilder) {
+  constructor(private router: Router, private authService: AuthenticationService, private fb: FormBuilder, private logs: LoginService) {
 
-    this.contact = new Contact();
+    this.logins = new Login();
 
-    this.contactForm = this.fb.group({
+    this.loginForm = this.fb.group({
 
-      id: this.fb.control(this.contact.id),
-      name: this.fb.control(this.contact.name),
-      firstName: this.fb.control(this.contact.firstName)
+      login: this.fb.control(this.logins.login, [Validators.required]),
+      password: this.fb.control(this.logins.password, [Validators.required]),
+
     });
   }
 
   ngOnInit() {
-  }
+    this.logs.isLogin().subscribe(logins => {
 
-  public submitForm(){
-    console.log('submit!', this.contact);
+    });
   }
+/* btnClick(){
+    this.router.navigate(['/createEvent']);
+}*/
 
-  public hasIdError() {
-    const control = this.contactForm.get('id');
-    return control.errors && control.errors.required;
+  public submitForm() {
+
+    const newValues = this.loginForm.value;
+
+    const newLogin = new Login();
+    newLogin.login = newValues.login;
+    newLogin.password = newValues.password;
+    this.logins = newLogin;
+    console.log('submit!', this.logins, newValues);
+
+    }
+
+  public hasLoginError() {
+    const control = this.loginForm.get('login');
+    return control.errors && control.errors.required && !control.invalid;
   }
 
   public hasPasswordError() {
-    const control = this.contactForm.get('pwd');
-    return control.errors && control.errors.required;
+    const control = this.loginForm.get('password');
+    return control.errors && control.errors.required && !control.invalid;
   }
   public isConnect() {
     return this.authService.isConnected();

@@ -3,32 +3,33 @@ import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
+import { Login } from '../modeles/login.modele';
 
 @Injectable()
-export class EventService {
+export class PersonService {
   constructor(private http: HttpClient) {}
 
-  public getEvent(): Observable<Event[]> {
+  public getLogin(): Observable<Login[]> {
     return this.http
-      .get<Event[]>(`${environment.baseUrl}/events`)
+      .get<Login[]>(`${environment.baseUrl}/logining`)
       .pipe(catchError((error: any) => Observable.throw(error.json())));
   }
 
-  public createEvent(payload: Event): Observable<Event> {
+  public createLogin(payload: Login): Observable<Login> {
     return this.http
-      .post<Event>(`${environment.baseUrl}/events`, payload)
+      .post<Login>(`${environment.baseUrl}/logining`, payload)
       .pipe(catchError((error: any) => Observable.throw(error.json())));
   }
 
-  public updateEvent(payload: Event): Observable<Event> {
+  public updateLogin(payload: Login): Observable<Login> {
     return this.http
-      .put<Event>(`${environment.baseUrl}/contacts/${payload}`, payload)
+      .put<Login>(`${environment.baseUrl}/logining/${payload.password}`, payload)
       .pipe(catchError((error: any) => Observable.throw(error.json())));
   }
 
-  public removeEvent(payload: Event): Observable<Event> {
+  public removeLogin(payload: Login): Observable<Login> {
     return this.http
-      .delete<any>(`${environment.baseUrl}/contacts/${payload}`)
+      .delete<any>(`${environment.baseUrl}/logining/${payload.login}`)
       .pipe(catchError((error: any) => Observable.throw(error.json())));
   }
 }

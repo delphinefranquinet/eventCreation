@@ -1,24 +1,26 @@
 <h2><a [routerLink]="['/home']">HOME</a></h2>
 
 
-<div [formGroup]="contactForm">
+<form [formGroup]="loginForm" (ngSubmit)="submitForm()">
 
-  <label for="id">ID </label>
-  <input type="text" id="id" name="id" formControlName="id"/>
-  <span *ngIf="!id.valid" >Error !</span>
-</div>
+  <div>
+   <label for="login">Login </label>
+   <input type="text" id="login" name="login" formControlName="login"/>
+   <span *ngIf="hasLoginError()">*Required</span>
+  </div>
 
-<div>
+  <div>
     <label for="password">Password </label>
-    <input type="password" id="pwd" name="pwd" formControlName="password"/>
-     <span *ngIf="!password.valid" >Error !</span>
-</div>
+    <input type="password" id="pwd" name="password" formControlName="password"/>
+    <span *ngIf="hasPasswordError()">*Required</span>
+  </div>
+
 <br>
-<form action="['/createEvent']">
-  <input type="submit" [disabled]="isConnect()" />
+
+<input type="submit" [disabled]="!loginForm.valid"><!-- (click)="btnClick()" *ngIf="isConnect"-->
+{{logins | json}}
 
 </form>
-
 
 
 
