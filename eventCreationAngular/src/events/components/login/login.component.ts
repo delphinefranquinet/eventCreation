@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthenticationService } from '../../../app/services/authentication.service.ts.service';
 import {  Router } from '@angular/router';
@@ -11,10 +11,11 @@ import { LoginService } from '../../../app/services/login.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  @Input()
   public logins: Login;
   public loginForm: FormGroup;
 
-  constructor(private router: Router, private authService: AuthenticationService, private fb: FormBuilder, private logs: LoginService) {
+  constructor(private router: Router, private authService: AuthenticationService, private fb: FormBuilder, private loginService: LoginService) {
 
     this.logins = new Login();
 
@@ -27,9 +28,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.logs.isLogin().subscribe(logins => {
-
-    });
+   
   }
 /* btnClick(){
     this.router.navigate(['/createEvent']);

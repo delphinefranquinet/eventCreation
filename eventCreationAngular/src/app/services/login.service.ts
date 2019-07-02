@@ -12,9 +12,9 @@ export class LoginService {
 
   constructor(private http: HttpClient) {}
 
-  public isLogin(login: Login): Observable<Login> {
+  public postLogin(login: Login): Observable<Login> {
     return this.http
-      .post<Login>(`${environment.baseUrl}/logining`, login)
+      .post<Login>(`${environment.baseUrl}/login`, login)
       .pipe(catchError((error: any) => Observable.throw(error.json())));
   }
 
