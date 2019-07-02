@@ -8,13 +8,14 @@ public class Activity {
 	private String description;
 	private Timestamp startActivity;
 	private Timestamp endActivity;
+	private Event event;
 	
 	
 	
 	@Override
 	public String toString() {
 		return "Activity [id=" + id + ", name=" + name + ", description=" + description + ", startActivity="
-				+ startActivity + ", endActivity=" + endActivity + "]";
+				+ startActivity + ", endActivity=" + endActivity + ", event=" + event + "]";
 	}
 	public Integer getId() {
 		return id;
@@ -46,6 +47,15 @@ public class Activity {
 	public void setEndActivity(Timestamp endActivity) {
 		this.endActivity = endActivity;
 	}
+	public Event getEvent() {
+		return event;
+	}
+	public void setEvent(Event event) {
+		this.event = event;
+	}
+	
+	
+	
 	
 	
 
