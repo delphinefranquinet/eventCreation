@@ -5,7 +5,7 @@
 -- Dumped from database version 11.2
 -- Dumped by pg_dump version 11.2
 
--- Started on 2019-07-01 15:41:35
+-- Started on 2019-07-02 15:53:51
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -113,7 +113,9 @@ ALTER SEQUENCE public."Events_id_event_seq" OWNED BY public."Events".id_event;
 CREATE TABLE public.persons (
     id_person integer NOT NULL,
     "namePerson" character varying(50) NOT NULL,
-    "firstnamePerson" character varying(50) NOT NULL
+    "firstnamePerson" character varying(50) NOT NULL,
+    login character varying(50) NOT NULL,
+    password character varying(50) NOT NULL
 );
 
 
@@ -193,8 +195,8 @@ INSERT INTO public."Events" VALUES (1, 'Détente et Bien-être', 'Initiation au 
 -- Data for Name: persons; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.persons VALUES (1, 'Franquinet', 'Delphine');
-INSERT INTO public.persons VALUES (2, 'Al-Sudani', 'Zahraa');
+INSERT INTO public.persons VALUES (1, 'Franquinet', 'Delphine', 'delphine122', '1234');
+INSERT INTO public.persons VALUES (2, 'Al-Sudani', 'Zahraa', 'Zahraa', '1234');
 
 
 --
@@ -285,7 +287,7 @@ ALTER TABLE ONLY public."Events"
     ADD CONSTRAINT "FKPersonneResponsable" FOREIGN KEY (id_person) REFERENCES public.persons(id_person);
 
 
--- Completed on 2019-07-01 15:41:35
+-- Completed on 2019-07-02 15:53:51
 
 --
 -- PostgreSQL database dump complete
