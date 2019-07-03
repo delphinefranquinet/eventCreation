@@ -11,6 +11,9 @@ import { AuthenticationService } from './services/authentication.service.ts.serv
 import { AuthGuard } from './guards/auth.guard';
 import { SinInComponent } from '../events/components/signIn/sinIn.component';
 import { SignInLoginComponent } from '../events/components/signInLogin/signInLogin.component';
+import { LoginService } from './services/login.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { PersonService } from './services/person.service';
 
 
 
@@ -21,15 +24,16 @@ import { SignInLoginComponent } from '../events/components/signInLogin/signInLog
     CreateEventComponent,
     LoginComponent,
     SinInComponent,
-    SignInLoginComponent,
+    SignInLoginComponent
    ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [ AuthGuard, AuthenticationService ],
+  providers: [ AuthGuard, AuthenticationService, HttpClient, LoginService, PersonService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -71,6 +71,7 @@ public class eventCreationJavaServelet extends HttpServlet {
 		String json = mapper.writeValueAsString(person); // convertir en format json 
 		
 		response.setContentType("application/json"); // le type du contenu est du json
+		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
 		response.getWriter().write(json); // on écrit le json dans la réponse
 		

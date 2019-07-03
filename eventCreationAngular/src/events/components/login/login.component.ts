@@ -28,7 +28,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-   
+    this.loginService
+    .postLogin(this.logins).subscribe
+    (person => console.log(person));
   }
 /* btnClick(){
     this.router.navigate(['/createEvent']);
