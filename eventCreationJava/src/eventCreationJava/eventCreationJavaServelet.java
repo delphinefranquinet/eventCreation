@@ -49,15 +49,34 @@ public class eventCreationJavaServelet extends HttpServlet {
 	}
 
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { // tu recuperes des données et je n'envoie rien
 		System.out.println("eventCreationJavaServelet.doGet()");
-		setHeaders(response);
+		
+		String path = request.getPathInfo();
+		ObjectMapper mapper= new ObjectMapper();
+		
+		if (path.startsWith("/event")) {
+
+			List<Event> events = repository.FindAllEvents();
+			System.out.println(events);
+			
+			String json = mapper.writeValueAsString(events); // convertir en format json
+			setHeaders(response);
+			response.setContentType("application/json"); // le type du contenu est du json
+			response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
+			response.getWriter().write(json); // on écrit le json dans la réponse
+			
+			/*request.setAttribute("list", events);// add elements to req
+			request.getRequestDispatcher("/event.jsp").forward(request, response);*/
+
+		}
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { //tu envoies des données // tu vas créer
 		
 		System.out.println("eventCreationJavaServelet.doPost()");
 		
@@ -78,15 +97,7 @@ public class eventCreationJavaServelet extends HttpServlet {
 			response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
 			response.getWriter().write(json); // on écrit le json dans la réponse
 
-		} else if (path.startsWith("/event")) {
-
-			List<Event> events = repository.FindAllEvents();
-			System.out.println(events);
-			request.setAttribute("list", events);// add elements to req
-			request.getRequestDispatcher("/Pays.jsp").forward(request, response);
-
-		}
-		
+		} 
 		//response.addHeader("", "*"); //"la clé""*"n'importe lequel
 		// Access-Control-Allow-Origin = dns + port
 		// Access-Control-Allow-Headers = accepte les headers 

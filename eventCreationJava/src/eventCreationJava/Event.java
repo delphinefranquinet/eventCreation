@@ -44,18 +44,7 @@ public class Event {
 	public void setEndEvent(LocalDateTime endEvent) {
 		this.endEvent = endEvent;
 	}
-	public Person getPerson() {//i will find the responsible
-		return person;
-	}
-	public void setPerson(Person person) {
-		this.person = person;
-	}
-	public List<Activity> getActivities() {
-		return activities;
-	}
-	public void setActivities(List<Activity> activities) {
-		this.activities = activities;
-	}
+
 	
 	
 

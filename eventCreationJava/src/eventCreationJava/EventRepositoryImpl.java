@@ -91,7 +91,7 @@ public class EventRepositoryImpl {
 			query.setString(2, newEvent.getDescription());
 			//query.setTimestamp(3, newEvent.getStartActivity());
 			//query.setTimestamp(4, newEvent.getEndActivity());
-			query.setInt(5, newEvent.getPerson().getId());
+			//query.setInt(5, newEvent.getPerson().getId());
 			query.executeUpdate(); // insert/update/delete
 			int updatedRows = query.getUpdateCount();
 			connection.commit();
