@@ -2,6 +2,7 @@ package eventCreationJava;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 
 import javax.servlet.ServletConfig;
@@ -62,20 +63,29 @@ public class eventCreationJavaServelet extends HttpServlet {
 		
 		String path = request.getPathInfo();
 		ObjectMapper mapper= new ObjectMapper();
-		
-		CreateLoginParameters parameters = mapper.readValue(request.getInputStream(), CreateLoginParameters.class);
-		
-		System.out.println(parameters);
-				// request.getInputStream() = flu de données sur lequel je peux lire
-		Person person = repository.connexion(parameters.login, parameters.password);
-		
-		String json = mapper.writeValueAsString(person); // convertir en format json 
-		setHeaders(response);
-		response.setContentType("application/json"); // le type du contenu est du json
-		response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
-		response.getWriter().write(json); // on écrit le json dans la réponse
-		
-		
+
+		if (path.startsWith("/login")) {
+
+			CreateLoginParameters parameters = mapper.readValue(request.getInputStream(), CreateLoginParameters.class);
+
+			System.out.println(parameters);
+			// request.getInputStream() = flu de données sur lequel je peux lire
+			Person person = repository.connexion(parameters.login, parameters.password);
+
+			String json = mapper.writeValueAsString(person); // convertir en format json
+			setHeaders(response);
+			response.setContentType("application/json"); // le type du contenu est du json
+			response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
+			response.getWriter().write(json); // on écrit le json dans la réponse
+
+		} else if (path.startsWith("/event")) {
+
+			List<Event> events = repository.FindAllEvents();
+			System.out.println(events);
+			request.setAttribute("list", events);// add elements to req
+			request.getRequestDispatcher("/Pays.jsp").forward(request, response);
+
+		}
 		
 		//response.addHeader("", "*"); //"la clé""*"n'importe lequel
 		// Access-Control-Allow-Origin = dns + port

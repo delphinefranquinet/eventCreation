@@ -1,31 +1,28 @@
 package eventCreationJava;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class Event {
-	private Integer id;
+	
 	private String name;
 	private String description;
-	private Timestamp startActivity;
-	private Timestamp endActivity;
-	private Person Person;
-	
-	
+	private LocalDateTime startEvent;
+	private LocalDateTime endEvent;
+	//private Person person;
+	//private List<Activity> activities;
 	
 	@Override
 	public String toString() {
-		return "Event [id=" + id + ", name=" + name + ", description=" + description + ", startActivity="
-				+ startActivity + ", endActivity=" + endActivity + ", Person=" + Person + "]";
+		return "Event [name=" + name + ", description=" + description + ", startEvent=" + startEvent + ", endEvent="
+				+ endEvent + "]";
 	}
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
+	
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -35,27 +32,30 @@ public class Event {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Timestamp getStartActivity() {
-		return startActivity;
+	public LocalDateTime getStartEvent() {
+		return startEvent;
 	}
-	public void setStartActivity(Timestamp startActivity) {
-		this.startActivity = startActivity;
+	public void setStartEvent(LocalDateTime startEvent) {
+		this.startEvent = startEvent;
 	}
-	public Timestamp getEndActivity() {
-		return endActivity;
+	public LocalDateTime getEndEvent() {
+		return endEvent;
 	}
-	public void setEndActivity(Timestamp endActivity) {
-		this.endActivity = endActivity;
+	public void setEndEvent(LocalDateTime endEvent) {
+		this.endEvent = endEvent;
 	}
-	public Person getPerson() {
-		return Person;
+	public Person getPerson() {//i will find the responsible
+		return person;
 	}
 	public void setPerson(Person person) {
-		Person = person;
+		this.person = person;
 	}
-	
-	
-	
+	public List<Activity> getActivities() {
+		return activities;
+	}
+	public void setActivities(List<Activity> activities) {
+		this.activities = activities;
+	}
 	
 	
 

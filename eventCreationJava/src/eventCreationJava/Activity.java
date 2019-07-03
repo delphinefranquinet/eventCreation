@@ -1,13 +1,14 @@
 package eventCreationJava;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class Activity {
 	private Integer id;
 	private String name;
 	private String description;
-	private Timestamp startActivity;
-	private Timestamp endActivity;
+	private LocalDateTime startActivity;
+	private LocalDateTime endActivity;
 	private Event event;
 	
 	
@@ -35,16 +36,16 @@ public class Activity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Timestamp getStartActivity() {
+	public LocalDateTime getStartActivity() {
 		return startActivity;
 	}
-	public void setStartActivity(Timestamp startActivity) {
+	public void setStartActivity(LocalDateTime startActivity) {
 		this.startActivity = startActivity;
 	}
-	public Timestamp getEndActivity() {
+	public LocalDateTime getEndActivity() {
 		return endActivity;
 	}
-	public void setEndActivity(Timestamp endActivity) {
+	public void setEndActivity(LocalDateTime endActivity) {
 		this.endActivity = endActivity;
 	}
 	public Event getEvent() {
@@ -55,8 +56,7 @@ public class Activity {
 	}
 	
 	
-	
-	
-	
+
+
 
 }

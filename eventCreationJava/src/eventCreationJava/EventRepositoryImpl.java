@@ -1,7 +1,13 @@
 package eventCreationJava;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class EventRepositoryImpl {
 
@@ -29,7 +35,7 @@ public class EventRepositoryImpl {
 				if (resultSet.next()) {
 
 					person = createPerson(resultSet);
-					
+
 				}
 			}
 		} catch (java.sql.SQLException sqle) {
@@ -83,8 +89,8 @@ public class EventRepositoryImpl {
 			connection.setAutoCommit(false);
 			query.setString(1, newEvent.getName());
 			query.setString(2, newEvent.getDescription());
-			query.setTimestamp(3, newEvent.getStartActivity());
-			query.setTimestamp(4, newEvent.getEndActivity());
+			//query.setTimestamp(3, newEvent.getStartActivity());
+			//query.setTimestamp(4, newEvent.getEndActivity());
 			query.setInt(5, newEvent.getPerson().getId());
 			query.executeUpdate(); // insert/update/delete
 			int updatedRows = query.getUpdateCount();
@@ -110,9 +116,9 @@ public class EventRepositoryImpl {
 			connection.setAutoCommit(false);
 			query.setString(1, newActivity.getName());
 			query.setString(2, newActivity.getDescription());
-			query.setTimestamp(3, newActivity.getStartActivity());
-			query.setTimestamp(4, newActivity.getEndActivity());
-			query.setInt(5, newActivity.getEvent().getId());
+			//query.setTimestamp(3, newActivity.getStartActivity()).;
+			//query.setTimestamp(4, newActivity.getEndActivity());
+			// query.setInt(5, newActivity.getEvent().getId());
 			query.executeUpdate(); // insert/update/delete
 			int updatedRows = query.getUpdateCount();
 			connection.commit();
@@ -123,6 +129,32 @@ public class EventRepositoryImpl {
 		}
 
 		return created;
+	}
+
+	public List<Event> FindAllEvents() {
+	
+		List<Event> events = new ArrayList<Event>();;
+		
+		try (Connection c = DriverManager.getConnection(url, user, password);
+                Statement s = c.createStatement();
+                ResultSet rs = s.executeQuery("Select \"eventName\", description, \"dateDebut\", \"dateFin\" From \"Events\"")) {
+		while (rs.next()) {
+               Event event = new Event();
+              event.setName(rs.getString("eventName"));
+              event.setDescription(rs.getString("description"));
+              event.setStartEvent(rs.getTimestamp("dateDebut").toLocalDateTime());
+              event.setEndEvent(rs.getTimestamp("dateFin").toLocalDateTime());
+              events.add(event);
+            
+            }
+
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            throw new RuntimeException(sqle);
+        }
+
+        return events;
+			
 	}
 
 }
