@@ -50,6 +50,7 @@ public class eventCreationJavaServelet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("eventCreationJavaServelet.doGet()");
+		setHeaders(response);
 	}
 
 	/**
@@ -69,13 +70,12 @@ public class eventCreationJavaServelet extends HttpServlet {
 		Person person = repository.connexion(parameters.login, parameters.password);
 		
 		String json = mapper.writeValueAsString(person); // convertir en format json 
-		
+		setHeaders(response);
 		response.setContentType("application/json"); // le type du contenu est du json
-		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
 		response.getWriter().write(json); // on écrit le json dans la réponse
 		
-		setHeaders(response);
+		
 		
 		//response.addHeader("", "*"); //"la clé""*"n'importe lequel
 		// Access-Control-Allow-Origin = dns + port
