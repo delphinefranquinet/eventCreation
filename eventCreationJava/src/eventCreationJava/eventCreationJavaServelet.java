@@ -74,10 +74,28 @@ public class eventCreationJavaServelet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
 		response.getWriter().write(json); // on écrit le json dans la réponse
 		
+		setHeaders(response);
+		
+		//response.addHeader("", "*"); //"la clé""*"n'importe lequel
+		// Access-Control-Allow-Origin = dns + port
+		// Access-Control-Allow-Headers = accepte les headers 
+		// Access-Control-Allow-Methods = accepte les differentes methodes, post get ...
 		
 		//System.out.println(person);
 		//System.out.println(password);
 		
+	}
+	
+	@Override
+	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { // est ce que le client a le droit de faire un post
+		super.doOptions(request, response);
+		setHeaders(response);
+	}
+	
+	private void setHeaders( HttpServletResponse response ) {
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Methods", "*");
+		response.addHeader("Access-Control-Allow-Headers", "*");
 	}
 
 }
