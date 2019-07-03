@@ -20,7 +20,7 @@ export class CreateEventComponent implements OnInit {
     this.eventForm = this.fb.group({
 
       nameOfEvent: this.fb.control(this.event.nameOfEvent),
-      description: this.fb.control(this.event.description),
+      description: this.fb.control(this.event.descriptionEvent),
       begins: this.fb.control(this.event.begins),
       ends: this.fb.control(this.event.ends),
 
@@ -57,7 +57,7 @@ export class CreateEventComponent implements OnInit {
 
     const newevent = new Event();
     newevent.nameOfEvent = newValues.nameOfEvent;
-    newevent.description = newValues.description;
+    newevent.descriptionEvent = newValues.description;
     newevent.begins = newValues.begins;
     newevent.ends = newValues.ends;
     this.event = newevent;
