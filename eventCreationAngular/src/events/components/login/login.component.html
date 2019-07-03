@@ -16,8 +16,9 @@
   </div>
 
 <br>
-
-<input type="submit" [disabled]="!loginForm.valid"><!-- (click)="btnClick()" *ngIf="isConnect"-->
+<input  type="submit" [disabled]="!loginForm.valid"  >
+<div *ngIf="connectionError">Login or Password incorrect</div><!-- (click)="btnClick()"></div>-->
+<!---->
 {{logins | json}}
 
 </form>

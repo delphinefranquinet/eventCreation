@@ -4,13 +4,14 @@ import { Observable } from 'rxjs/internal/Observable';
 import { Login } from '../modeles/login.modele';
 import { environment } from '../../environments/environment';
 import { catchError } from 'rxjs/operators';
+import { Person } from '../modeles/person.modele';
 
 @Injectable()
 export class LoginService {
 
   constructor(private http: HttpClient) {}
 
-  public postLogin(login: Login): Observable<Login> {
+  public postLogin(login: Login): Observable<Person> {
 
    /* const httpHeaders = new HttpHeaders({
       'Content-Type' : 'application/json',
@@ -23,7 +24,7 @@ export class LoginService {
     };
 */
     return this.http
-      .post<Login>(`${environment.baseUrl}/login`, login)
+      .post<Person>(`${environment.baseUrl}/login`, login)
       .pipe(catchError((error: any) => Observable.throw(error.json())));
   }
 

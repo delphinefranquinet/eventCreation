@@ -4,6 +4,7 @@ import { AuthenticationService } from '../../../app/services/authentication.serv
 import {  Router } from '@angular/router';
 import { Login } from '../../../app/modeles/login.modele';
 import { LoginService } from '../../../app/services/login.service';
+import { Person } from '../../../app/modeles/person.modele';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,8 @@ export class LoginComponent implements OnInit {
   @Input()
   public logins: Login;
   public loginForm: FormGroup;
+  public connectionError: boolean = false;
+
 
   constructor(private router: Router, private authService: AuthenticationService, private fb: FormBuilder, private loginService: LoginService) {
 
@@ -28,37 +31,51 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loginService
-    .postLogin(this.logins).subscribe
-    (person => console.log(person));
+   /* this.loginService
+    .postLogin(this.logins).subscribe//postlogin envoie un observale / observable =  la prochaine fois qu'un evenement aura lieu, exécute ca ...(person => console.log(person));
+    (person => console.log('toto' + person));*/
   }
-/* btnClick(){
+ next() {
     this.router.navigate(['/createEvent']);
-}*/
+}
 
   public submitForm() {
-
     const newValues = this.loginForm.value;
-
     const newLogin = new Login();
     newLogin.login = newValues.login;
     newLogin.password = newValues.password;
     this.logins = newLogin;
-    console.log('submit!', this.logins, newValues);
+
+    this.loginService
+    .postLogin(this.logins).subscribe//postlogin envoie un observale / observable =  la prochaine fois qu'un evenement aura lieu, exécute ca ...(person => console.log(person));
+     (person => this.connection(person));
+
+
+    /*console.log('submit!', this.logins, newValues);*/
 
     }
 
   public hasLoginError() {
     const control = this.loginForm.get('login');
-    return control.errors && control.errors.required && !control.invalid;
+    return control.errors && control.errors.required && control.invalid;
   }
 
   public hasPasswordError() {
     const control = this.loginForm.get('password');
-    return control.errors && control.errors.required && !control.invalid;
+    return control.errors && control.errors.required && control.invalid;
   }
   public isConnect() {
     return this.authService.isConnected();
   }
-
+public connection(person: Person) {
+  if (person === null) {
+    this.connectionError = true;
+    console.log(this.connectionError);
+  } else {
+this.connectionError = false;
+console.log(this.connectionError);
+this.next();
+   //ENVOYER person VERS HTTP//LOCALHOST/8080/CREATEEVENT/LOGIN ;
+ }
+}
 }
