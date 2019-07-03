@@ -7,5 +7,5 @@ export class Event {
   public descriptionEvent: string;
   public begins: Date;
   public ends: Date;
-  public activities: Activity[];
+  //public activities: Activity[];
 }

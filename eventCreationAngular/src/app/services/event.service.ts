@@ -8,7 +8,13 @@ import { Observable } from 'rxjs';
 export class EventService {
   constructor(private http: HttpClient) {}
 
-  public getEvent(): Observable<Event[]> {
+  public postEvent(event: Event): Observable<Event> {
+
+     return this.http
+       .post<Event>(`${environment.baseUrl}/event`, event)
+       .pipe(catchError((error: any) => Observable.throw(error.json())));
+   }
+ /* public getEvent(): Observable<Event[]> {
     return this.http
       .get<Event[]>(`${environment.baseUrl}/events`)
       .pipe(catchError((error: any) => Observable.throw(error.json())));
@@ -30,5 +36,5 @@ export class EventService {
     return this.http
       .delete<any>(`${environment.baseUrl}/contacts/${payload}`)
       .pipe(catchError((error: any) => Observable.throw(error.json())));
-  }
+  }*/
 }

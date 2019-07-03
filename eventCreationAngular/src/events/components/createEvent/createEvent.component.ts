@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Event } from 'src/app/modeles/event.modele';
 import { from } from 'rxjs';
+import { AuthenticationService } from '../../../app/services/authentication.service.ts.service';
+import { Router } from '@angular/router';
+import { EventService } from '../../../app/services/event.service';
 
 @Component({
 
@@ -14,15 +17,15 @@ export class CreateEventComponent implements OnInit {
   public event: Event;
   public eventForm: FormGroup;
   public now = new Date();
-  constructor(private fb: FormBuilder) {
+  constructor(private router: Router, private authService: AuthenticationService, private fb: FormBuilder, private eventService: EventService) {
     this.event = new Event();
 
     this.eventForm = this.fb.group({
 
-      nameOfEvent: this.fb.control(this.event.nameOfEvent),
-      description: this.fb.control(this.event.descriptionEvent),
-      begins: this.fb.control(this.event.begins),
-      ends: this.fb.control(this.event.ends),
+      nameOfEvent: this.fb.control(this.event.nameOfEvent, [Validators.required]),
+      description: this.fb.control(this.event.descriptionEvent, [Validators.required]),
+      begins: this.fb.control(this.event.begins, [Validators.required]),
+      ends: this.fb.control(this.event.ends, [Validators.required]),
 
 
     });
