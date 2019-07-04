@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import be.afelio.pco.web.Exception;
 
 @WebServlet("/*")
 public class eventCreationJavaServelet extends HttpServlet {
