@@ -99,11 +99,12 @@ public class EventRepositoryImpl {
 			query.executeUpdate(); // insert/update/delete
 			
 			try (
-					ResultSet resultSet = query.getGeneratedKeys()	
+					ResultSet resultSet = query.getGeneratedKeys()		// pour récupérer l'id qui est en autoincrement, ne pas oublier Statement.RETURN_GENERATED_KEYS)
 				) {
 					if (resultSet.next()) {
 						int id = resultSet.getInt(1);
-						System.out.println("bonjour" + id);
+						//System.out.println("bonjour" + id);
+						newEvent.setId(id);
 					}
 				}
 		
