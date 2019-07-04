@@ -1,9 +1,7 @@
 package eventCreationJava;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -12,6 +10,8 @@ import eventCreationJava.utilJson.LocalDateDeserializer;
 import eventCreationJava.utilJson.LocalDateSerializer;
 
 public class Event implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
 	private String name;
