@@ -2,8 +2,6 @@ package eventCreationJava;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Properties;
 
@@ -18,23 +16,23 @@ import javax.servlet.http.HttpSession;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-
 @WebServlet("/*")
 public class eventCreationJavaServelet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
-	
+
 	protected EventRepositoryImpl repository;
-	
-	
+
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		
+
 		try {
 			Class.forName("org.postgresql.Driver"); // charger la class (driver) postgres
-			String path = getServletContext().getRealPath("/WEB-INF/database.properties"); //je demande le chemin au contexte / il crée le chemin vers le fichier
-			Properties properties = new Properties(); // properties clé et valeurs sont des string, il est capable de lire les fichier qui ont un format adapté
+			String path = getServletContext().getRealPath("/WEB-INF/database.properties"); // je demande le chemin au
+																							// contexte / il crée le
+																							// chemin vers le fichier
+			Properties properties = new Properties(); // properties clé et valeurs sont des string, il est capable de
+														// lire les fichier qui ont un format adapté
 			try ( // le fichier pourrait être absent try() = closable
 					java.io.InputStream in = new FileInputStream(path); // objet capable de lire le fichier
 			) {
@@ -43,111 +41,125 @@ public class eventCreationJavaServelet extends HttpServlet {
 			String url = properties.getProperty("database.url");
 			String user = properties.getProperty("database.user");
 			String password = properties.getProperty("database.password");
-			
+
 			repository = new EventRepositoryImpl(user, password, url);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			throw new ServletException(e);
 		}
-		
+
 	}
 
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { // tu recuperes des données et je n'envoie rien
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException { // tu recuperes des données et je n'envoie rien
+
 		String path = request.getPathInfo();
-		ObjectMapper mapper= new ObjectMapper();
-		
+		ObjectMapper mapper = new ObjectMapper();
+
 		if (path.startsWith("/event")) {
 
 			List<Event> events = repository.FindAllEvents();
 			System.out.println(events);
-			
+
 			String json = mapper.writeValueAsString(events); // convertir en format json
 			setHeaders(response);
 			response.setContentType("application/json"); // le type du contenu est du json
 			response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
 			response.getWriter().write(json); // on écrit le json dans la réponse
-			
-			/*request.setAttribute("list", events);// add elements to req
-			request.getRequestDispatcher("/event.jsp").forward(request, response);*/
+
+			/*
+			 * request.setAttribute("list", events);// add elements to req
+			 * request.getRequestDispatcher("/event.jsp").forward(request, response);
+			 */
 
 		}
-		
+
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { //tu envoies des données // tu vas créer
-		HttpSession session = request.getSession(true);// endroit de memorisation qui dure plusieurs requetes et qui est lié au client (5 clients, chacun aura sa sesssion) (espace memoire)
-		
-		String path = request.getPathInfo();
-		ObjectMapper mapper= new ObjectMapper();
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException { // tu envoies des données // tu vas créer
+		HttpSession session = request.getSession(true);// endroit de memorisation qui dure plusieurs requetes et qui est
+														// lié au client (5 clients, chacun aura sa sesssion) (espace
+														// memoire)
 
-		if (path.startsWith("/login")) {
+		try {
+			String path = request.getPathInfo();
+			ObjectMapper mapper = new ObjectMapper();
 
-			CreateLoginParameters parameters = mapper.readValue(request.getInputStream(), CreateLoginParameters.class);
+			if (path.startsWith("/login")) {
 
-			// request.getInputStream() = flu de données sur lequel je peux lire
-			Person person = repository.connexion(parameters.login, parameters.password);
-			
-			if (person != null) {
-				session.setAttribute("idResponsable", person.getId()); // pour récupérer l'id du responsable
-			}
-			
-			String json = mapper.writeValueAsString(person); // convertir en format json
-			setHeaders(response);
-			response.setContentType("application/json"); // le type du contenu est du json
-			response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
-			response.getWriter().write(json); // on écrit le json dans la réponse
+				CreateLoginParameters parameters = mapper.readValue(request.getInputStream(),
+						CreateLoginParameters.class);
 
-		} else if (path.startsWith("/createEvent")) {
-			
-			CreateEventParameters parameters = mapper.readValue(request.getInputStream(), CreateEventParameters.class);
-			Integer idResponsable = (Integer) session.getAttribute("idResponsable");
+				// request.getInputStream() = flu de données sur lequel je peux lire
+				Person person = repository.connexion(parameters.login, parameters.password);
 
-			if (idResponsable != null) {
+				if (person != null) {
+					session.setAttribute("idResponsable", person.getId()); // pour récupérer l'id du responsable
+				}
 
-				
-				Event event = new Event();
-				event.setName(parameters.name);
-				event.setDescription (parameters.description);
-				event.setStartEvent(parameters.startEvent);
-				event.setEndEvent (parameters.endEvent);
-				event.setIdResponsable(idResponsable);
-			
-				event = repository.CreateNewEvent(event);
-
-				String json = mapper.writeValueAsString(event); // convertir en format json
-				System.out.println(json);
+				String json = mapper.writeValueAsString(person); // convertir en format json
 				setHeaders(response);
 				response.setContentType("application/json"); // le type du contenu est du json
 				response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
 				response.getWriter().write(json); // on écrit le json dans la réponse
-			} else {
-				response.setStatus(401); // si connexion NOK, code erreur (google)
+
+			} else if (path.startsWith("/createEvent")) {
+
+				CreateEventParameters parameters = mapper.readValue(request.getInputStream(),
+						CreateEventParameters.class);
+				Integer idResponsable = (Integer) session.getAttribute("idResponsable");
+
+				if (idResponsable != null) {
+
+					Event event = new Event();
+					event.setName(parameters.name);
+					event.setDescription(parameters.description);
+					event.setStartEvent(parameters.startEvent);
+					event.setEndEvent(parameters.endEvent);
+					event.setIdResponsable(idResponsable);
+
+					event = repository.CreateNewEvent(event);
+
+					String json = mapper.writeValueAsString(event); // convertir en format json
+					System.out.println(json);
+					setHeaders(response);
+					response.setContentType("application/json"); // le type du contenu est du json
+					response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
+					response.getWriter().write(json); // on écrit le json dans la réponse
+				} else {
+					response.setStatus(401); // si connexion NOK, code erreur (google)
+				}
 			}
+			// response.addHeader("", "*"); //"la clé""*"n'importe lequel
+			// Access-Control-Allow-Origin = dns + port
+			// Access-Control-Allow-Headers = accepte les headers
+			// Access-Control-Allow-Methods = accepte les differentes methodes, post get ...
+
+			// System.out.println(person);
+			// System.out.println(password);
+
+		} catch (Exception e) {
+			response.setStatus(500);
 		}
-		//response.addHeader("", "*"); //"la clé""*"n'importe lequel
-		// Access-Control-Allow-Origin = dns + port
-		// Access-Control-Allow-Headers = accepte les headers 
-		// Access-Control-Allow-Methods = accepte les differentes methodes, post get ...
-		
-		//System.out.println(person);
-		//System.out.println(password);
-		
+
 	}
-	
+
 	@Override
-	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { // est ce que le client a le droit de faire un post
+	protected void doOptions(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException { // est ce que le client a le droit de faire un post
 		super.doOptions(request, response);
 		setHeaders(response);
 	}
-	
-	private void setHeaders( HttpServletResponse response ) {
+
+	private void setHeaders(HttpServletResponse response) {
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		response.addHeader("Access-Control-Allow-Methods", "*");
-		response.addHeader("Access-Control-Allow-Headers", "*");
+		response.addHeader("Access-Control-Allow-Headers", "content-type"); // pour que ca soit accepté par tous les
+																			// browser content-type pour le headers
 	}
 
 }
