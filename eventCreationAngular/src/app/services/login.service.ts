@@ -14,7 +14,6 @@ export class LoginService {
   public postLogin(login: Login): Observable<Person> {
     return this.http
       .post<Person>(`${environment.baseUrl}/login`, login)
-      .pipe(catchError((error: any) => Observable.throw(error.json())));
   }
 
 }

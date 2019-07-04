@@ -12,11 +12,14 @@ import { EventService } from '../../../app/services/event.service';
   templateUrl: './createEvent.component.html',
   styleUrls: ['./createEvent.component.css']
 })
+
 export class CreateEventComponent implements OnInit {
 
   public event: Event;
   public eventForm: FormGroup;
   public now = new Date();
+  public eventError = false;
+
   constructor(private router: Router, private authService: AuthenticationService, private fb: FormBuilder, private eventService: EventService) {
     this.event = new Event();
 
@@ -26,13 +29,15 @@ export class CreateEventComponent implements OnInit {
       description: this.fb.control(this.event.descriptionEvent, [Validators.required]),
       begins: this.fb.control(this.event.begins, [Validators.required]),
       ends: this.fb.control(this.event.ends, [Validators.required]),
-
-
     });
    }
 
 
   ngOnInit() {
+  }
+
+  next() {
+    this.router.navigate(['/activity']);
   }
 
   public hasnameOfEventError() {
@@ -55,15 +60,35 @@ export class CreateEventComponent implements OnInit {
     return control.errors && control.errors.required;
   }
 
+  public isConnect() {
+    return this.authService.isConnected();
+  }
+
   public submitForm(){
     const newValues = this.eventForm.value;
 
-    const newevent = new Event();
-    newevent.nameOfEvent = newValues.nameOfEvent;
-    newevent.descriptionEvent = newValues.description;
-    newevent.begins = newValues.begins;
-    newevent.ends = newValues.ends;
-    this.event = newevent;
-    console.log('submit!', this.event, newValues);
- }
-}
+    const newEvent = new Event();
+    newEvent.nameOfEvent = newValues.nameOfEvent;
+    newEvent.descriptionEvent = newValues.descriptionEvent;
+    newEvent.begins = newValues.begins;
+    newEvent.ends = newValues.ends;
+    this.event = newEvent;
+
+    this.eventService
+    .postEvent(this.event).subscribe//postlogin envoie un observale / observable =  la prochaine fois qu'un evenement aura lieu, exécute ca ...(person => console.log(person));
+    (event =>  this.connection(event));
+  }
+
+
+
+
+public connection(event: Event) {
+  if (event === null) {
+   this.eventError = true;
+  } else {
+    this.eventError = false;
+    this.next();
+
+  }
+    }
+  }

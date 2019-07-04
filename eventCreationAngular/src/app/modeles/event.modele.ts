@@ -1,5 +1,5 @@
-import { ConvertActionBindingResult } from '@angular/compiler/src/compiler_util/expression_converter';
-import { Activity } from './activity.modele';
+
+//import { Activity } from './activity.modele';
 
 export class Event {
 

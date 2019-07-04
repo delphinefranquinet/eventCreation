@@ -14,6 +14,8 @@ import { SignInLoginComponent } from '../events/components/signInLogin/signInLog
 import { LoginService } from './services/login.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { PersonService } from './services/person.service';
+import { EventService } from './services/event.service';
+import { ActivityComponent } from '../events/components/activity/activity.component';
 
 
 
@@ -24,7 +26,8 @@ import { PersonService } from './services/person.service';
     CreateEventComponent,
     LoginComponent,
     SinInComponent,
-    SignInLoginComponent
+    SignInLoginComponent,
+    ActivityComponent,
    ],
   imports: [
     BrowserModule,
@@ -33,7 +36,7 @@ import { PersonService } from './services/person.service';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [ AuthGuard, AuthenticationService, HttpClient, LoginService, PersonService ],
+  providers: [ AuthGuard, AuthenticationService, HttpClient, LoginService, PersonService, EventService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

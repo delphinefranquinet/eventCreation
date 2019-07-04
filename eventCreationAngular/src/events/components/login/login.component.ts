@@ -12,6 +12,7 @@ import { Person } from '../../../app/modeles/person.modele';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
   @Input()
   public logins: Login;
   public loginForm: FormGroup;
@@ -31,13 +32,11 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-   /* this.loginService
-    .postLogin(this.logins).subscribe//postlogin envoie un observale / observable =  la prochaine fois qu'un evenement aura lieu, exécute ca ...(person => console.log(person));
-    (person => console.log('toto' + person));*/
   }
- next() {
+
+  next() {
     this.router.navigate(['/createEvent']);
-}
+  }
 
   public submitForm() {
     const newValues = this.loginForm.value;
@@ -48,12 +47,7 @@ export class LoginComponent implements OnInit {
 
     this.loginService
     .postLogin(this.logins).subscribe//postlogin envoie un observale / observable =  la prochaine fois qu'un evenement aura lieu, exécute ca ...(person => console.log(person));
-     (person => this.connection(person));
-
-
-    /*console.log('submit!', this.logins, newValues);*/
-
-    }
+     (person =>  this.connection(person));}
 
   public hasLoginError() {
     const control = this.loginForm.get('login');
@@ -64,18 +58,18 @@ export class LoginComponent implements OnInit {
     const control = this.loginForm.get('password');
     return control.errors && control.errors.required && control.invalid;
   }
+
   public isConnect() {
     return this.authService.isConnected();
   }
-public connection(person: Person) {
-  if (person === null) {
-    this.connectionError = true;
-    console.log(this.connectionError);
-  } else {
-this.connectionError = false;
-console.log(this.connectionError);
-this.next();
-   //ENVOYER person VERS HTTP//LOCALHOST/8080/CREATEEVENT/LOGIN ;
- }
-}
+
+  public connection(person: Person) {
+    if (person === null) {
+     this.connectionError = true;
+    } else {
+      this.connectionError = false;
+      this.next();
+
+    }
+      }
 }
