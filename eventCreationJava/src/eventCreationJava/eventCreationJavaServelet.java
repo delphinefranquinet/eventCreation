@@ -144,6 +144,7 @@ public class eventCreationJavaServelet extends HttpServlet {
 
 		} catch (Exception e) {
 			response.setStatus(500);
+			e.printStackTrace(); // affiche une exception sur le canal d'erreur (console)
 		}
 
 	}
