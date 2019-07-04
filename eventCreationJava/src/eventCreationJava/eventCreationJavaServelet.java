@@ -51,7 +51,6 @@ public class eventCreationJavaServelet extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { // tu recuperes des données et je n'envoie rien
-		System.out.println("eventCreationJavaServelet.doGet()");
 		
 		String path = request.getPathInfo();
 		ObjectMapper mapper= new ObjectMapper();
@@ -79,7 +78,6 @@ public class eventCreationJavaServelet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { //tu envoies des données // tu vas créer
 		HttpSession session = request.getSession(true);// endroit de memorisation qui dure plusieurs requetes et qui est lié au client (5 clients, chacun aura sa sesssion) (espace memoire)
-		System.out.println("eventCreationJavaServelet.doPost()");
 		
 		String path = request.getPathInfo();
 		ObjectMapper mapper= new ObjectMapper();
@@ -88,7 +86,6 @@ public class eventCreationJavaServelet extends HttpServlet {
 
 			CreateLoginParameters parameters = mapper.readValue(request.getInputStream(), CreateLoginParameters.class);
 
-			System.out.println(parameters);
 			// request.getInputStream() = flu de données sur lequel je peux lire
 			Person person = repository.connexion(parameters.login, parameters.password);
 			
@@ -109,7 +106,6 @@ public class eventCreationJavaServelet extends HttpServlet {
 
 			if (idResponsable != null) {
 
-				System.out.println(parameters);
 				
 				Event event = new Event();
 				event.setName(parameters.name);

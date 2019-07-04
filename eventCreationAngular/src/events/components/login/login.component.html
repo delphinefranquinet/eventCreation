@@ -1,4 +1,18 @@
-<h2><a [routerLink]="['/home']">HOME</a></h2>
+<table>
+    <tr>
+      <th><button class="accordion"> <a [routerLink]="['/home']">HOME</a>  </button>
+      <td>
+       <button class="accordion"><a [routerLink]="['/signin']"> SIGN IN</a></button>
+         <div class="panel">
+          </div>
+          </td>
+          <td>
+              <button class="accordion"><a [routerLink]="['/login']"> LOGIN</a></button>
+                <div class="panel">
+                 </div>
+                 </td>
+    </tr>
+</table>
 
 
 <form [formGroup]="loginForm" (ngSubmit)="submitForm()">

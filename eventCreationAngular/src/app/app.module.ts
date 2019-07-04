@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from 'src/events/components/home/home.component';
@@ -16,6 +15,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { PersonService } from './services/person.service';
 import { EventService } from './services/event.service';
 import { ActivityComponent } from '../events/components/activity/activity.component';
+import { InscriptionComponent } from '../events/components/inscription/inscription.component';
 
 
 
@@ -28,6 +28,7 @@ import { ActivityComponent } from '../events/components/activity/activity.compon
     SinInComponent,
     SignInLoginComponent,
     ActivityComponent,
+    InscriptionComponent
    ],
   imports: [
     BrowserModule,
