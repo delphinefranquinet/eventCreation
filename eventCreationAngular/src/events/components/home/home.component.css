@@ -1,17 +1,13 @@
-.container {
-  position: relative;
-  text-align: center;
-  color: white;
+container {
+  height: 300px;
+  width: 250px;
 }
 
-.top-left {
-  position: absolute;
-  top: 8px;
-  left: 16px;
-}
-.centered {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+/* Bottom right text */
+.text-block {
+  position: center;
+  bottom: 30px;
+  right: 30px;
+  color: black;
+
 }

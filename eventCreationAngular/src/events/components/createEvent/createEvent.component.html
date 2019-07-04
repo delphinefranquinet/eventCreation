@@ -1,7 +1,22 @@
-  <h2><a [routerLink]="['/home']">HOME</a></h2>
+<table>
+    <tr>
+      <th><button class="accordion"> <a [routerLink]="['/home']">HOME</a>  </button>
+      <td>
+       <button class="accordion"><a [routerLink]="['/signin']"> SIGN IN</a></button>
+         <div class="panel">
+          </div>
+          </td>
+          <td>
+              <button class="accordion"><a [routerLink]="['/login']"> LOGIN</a></button>
+                <div class="panel">
+                 </div>
+                 </td>
+    </tr>
+</table>
 
 
-<form [formGroup]= "eventForm" (ngSubmit)="submitForm()">
+
+  <form [formGroup]= "eventForm" (ngSubmit)="submitForm()">
 
     <div>
       <label for="nameOfEvent">Name of event:</label>
@@ -9,22 +24,22 @@
     </div>
 
     <div>
-        <label for="description">Description:</label>
+        <label for="description">Description Of Event:</label>
         <input type="text" id="description" name="description" formControlName="description"/>
     </div>
 
    <div>
       <label for="begins">Event begins the :</label>
-      <input type="Date" id="begins" name="begins" formControlName="begins"/>
+      <input type="datetime-local" id="begins" name="begins" formControlName="begins"/>
     </div>
 
     <div>
       <label for="ends">Event ends the :</label>
-      <input type="Date" id="ends" name="ends" formControlName="ends"/>
+      <input type="datetime-local" id="ends" name="ends" formControlName="ends"/>
     </div>
 
     <div>
-      <input type="submit" [disabled]="!eventtForm.valid"/>
+      <input type="submit" [disabled]="!eventForm.valid"/>
     </div>
     </form>
 

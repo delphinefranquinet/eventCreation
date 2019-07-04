@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
 
   @Input()
   public logins: Login;
+  public person: Person;
   public loginForm: FormGroup;
   public connectionError: boolean = false;
 
@@ -24,7 +25,6 @@ export class LoginComponent implements OnInit {
     this.logins = new Login();
 
     this.loginForm = this.fb.group({
-
       login: this.fb.control(this.logins.login, [Validators.required]),
       password: this.fb.control(this.logins.password, [Validators.required]),
 
@@ -47,7 +47,8 @@ export class LoginComponent implements OnInit {
 
     this.loginService
     .postLogin(this.logins).subscribe//postlogin envoie un observale / observable =  la prochaine fois qu'un evenement aura lieu, exécute ca ...(person => console.log(person));
-     (person =>  this.connection(person));}
+     (person =>  this.connection(person));
+    }
 
   public hasLoginError() {
     const control = this.loginForm.get('login');
