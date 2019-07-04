@@ -3,7 +3,7 @@
 
 export class EventManage {
 
-  public nameOfEvent: string;
+  public name: string;
   public descriptionEvent: string;
   public begins: Date;
   public ends: Date;

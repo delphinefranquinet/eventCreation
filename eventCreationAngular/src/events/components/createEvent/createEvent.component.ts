@@ -26,7 +26,7 @@ export class CreateEventComponent implements OnInit {
 
     this.eventForm = this.fb.group({
 
-      nameOfEvent: this.fb.control(this.event.nameOfEvent, [Validators.required]),
+      name: this.fb.control(this.event.name, [Validators.required]),
       description: this.fb.control(this.event.descriptionEvent, [Validators.required]),
       begins: this.fb.control(this.event.begins, [Validators.required]),
       ends: this.fb.control(this.event.ends, [Validators.required]),
@@ -70,7 +70,7 @@ export class CreateEventComponent implements OnInit {
 
     const newEvent = new EventManage();
 
-    newEvent.nameOfEvent = newValues.nameOfEvent;
+    newEvent.name = newValues.nameOfEvent;
     newEvent.descriptionEvent = newValues.descriptionEvent;
     newEvent.begins = newValues.begins;
     newEvent.ends = newValues.ends;

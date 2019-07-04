@@ -19,8 +19,8 @@
   <form [formGroup]= "eventForm" (ngSubmit)="submitForm()">
 
     <div>
-      <label for="nameOfEvent">Name of event:</label>
-      <input type="text" id="nameOfEvent" name="nameOfEvent" formControlName="nameOfEvent"/>
+      <label for="name">Name of event:</label>
+      <input type="text" id="name" name="name" formControlName="name"/>
     </div>
 
     <div>
@@ -39,7 +39,7 @@
     </div>
 
     <div>
-      <input type="submit" [disabled]="!eventForm.valid"/>
+      <input type="submit" name="send" [disabled]="!eventForm.valid"/>
     </div>
     </form>
 
