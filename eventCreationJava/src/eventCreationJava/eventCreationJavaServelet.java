@@ -2,6 +2,8 @@ package eventCreationJava;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Properties;
 
@@ -11,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -77,7 +80,7 @@ public class eventCreationJavaServelet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { //tu envoies des données // tu vas créer
-		
+		HttpSession session = request.getSession(true);// endroit de memorisation qui dure plusieurs requetes et qui est lié au client (5 clients, chacun aura sa sesssion) (espace memoire)
 		System.out.println("eventCreationJavaServelet.doPost()");
 		
 		String path = request.getPathInfo();
@@ -90,14 +93,45 @@ public class eventCreationJavaServelet extends HttpServlet {
 			System.out.println(parameters);
 			// request.getInputStream() = flu de données sur lequel je peux lire
 			Person person = repository.connexion(parameters.login, parameters.password);
-
+			
+			if (person != null) {
+				session.setAttribute("idResponsable", person.getId()); // pour récupérer l'id du responsable
+			}
+			
 			String json = mapper.writeValueAsString(person); // convertir en format json
 			setHeaders(response);
 			response.setContentType("application/json"); // le type du contenu est du json
 			response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
 			response.getWriter().write(json); // on écrit le json dans la réponse
 
-		} 
+		} else if (path.startsWith("/createEvent")) {
+			
+			CreateEventParameters parameters = mapper.readValue(request.getInputStream(), CreateEventParameters.class);
+			Integer idResponsable = (Integer) session.getAttribute("idResponsable");
+
+			if (idResponsable != null) {
+
+				System.out.println(parameters);
+				
+				Event event = new Event();
+				event.setName(parameters.name);
+				event.setDescription (parameters.description);
+				event.setStartEvent(parameters.startEvent);
+				event.setEndEvent (parameters.endEvent);
+				event.setIdResponsable(idResponsable);
+			
+				event = repository.CreateNewEvent(event);
+
+				String json = mapper.writeValueAsString(event); // convertir en format json
+				System.out.println(json);
+				setHeaders(response);
+				response.setContentType("application/json"); // le type du contenu est du json
+				response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
+				response.getWriter().write(json); // on écrit le json dans la réponse
+			} else {
+				response.setStatus(401); // si connexion NOK, code erreur (google)
+			}
+		}
 		//response.addHeader("", "*"); //"la clé""*"n'importe lequel
 		// Access-Control-Allow-Origin = dns + port
 		// Access-Control-Allow-Headers = accepte les headers 

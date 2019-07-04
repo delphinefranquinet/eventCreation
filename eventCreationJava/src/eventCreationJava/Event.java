@@ -1,28 +1,46 @@
 package eventCreationJava;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Event {
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import eventCreationJava.utilJson.LocalDateDeserializer;
+import eventCreationJava.utilJson.LocalDateSerializer;
+
+public class Event implements Serializable{
 	
+	private Integer id;
 	private String name;
 	private String description;
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDateTime startEvent;
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDateTime endEvent;
-	//private Person person;
+	private Integer idResponsable;
 	//private List<Activity> activities;
 	
 	@Override
 	public String toString() {
-		return "Event [name=" + name + ", description=" + description + ", startEvent=" + startEvent + ", endEvent="
-				+ endEvent + "]";
+		return "Event [id=" + id + ", name=" + name + ", description=" + description + ", startEvent=" + startEvent
+				+ ", endEvent=" + endEvent + ", idResponsable=" + idResponsable + "]";
 	}
 	
+	public Integer getId() {
+		return id;
+	}
+	
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}
-	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -44,8 +62,12 @@ public class Event {
 	public void setEndEvent(LocalDateTime endEvent) {
 		this.endEvent = endEvent;
 	}
-
+	public Integer getIdResponsable() {
+		return idResponsable;
+	}
+	public void setIdResponsable(Integer idResponsable) {
+		this.idResponsable = idResponsable;
+	}
 	
 	
-
 }

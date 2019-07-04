@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +64,7 @@ public class EventRepositoryImpl {
 				java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 			// connection.setAutoCommit(true);
 
-			connection.setAutoCommit(false);
+			connection.setAutoCommit(false);// pour etre certain que les 2 aboutissent, sinon que les 2 échouent.
 			query.setString(1, person.getName());
 			query.setString(2, person.getFirstname());
 			query.executeUpdate(); // insert/update/delete
@@ -77,31 +79,33 @@ public class EventRepositoryImpl {
 		return created;
 	}
 
-	public boolean CreateNewEvent(Event newEvent) {
-
-		boolean created = false;
+	public Event CreateNewEvent(Event newEvent) {
+	
+		//Timestamp timestamp = Timestamp.valueOf(localDateTime); Convertir localDateTime en Timestamp
+		
+		//boolean created = false;
 
 		String sql = "insert into \"Events\" values (default, ?, ?, ?, ?, ? )";
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 			// connection.setAutoCommit(true);
 
-			connection.setAutoCommit(false);
+			connection.setAutoCommit(false);// pour etre certain que les 2 aboutissent, sinon que les 2 échouent.
 			query.setString(1, newEvent.getName());
 			query.setString(2, newEvent.getDescription());
-			//query.setTimestamp(3, newEvent.getStartActivity());
-			//query.setTimestamp(4, newEvent.getEndActivity());
-			//query.setInt(5, newEvent.getPerson().getId());
+			query.setTimestamp(3, Timestamp.valueOf(newEvent.getStartEvent())); //Timestamp.valueOf(startEvent)
+			query.setTimestamp(4, Timestamp.valueOf(newEvent.getEndEvent())); //Timestamp.valueOf(endEvent)
+			query.setInt(5, newEvent.getIdResponsable());
 			query.executeUpdate(); // insert/update/delete
-			int updatedRows = query.getUpdateCount();
+			//int updatedRows = query.getUpdateCount();
 			connection.commit();
 
-			created = updatedRows > 0;
+			//created = updatedRows > 0;
 		} catch (java.sql.SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
 
-		return created;
+		return newEvent;
 	}
 
 	public boolean CreateNewActivity(Activity newActivity) {
