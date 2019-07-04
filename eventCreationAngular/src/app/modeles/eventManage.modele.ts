@@ -5,7 +5,7 @@ export class EventManage {
 
   public name: string;
   public descriptionEvent: string;
-  public begins: Date;
-  public ends: Date;
+  public startEvent: Date;
+  public endEvent: Date;
   //public activities: Activity[];
 }

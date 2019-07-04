@@ -28,8 +28,8 @@ export class CreateEventComponent implements OnInit {
 
       name: this.fb.control(this.event.name, [Validators.required]),
       description: this.fb.control(this.event.descriptionEvent, [Validators.required]),
-      begins: this.fb.control(this.event.begins, [Validators.required]),
-      ends: this.fb.control(this.event.ends, [Validators.required]),
+      begins: this.fb.control(this.event.startEvent, [Validators.required]),
+      ends: this.fb.control(this.event.endEvent, [Validators.required]),
     });
    }
 
@@ -72,8 +72,8 @@ export class CreateEventComponent implements OnInit {
 
     newEvent.name = newValues.nameOfEvent;
     newEvent.descriptionEvent = newValues.descriptionEvent;
-    newEvent.begins = newValues.begins;
-    newEvent.ends = newValues.ends;
+    newEvent.startEvent = newValues.begins;
+    newEvent.endEvent = newValues.ends;
     this.event = newEvent;
 
     this.eventService
