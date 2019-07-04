@@ -5,6 +5,9 @@ import { CreateEventComponent } from '../events/components/createEvent/createEve
 import { LoginComponent } from '../events/components/login/login.component';
 import { SinInComponent } from '../events/components/signIn/sinIn.component';
 import { SignInLoginComponent } from '../events/components/signInLogin/signInLogin.component';
+import { ActivityComponent } from '../events/components/activity/activity.component';
+import { InscriptionComponent } from '../events/components/inscription/inscription.component';
+
 
 
 const routes: Routes = [
@@ -14,12 +17,14 @@ const routes: Routes = [
   {path: 'signIn' , component: SinInComponent},
   {path: 'signInLogin' , component: SignInLoginComponent},
   {path: 'createEvent' , component: CreateEventComponent},
-  { path: '**', redirectTo: '/home'}
+  {path: 'activity' , component: ActivityComponent},
+  {path: 'inscription' , component: InscriptionComponent},
+  {path: '**', redirectTo: '/home'}
 ];
 
 @NgModule({
    imports: [
-      RouterModule.forRoot(routes)
+      RouterModule.forRoot(routes),
    ],
    exports: [
       RouterModule

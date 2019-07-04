@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Event } from 'src/app/modeles/event.modele';
+
 import { from } from 'rxjs';
 import { AuthenticationService } from '../../../app/services/authentication.service.ts.service';
 import { Router } from '@angular/router';
 import { EventService } from '../../../app/services/event.service';
+import {EventManage} from '../../../app/modeles/eventManage.modele';
 
 @Component({
 
@@ -15,13 +16,13 @@ import { EventService } from '../../../app/services/event.service';
 
 export class CreateEventComponent implements OnInit {
 
-  public event: Event;
+  public event: EventManage;
   public eventForm: FormGroup;
   public now = new Date();
   public eventError = false;
 
   constructor(private router: Router, private authService: AuthenticationService, private fb: FormBuilder, private eventService: EventService) {
-    this.event = new Event();
+    this.event = new EventManage();
 
     this.eventForm = this.fb.group({
 
@@ -56,7 +57,7 @@ export class CreateEventComponent implements OnInit {
   }
 
   public hasdescriptionError() {
-    const control = this.eventForm.get('description');
+    const control = this.eventForm.get('descriptionOfEvent');
     return control.errors && control.errors.required;
   }
 
@@ -67,7 +68,8 @@ export class CreateEventComponent implements OnInit {
   public submitForm(){
     const newValues = this.eventForm.value;
 
-    const newEvent = new Event();
+    const newEvent = new EventManage();
+
     newEvent.nameOfEvent = newValues.nameOfEvent;
     newEvent.descriptionEvent = newValues.descriptionEvent;
     newEvent.begins = newValues.begins;
@@ -80,15 +82,13 @@ export class CreateEventComponent implements OnInit {
   }
 
 
+  public connection(event: EventManage) {
+     if (event === null) {
+       this.eventError = true;
+     } else {
+       this.eventError = false;
+       this.next();
 
-
-public connection(event: Event) {
-  if (event === null) {
-   this.eventError = true;
-  } else {
-    this.eventError = false;
-    this.next();
-
-  }
     }
   }
+}

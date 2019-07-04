@@ -3,15 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
+import { EventManage } from '../modeles/eventManage.modele';
 
 @Injectable()
 export class EventService {
   constructor(private http: HttpClient) {}
 
-  public postEvent(event: Event): Observable<Event> {
+  public postEvent(event: EventManage): Observable<EventManage> {
 
      return this.http
-       .post<Event>(`${environment.baseUrl}/event`, event)
+       .post<EventManage>(`${environment.baseUrl}/createEvent`, event)
        .pipe(catchError((error: any) => Observable.throw(error.json())));
    }
  /* public getEvent(): Observable<Event[]> {

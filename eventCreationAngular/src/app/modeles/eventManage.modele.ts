@@ -1,7 +1,7 @@
 
 //import { Activity } from './activity.modele';
 
-export class Event {
+export class EventManage {
 
   public nameOfEvent: string;
   public descriptionEvent: string;

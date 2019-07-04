@@ -52,7 +52,7 @@ public class eventCreationJavaServelet extends HttpServlet {
 	}
 
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { // tu recuperes des données et je n'envoie rien
+	/*protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { // tu recuperes des données et je n'envoie rien
 		System.out.println("eventCreationJavaServelet.doGet()");
 		
 		String path = request.getPathInfo();
@@ -70,11 +70,11 @@ public class eventCreationJavaServelet extends HttpServlet {
 			response.getWriter().write(json); // on écrit le json dans la réponse
 			
 			/*request.setAttribute("list", events);// add elements to req
-			request.getRequestDispatcher("/event.jsp").forward(request, response);*/
+			request.getRequestDispatcher("/event.jsp").forward(request, response);
 
 		}
 		
-	}
+	}*/
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -105,6 +105,7 @@ public class eventCreationJavaServelet extends HttpServlet {
 			response.getWriter().write(json); // on écrit le json dans la réponse
 
 		} else if (path.startsWith("/createEvent")) {
+<<<<<<< Updated upstream
 			
 			CreateEventParameters parameters = mapper.readValue(request.getInputStream(), CreateEventParameters.class);
 			Integer idResponsable = (Integer) session.getAttribute("idResponsable");
@@ -131,6 +132,17 @@ public class eventCreationJavaServelet extends HttpServlet {
 			} else {
 				response.setStatus(401); // si connexion NOK, code erreur (google)
 			}
+=======
+
+			List<Event> events = repository.FindAllEvents();
+			System.out.println(events);
+			
+			String json = mapper.writeValueAsString(events); // convertir en format json
+			setHeaders(response);
+			response.setContentType("application/json"); // le type du contenu est du json
+			response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
+			response.getWriter().write(json); // on écrit le json dans la réponse
+>>>>>>> Stashed changes
 		}
 		//response.addHeader("", "*"); //"la clé""*"n'importe lequel
 		// Access-Control-Allow-Origin = dns + port
