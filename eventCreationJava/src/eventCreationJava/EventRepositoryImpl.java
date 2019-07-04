@@ -80,14 +80,14 @@ public class EventRepositoryImpl {
 	}
 
 	public Event CreateNewEvent(Event newEvent) {
-	
+		
 		//Timestamp timestamp = Timestamp.valueOf(localDateTime); Convertir localDateTime en Timestamp
 		
 		//boolean created = false;
 
 		String sql = "insert into \"Events\" values (default, ?, ?, ?, ?, ? )";
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
-				java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
+				java.sql.PreparedStatement query = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 			// connection.setAutoCommit(true);
 
 			connection.setAutoCommit(false);// pour etre certain que les 2 aboutissent, sinon que les 2 échouent.
@@ -97,10 +97,18 @@ public class EventRepositoryImpl {
 			query.setTimestamp(4, Timestamp.valueOf(newEvent.getEndEvent())); //Timestamp.valueOf(endEvent)
 			query.setInt(5, newEvent.getIdResponsable());
 			query.executeUpdate(); // insert/update/delete
-			//int updatedRows = query.getUpdateCount();
+			
+			try (
+					ResultSet resultSet = query.getGeneratedKeys()	
+				) {
+					if (resultSet.next()) {
+						int id = resultSet.getInt(1);
+						System.out.println("bonjour" + id);
+					}
+				}
+		
 			connection.commit();
 
-			//created = updatedRows > 0;
 		} catch (java.sql.SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
