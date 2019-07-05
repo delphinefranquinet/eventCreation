@@ -55,17 +55,17 @@ public class EventRepositoryImpl {
 		return person;
 	}
 
-	public Person CreateNewPerson(Person person) {
+	public Person CreateNewPerson(Person newPerson) {
 
 		String sql = "INSERT INTO persons Values (DEFAULT, ?, ?, ?, ?)";
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 
 			connection.setAutoCommit(false);// pour etre certain que les 2 aboutissent, sinon que les 2 échouent.
-			query.setString(1, person.getName());
-			query.setString(2, person.getFirstname());
-			query.setString(3, person.getLogin());
-			query.setString(4, person.getPassword());
+			query.setString(1, newPerson.getName());
+			query.setString(2, newPerson.getFirstname());
+			query.setString(3, newPerson.getLogin());
+			query.setString(4, newPerson.getPassword());
 			query.executeUpdate(); // insert/update/delete
 			
 			connection.commit();
@@ -75,9 +75,9 @@ public class EventRepositoryImpl {
 			throw new RuntimeException(sqle);
 		}
 		
-		person.setPassword(null);
+		newPerson.setPassword(null);
 		
-		return person;
+		return newPerson;
 	}
 
 	public Event CreateNewEvent(Event newEvent) {
