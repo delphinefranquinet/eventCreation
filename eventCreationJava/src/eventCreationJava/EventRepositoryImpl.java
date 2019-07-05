@@ -9,7 +9,6 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -191,6 +190,7 @@ public class EventRepositoryImpl {
 	public List<Activity> FindAllActivityByIdEvent(int id) {
 
 		List<Activity> activities = new ArrayList<>();
+	
 
 		try (Connection c = DriverManager.getConnection(url, user, password);
 				Statement s = c.createStatement();
