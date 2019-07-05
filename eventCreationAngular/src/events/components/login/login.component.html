@@ -30,8 +30,8 @@
   </div>
 
 <br>
-<input  type="submit" name="send" [disabled]="!loginForm.valid"  >
-<div *ngIf="connectionError" (click)="next()">Login or Password incorrect</div><!-- (click)="next()"></div>-->
+<input  type="submit" name="send" [disabled]="!loginForm.valid" value="Send"  >
+<div *ngIf="connectionError">Login or Password incorrect</div><!-- (click)="next()"></div>-->
 <!---->
 {{logins | json}}
 
