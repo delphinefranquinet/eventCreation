@@ -45,7 +45,6 @@ public class eventCreationJavaServelet extends HttpServlet {
 		} catch (Exception e) {
 			throw new ServletException(e);
 		}
-
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -69,21 +68,14 @@ public class eventCreationJavaServelet extends HttpServlet {
 			 * request.setAttribute("list", events);// add elements to req
 			 * request.getRequestDispatcher("/event.jsp").forward(request, response);
 			 */
-
 		}
-
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException { // tu envoies des données // tu vas créer
 		HttpSession session = request.getSession(true);// endroit de memorisation qui dure plusieurs requetes et qui est
 														// lié au client (5 clients, chacun aura sa sesssion) (espace
 														// memoire)
-
 		try {
 			String path = request.getPathInfo();
 			ObjectMapper mapper = new ObjectMapper();
@@ -120,7 +112,6 @@ public class eventCreationJavaServelet extends HttpServlet {
 					event.setStartEvent(parameters.startEvent);
 					event.setEndEvent(parameters.endEvent);
 					event.setIdResponsable(idResponsable);
-
 					event = repository.CreateNewEvent(event);
 
 					String json = mapper.writeValueAsString(event); // convertir en format json
@@ -145,7 +136,6 @@ public class eventCreationJavaServelet extends HttpServlet {
 					activity.setStartActivity(parameters.startActivity);
 					activity.setEndActivity(parameters.endActivity);
 					activity.setIdEvent(idEvent);
-
 					activity = repository.CreateNewActivity(activity);
 
 					String json = mapper.writeValueAsString(activity); // convertir en format json
@@ -158,12 +148,10 @@ public class eventCreationJavaServelet extends HttpServlet {
 					response.setStatus(401); // si connexion NOK, code erreur (google)
 				}
 			}
-
 		} catch (Exception e) {
 			response.setStatus(500);
 			e.printStackTrace(); // affiche une exception sur le canal d'erreur (console)
 		}
-
 	}
 
 	@Override
