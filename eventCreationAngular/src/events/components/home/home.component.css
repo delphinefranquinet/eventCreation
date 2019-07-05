@@ -1,6 +1,6 @@
-container {
-  height: 300px;
-  width: 250px;
+.container {
+  height: 50%;
+  width: 100%;
 }
 
 /* Bottom right text */
