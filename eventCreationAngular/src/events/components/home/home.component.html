@@ -1,5 +1,5 @@
 
-  <img width=100% height=50% alt="Event Logo" src="\assets\img\evenement-decoration-salle-mulhouse-alsace.jpg">
+  <img class="container" width=50% alt="Event Logo" src="\assets\img\evenement-decoration-salle-mulhouse-alsace.jpg">
 
      <h1>We make your {{ title }} awesome!</h1>
 
@@ -11,12 +11,22 @@
 
         <div class="panel">
         </div></th>
-      <td>
+        <td>
+        <button class="accordion"><a [routerLink]="['/register']"> REGISTER</a></button>
+        <div class="panel">
+         </div>
+         </td>
+         <td>
+             <button class="accordion"><a [routerLink]="['/login']"> LOGIN</a></button>
+               <div class="panel">
+                </div>
+                </td>
+     <!-- <td>
          <div class=container> <button class="accordion"><a [routerLink]="['/activity']"> See upcoming events</a></button></div>
          <div class="panel">
 
           </div>
-          </td>
+          </td>-->
     </tr>
 </table>
 
