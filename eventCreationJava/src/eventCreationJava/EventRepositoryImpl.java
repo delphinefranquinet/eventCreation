@@ -7,8 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
 
 public class EventRepositoryImpl {
 
@@ -155,36 +158,43 @@ public class EventRepositoryImpl {
 	public List<Event> FindAllEvents() {
 
 		List<Event> events = new ArrayList<>();
+		String sql = "Select id_event, \"eventName\", description, \"dateDebut\", \"dateFin\" From \"Events\"";
 
-		try (Connection c = DriverManager.getConnection(url, user, password);
-				Statement s = c.createStatement();
-				ResultSet rs = s.executeQuery(
-						"Select id_event, \"eventName\", description, \"dateDebut\", \"dateFin\" From \"Events\"")) {
-			while (rs.next()) {
+		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+				java.sql.PreparedStatement query = connection.prepareStatement(sql)) {
 
-				Event event = new Event();
-				event.setId(rs.getInt("id"));
-				event.setName(rs.getString("eventName"));
-				event.setDescription(rs.getString("description"));
-				event.setStartEvent(rs.getTimestamp("dateDebut").toLocalDateTime());
-				event.setEndEvent(rs.getTimestamp("dateFin").toLocalDateTime());
-				events.add(event);
+			try (ResultSet rs = query.executeQuery()) {
+
+				while (rs.next()) {
+					Event event = new Event();
+					event.setId(rs.getInt(1));
+					event.setName(rs.getString(2));
+					event.setDescription(rs.getString(3));
+
+					Timestamp timestamp = rs.getTimestamp(4); // récupérer le timestamp
+					LocalDateTime localDateTime = timestamp.toLocalDateTime(); // convertir Timestamp en localDateTime
+					event.setStartEvent(localDateTime); // stock l'information dans l'event
+
+					event.setEndEvent(rs.getTimestamp(5).toLocalDateTime()); // idem 3 lignes
+
+					events.add(event);
+				}
 			}
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-			throw new RuntimeException(sqle);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
+
 		return events;
 	}
-	
-	public List<Activity> FindAllActivityByIdEvent (int id){
-		
+
+	public List<Activity> FindAllActivityByIdEvent(int id) {
+
 		List<Activity> activities = new ArrayList<>();
-		
+
 		try (Connection c = DriverManager.getConnection(url, user, password);
 				Statement s = c.createStatement();
 				ResultSet rs = s.executeQuery(
-						"Select id_event, \"eventName\", description, \"dateDebut\", \"dateFin\" From \"Events\"")) {
+						"SELECT id_activity, \"nameActivity\", \"descriptionActivity\", \"startActivity\", \"endActivity\" FROM \"Activities\" WHERE id_event = 1")) {
 			while (rs.next()) {
 
 				Activity activity = new Activity();
@@ -199,9 +209,9 @@ public class EventRepositoryImpl {
 			sqle.printStackTrace();
 			throw new RuntimeException(sqle);
 		}
-		
+
 		return activities;
-		
+
 	}
 
 	/*
