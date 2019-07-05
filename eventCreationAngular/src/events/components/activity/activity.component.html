@@ -34,12 +34,12 @@
   </div>
 
   <div>
-    <label for="endActivity">aActivity ends the :</label>
+    <label for="endActivity">Activity ends the :</label>
     <input type="datetime-local" id="endActivity" name="endActivity" formControlName="endActivity"/>
   </div>
 
   <div>
-    <input type="submit" [disabled]="!activityForm.valid"/>
+    <input type="submit" [disabled]="!activityForm.valid" value="Send"/>
   </div>
   </form>
 
