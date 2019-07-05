@@ -14,7 +14,7 @@ export class RegisterService {
      public postActivity(event: Register): Observable<Register> {
 
        return this.http
-         .post<Register>(`${environment.baseUrl}/activity`, event, { withCredentials: true })
+         .post<Register>(`${environment.baseUrl}/register`, event, { withCredentials: true })
          .pipe(catchError((error: any) => Observable.throw(error.json())));
      }
 
