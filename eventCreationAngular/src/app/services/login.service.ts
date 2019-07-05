@@ -13,7 +13,7 @@ export class LoginService {
 
   public postLogin(login: Login): Observable<Person> {
     return this.http
-      .post<Person>(`${environment.baseUrl}/login`, login)
+      .post<Person>(`${environment.baseUrl}/login`, login, {withCredentials: true})
   }
 
 }

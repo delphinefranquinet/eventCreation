@@ -99,6 +99,7 @@ public class eventCreationJavaServelet extends HttpServlet {
 
 				if (person != null) {
 					session.setAttribute("idResponsable", person.getId()); // pour récupérer l'id du responsable
+
 				}
 
 				String json = mapper.writeValueAsString(person); // convertir en format json
@@ -109,11 +110,13 @@ public class eventCreationJavaServelet extends HttpServlet {
 
 			} else if (path.startsWith("/createEvent")) {
 
-				CreateEventParameters parameters = mapper.readValue(request.getInputStream(),
-						CreateEventParameters.class);
 				Integer idResponsable = (Integer) session.getAttribute("idResponsable");
+				setHeaders(response);
 
 				if (idResponsable != null) {
+
+					CreateEventParameters parameters = mapper.readValue(request.getInputStream(),
+							CreateEventParameters.class);
 
 					Event event = new Event();
 					event.setName(parameters.name);
@@ -126,7 +129,6 @@ public class eventCreationJavaServelet extends HttpServlet {
 
 					String json = mapper.writeValueAsString(event); // convertir en format json
 					System.out.println(json);
-					setHeaders(response);
 					response.setContentType("application/json"); // le type du contenu est du json
 					response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
 					response.getWriter().write(json); // on écrit le json dans la réponse
@@ -157,8 +159,9 @@ public class eventCreationJavaServelet extends HttpServlet {
 	}
 
 	private void setHeaders(HttpServletResponse response) {
-		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
 		response.addHeader("Access-Control-Allow-Methods", "*");
+		response.addHeader("Access-Control-Allow-Credentials", "true");
 		response.addHeader("Access-Control-Allow-Headers", "content-type"); // pour que ca soit accepté par tous les
 																			// browser content-type pour le headers
 	}

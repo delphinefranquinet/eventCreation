@@ -21,6 +21,7 @@ export class CreateEventComponent implements OnInit {
   public now = new Date();
   public eventError = false;
 
+// tslint:disable-next-line: max-line-length
   constructor(private router: Router, private authService: AuthenticationService, private fb: FormBuilder, private eventService: EventService) {
     this.event = new EventManage();
 
@@ -28,8 +29,8 @@ export class CreateEventComponent implements OnInit {
 
       name: this.fb.control(this.event.name, [Validators.required]),
       description: this.fb.control(this.event.descriptionEvent, [Validators.required]),
-      begins: this.fb.control(this.event.startEvent, [Validators.required]),
-      ends: this.fb.control(this.event.endEvent, [Validators.required]),
+      startEvent: this.fb.control(this.event.startEvent, [Validators.required]),
+      endEvent: this.fb.control(this.event.endEvent, [Validators.required]),
     });
    }
 
@@ -77,7 +78,8 @@ export class CreateEventComponent implements OnInit {
     this.event = newEvent;
 
     this.eventService
-    .postEvent(this.event).subscribe//postlogin envoie un observale / observable =  la prochaine fois qu'un evenement aura lieu, exécute ca ...(person => console.log(person));
+// tslint:disable-next-line: max-line-length
+    .postEvent(this.event).subscribe// postlogin envoie un observale / observable =  la prochaine fois qu'un evenement aura lieu, exécute ca ...(person => console.log(person));
     (event =>  this.connection(event));
   }
 

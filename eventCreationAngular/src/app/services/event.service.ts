@@ -12,7 +12,7 @@ export class EventService {
   public postEvent(event: EventManage): Observable<EventManage> {
 
      return this.http
-       .post<EventManage>(`${environment.baseUrl}/createEvent`, event)
+       .post<EventManage>(`${environment.baseUrl}/createEvent`, event, { withCredentials: true })
        .pipe(catchError((error: any) => Observable.throw(error.json())));
    }
  /* public getEvent(): Observable<Event[]> {
