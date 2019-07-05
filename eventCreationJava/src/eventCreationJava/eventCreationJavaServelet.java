@@ -52,10 +52,10 @@ public class eventCreationJavaServelet extends HttpServlet {
 		
 	
 		
-		/*String path = request.getPathInfo();
+		String path = request.getPathInfo();
 		ObjectMapper mapper = new ObjectMapper();
 
-		if (path.startsWith("/event")) {
+		if (path.startsWith("/home")) {
 
 			List<Event> events = repository.FindAllEvents();
 			System.out.println(events);
@@ -66,11 +66,7 @@ public class eventCreationJavaServelet extends HttpServlet {
 			response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
 			response.getWriter().write(json); // on écrit le json dans la réponse
 
-			/*
-			 * request.setAttribute("list", events);// add elements to req
-			 * request.getRequestDispatcher("/event.jsp").forward(request, response);
-			
-		}*/
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
