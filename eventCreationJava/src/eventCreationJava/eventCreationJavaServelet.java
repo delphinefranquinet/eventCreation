@@ -151,7 +151,7 @@ public class eventCreationJavaServelet extends HttpServlet {
 				} else {
 					response.setStatus(401); // si connexion NOK, code erreur (google)
 				}
-			} else if (path.startsWith("/inscription")) {
+			} else if (path.startsWith("/register")) {
 
 				setHeaders(response);
 
