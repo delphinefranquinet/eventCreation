@@ -49,8 +49,10 @@ public class eventCreationJavaServelet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException { // tu recuperes des données et je n'envoie rien
-
-		String path = request.getPathInfo();
+		
+	
+		
+		/*String path = request.getPathInfo();
 		ObjectMapper mapper = new ObjectMapper();
 
 		if (path.startsWith("/event")) {
@@ -67,8 +69,8 @@ public class eventCreationJavaServelet extends HttpServlet {
 			/*
 			 * request.setAttribute("list", events);// add elements to req
 			 * request.getRequestDispatcher("/event.jsp").forward(request, response);
-			 */
-		}
+			
+		}*/
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -165,6 +167,8 @@ public class eventCreationJavaServelet extends HttpServlet {
 				newPerson.setPassword(parameters.password);
 				
 				newPerson = repository.CreateNewPerson(newPerson);
+				
+				session.setAttribute("id", newPerson.getId());
 
 				String json = mapper.writeValueAsString(newPerson); // convertir en format json
 				System.out.println(json);

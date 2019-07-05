@@ -10,7 +10,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class EventRepositoryImpl {
 
 	protected String user;
@@ -68,7 +67,15 @@ public class EventRepositoryImpl {
 			query.setString(3, newPerson.getLogin());
 			query.setString(4, newPerson.getPassword());
 			query.executeUpdate(); // insert/update/delete
-
+			try (ResultSet resultSet = query.getGeneratedKeys() // pour récupérer l'id qui est en autoincrement, ne pas
+			// oublier Statement.RETURN_GENERATED_KEYS)
+			) {
+				if (resultSet.next()) {
+					int id = resultSet.getInt(1);
+					// System.out.println("bonjour" + id);
+					newPerson.setId(id);
+				}
+			}
 			connection.commit();
 
 		} catch (java.sql.SQLException sqle) {
