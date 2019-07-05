@@ -90,7 +90,6 @@ public class eventCreationJavaServelet extends HttpServlet {
 
 				if (person != null) {
 					session.setAttribute("idResponsable", person.getId()); // pour récupérer l'id du responsable
-
 				}
 
 				String json = mapper.writeValueAsString(person); // convertir en format json
@@ -127,10 +126,11 @@ public class eventCreationJavaServelet extends HttpServlet {
 				}
 			} else if (path.startsWith("/activity")) {
 
-				CreateActivityParameters parameters = mapper.readValue(request.getInputStream(), CreateActivityParameters.class);
 				Integer idEvent = (Integer) session.getAttribute("idEvent");
+				setHeaders(response);
 
 				if (idEvent != null) {
+					CreateActivityParameters parameters = mapper.readValue(request.getInputStream(), CreateActivityParameters.class);
 
 					Activity activity = new Activity();
 					activity.setName(parameters.name);
@@ -142,7 +142,6 @@ public class eventCreationJavaServelet extends HttpServlet {
 
 					String json = mapper.writeValueAsString(activity); // convertir en format json
 					System.out.println(json);
-					setHeaders(response);
 					response.setContentType("application/json"); // le type du contenu est du json
 					response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
 					response.getWriter().write(json); // on écrit le json dans la réponse
