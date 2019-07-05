@@ -115,7 +115,7 @@ public class eventCreationJavaServelet extends HttpServlet {
 					event.setEndEvent(parameters.endEvent);
 					event.setIdResponsable(idResponsable);
 					event = repository.CreateNewEvent(event);
-					
+
 					session.setAttribute("idEvent", event.getId());
 
 					String json = mapper.writeValueAsString(event); // convertir en format json
@@ -132,7 +132,8 @@ public class eventCreationJavaServelet extends HttpServlet {
 				setHeaders(response);
 
 				if (idEvent != null) {
-					CreateActivityParameters parameters = mapper.readValue(request.getInputStream(), CreateActivityParameters.class);
+					CreateActivityParameters parameters = mapper.readValue(request.getInputStream(),
+							CreateActivityParameters.class);
 
 					Activity activity = new Activity();
 					activity.setName(parameters.name);
@@ -150,6 +151,26 @@ public class eventCreationJavaServelet extends HttpServlet {
 				} else {
 					response.setStatus(401); // si connexion NOK, code erreur (google)
 				}
+			} else if (path.startsWith("/register")) {
+
+				setHeaders(response);
+
+				CreatePersonParameters parameters = mapper.readValue(request.getInputStream(),
+						CreatePersonParameters.class);
+
+				Person newPerson = new Person();
+				newPerson.setName(parameters.name);
+				newPerson.setFirstname(parameters.firstname);
+				newPerson.setLogin(parameters.login);
+				newPerson.setPassword(parameters.password);
+				
+				newPerson = repository.CreateNewPerson(newPerson);
+
+				String json = mapper.writeValueAsString(newPerson); // convertir en format json
+				System.out.println(json);
+				response.setContentType("application/json"); // le type du contenu est du json
+				response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
+				response.getWriter().write(json); // on écrit le json dans la réponse
 			}
 		} catch (Exception e) {
 			response.setStatus(500);

@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class EventRepositoryImpl {
 
 	protected String user;
@@ -55,56 +56,54 @@ public class EventRepositoryImpl {
 		return person;
 	}
 
-	public Person CreateNewPerson(Person person) {
+	public Person CreateNewPerson(Person newPerson) {
 
 		String sql = "INSERT INTO persons Values (DEFAULT, ?, ?, ?, ?)";
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 
 			connection.setAutoCommit(false);// pour etre certain que les 2 aboutissent, sinon que les 2 échouent.
-			query.setString(1, person.getName());
-			query.setString(2, person.getFirstname());
-			query.setString(3, person.getLogin());
-			query.setString(4, person.getPassword());
+			query.setString(1, newPerson.getName());
+			query.setString(2, newPerson.getFirstname());
+			query.setString(3, newPerson.getLogin());
+			query.setString(4, newPerson.getPassword());
 			query.executeUpdate(); // insert/update/delete
-			
+
 			connection.commit();
-			
-			
+
 		} catch (java.sql.SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
-		
-		person.setPassword(null);
-		
-		return person;
+		newPerson.setPassword(null);
+
+		return newPerson;
 	}
 
 	public Event CreateNewEvent(Event newEvent) {
-		
-		//Timestamp timestamp = Timestamp.valueOf(localDateTime); Convertir localDateTime en Timestamp
+
+		// Timestamp timestamp = Timestamp.valueOf(localDateTime); Convertir
+		// localDateTime en Timestamp
 		String sql = "insert into \"Events\" values (default, ?, ?, ?, ?, ? )";
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 
-
 			connection.setAutoCommit(false);// pour etre certain que les 2 aboutissent, sinon que les 2 échouent.
 			query.setString(1, newEvent.getName());
 			query.setString(2, newEvent.getDescription());
-			query.setTimestamp(3, Timestamp.valueOf(newEvent.getStartEvent())); //Timestamp.valueOf(startEvent)
-			query.setTimestamp(4, Timestamp.valueOf(newEvent.getEndEvent())); //Timestamp.valueOf(endEvent)
+			query.setTimestamp(3, Timestamp.valueOf(newEvent.getStartEvent())); // Timestamp.valueOf(startEvent)
+			query.setTimestamp(4, Timestamp.valueOf(newEvent.getEndEvent())); // Timestamp.valueOf(endEvent)
 			query.setInt(5, newEvent.getIdResponsable());
 			query.executeUpdate(); // insert/update/delete
-			
-			try (
-					ResultSet resultSet = query.getGeneratedKeys()		// pour récupérer l'id qui est en autoincrement, ne pas oublier Statement.RETURN_GENERATED_KEYS)
-				) {
-					if (resultSet.next()) {
-						int id = resultSet.getInt(1);
-						//System.out.println("bonjour" + id);
-						newEvent.setId(id);
-					}
+
+			try (ResultSet resultSet = query.getGeneratedKeys() // pour récupérer l'id qui est en autoincrement, ne pas
+																// oublier Statement.RETURN_GENERATED_KEYS)
+			) {
+				if (resultSet.next()) {
+					int id = resultSet.getInt(1);
+					// System.out.println("bonjour" + id);
+					newEvent.setId(id);
 				}
+			}
 			connection.commit();
 
 		} catch (java.sql.SQLException sqle) {
@@ -147,48 +146,44 @@ public class EventRepositoryImpl {
 	}
 
 	public List<Event> FindAllEvents() {
-	
-		List<Event> events = new ArrayList<Event>();;
-		
+
+		List<Event> events = new ArrayList<>();
+
 		try (Connection c = DriverManager.getConnection(url, user, password);
-                Statement s = c.createStatement();
-                ResultSet rs = s.executeQuery("Select \"eventName\", description, \"dateDebut\", \"dateFin\" From \"Events\"")) {
-		while (rs.next()) {
-               Event event = new Event();
-              event.setName(rs.getString("eventName"));
-              event.setDescription(rs.getString("description"));
-              event.setStartEvent(rs.getTimestamp("dateDebut").toLocalDateTime());
-              event.setEndEvent(rs.getTimestamp("dateFin").toLocalDateTime());
-              events.add(event);   
-            }
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-            throw new RuntimeException(sqle);
-        }
-        return events;
+				Statement s = c.createStatement();
+				ResultSet rs = s.executeQuery(
+						"Select id_event, \"eventName\", description, \"dateDebut\", \"dateFin\" From \"Events\"")) {
+			while (rs.next()) {
+
+				Event event = new Event();
+				event.setId(rs.getInt("id"));
+				event.setName(rs.getString("eventName"));
+				event.setDescription(rs.getString("description"));
+				event.setStartEvent(rs.getTimestamp("dateDebut").toLocalDateTime());
+				event.setEndEvent(rs.getTimestamp("dateFin").toLocalDateTime());
+				events.add(event);
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			throw new RuntimeException(sqle);
+		}
+		return events;
 	}
-	
-	/*public Integer FindIdEventByName(String eventName) {
-		
-		Integer idEvent = null;
-		
-		String sql = "Select id_event From \"Events\" Where \"eventName\" = ?";
-		
-		try (
-	            PreparedStatement preparedStatement = c.prepareStatement(sql)
-	        ) {
-	            preparedStatement.setString(1, password);
-	            try (
-	                ResultSet resultSet = preparedStatement.executeQuery()
-	            ) {
-	                if (resultSet.next()) { //récupérer la ou les colonne(s) demandée(s)
-	                    email = resultSet.getString(1);
-	                }
-	            }
-	        }
-			
-		
-		return idEvent;
-	}*/
+
+	/*
+	 * public Integer FindIdEventByName(String eventName) {
+	 * 
+	 * Integer idEvent = null;
+	 * 
+	 * String sql = "Select id_event From \"Events\" Where \"eventName\" = ?";
+	 * 
+	 * try ( PreparedStatement preparedStatement = c.prepareStatement(sql) ) {
+	 * preparedStatement.setString(1, password); try ( ResultSet resultSet =
+	 * preparedStatement.executeQuery() ) { if (resultSet.next()) { //récupérer la
+	 * ou les colonne(s) demandée(s) email = resultSet.getString(1); } } }
+	 * 
+	 * 
+	 * return idEvent; }
+	 */
 
 }
