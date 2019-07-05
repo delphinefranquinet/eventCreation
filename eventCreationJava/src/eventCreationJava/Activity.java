@@ -1,26 +1,36 @@
 package eventCreationJava;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import eventCreationJava.utilJson.LocalDateDeserializer;
+import eventCreationJava.utilJson.LocalDateSerializer;
 
 public class Activity {
 	private Integer id;
 	private String name;
 	private String description;
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDateTime startActivity;
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDateTime endActivity;
-	private Event event;
-	
-	
+	private Integer idEvent;
+	//private Event event;
 	
 	@Override
 	public String toString() {
 		return "Activity [id=" + id + ", name=" + name + ", description=" + description + ", startActivity="
-				+ startActivity + ", endActivity=" + endActivity + ", event=" + event + "]";
+				+ startActivity + ", endActivity=" + endActivity + ", idEvent=" + idEvent + "]";
 	}
+	
 	public Integer getId() {
 		return id;
 	}
+	
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -48,15 +58,15 @@ public class Activity {
 	public void setEndActivity(LocalDateTime endActivity) {
 		this.endActivity = endActivity;
 	}
-	public Event getEvent() {
-		return event;
+	public Integer getIdEvent() {
+		return idEvent;
 	}
-	public void setEvent(Event event) {
-		this.event = event;
+	public void setIdEvent(Integer idEvent) {
+		this.idEvent = idEvent;
 	}
 	
 	
-
+	
 
 
 }

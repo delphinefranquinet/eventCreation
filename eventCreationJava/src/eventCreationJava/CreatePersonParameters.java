@@ -1,17 +1,19 @@
 package eventCreationJava;
 
-public class Person {
-	private Integer id;
-	private String name;
-	private String firstname;
-	private String login;
-	private String password;
+public class CreatePersonParameters {
+	
+	public Integer id;
+	public String name;
+	public String firstname;
+	public String login;
+	public String password;
 	
 	@Override
 	public String toString() {
-		return "Person [id=" + id + ", name=" + name + ", firstname=" + firstname + ", login=" + login + ", password="
-				+ password + "]";
+		return "CreatePersonParameters [id=" + id + ", name=" + name + ", firstname=" + firstname + ", login=" + login
+				+ ", password=" + password + "]";
 	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -42,7 +44,6 @@ public class Person {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 	
 	
 

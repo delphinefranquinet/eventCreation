@@ -2,13 +2,13 @@ package eventCreationJava;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class EventRepositoryImpl {
 
@@ -55,39 +55,38 @@ public class EventRepositoryImpl {
 		return person;
 	}
 
-	public boolean CreateNewPerson(Person person) {
-		boolean created = false;
+	public Person CreateNewPerson(Person person) {
 
-		String sql = "INSERT INTO persons Values (DEFAULT, ?, ?)";
+		String sql = "INSERT INTO persons Values (DEFAULT, ?, ?, ?, ?)";
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
-				java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
-			// connection.setAutoCommit(true);
+				java.sql.PreparedStatement query = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 
 			connection.setAutoCommit(false);// pour etre certain que les 2 aboutissent, sinon que les 2 échouent.
 			query.setString(1, person.getName());
 			query.setString(2, person.getFirstname());
+			query.setString(3, person.getLogin());
+			query.setString(4, person.getPassword());
 			query.executeUpdate(); // insert/update/delete
-			int updatedRows = query.getUpdateCount(); // combien de ligne ont été mise à jour
+			
 			connection.commit();
-
-			created = updatedRows > 0;
+			
+			
 		} catch (java.sql.SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
-
-		return created;
+		
+		person.setPassword(null);
+		
+		return person;
 	}
 
 	public Event CreateNewEvent(Event newEvent) {
 		
 		//Timestamp timestamp = Timestamp.valueOf(localDateTime); Convertir localDateTime en Timestamp
-		
-		//boolean created = false;
-
 		String sql = "insert into \"Events\" values (default, ?, ?, ?, ?, ? )";
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
-			// connection.setAutoCommit(true);
+
 
 			connection.setAutoCommit(false);// pour etre certain que les 2 aboutissent, sinon que les 2 échouent.
 			query.setString(1, newEvent.getName());
@@ -106,7 +105,6 @@ public class EventRepositoryImpl {
 						newEvent.setId(id);
 					}
 				}
-		
 			connection.commit();
 
 		} catch (java.sql.SQLException sqle) {
@@ -116,31 +114,36 @@ public class EventRepositoryImpl {
 		return newEvent;
 	}
 
-	public boolean CreateNewActivity(Activity newActivity) {
-
-		boolean created = false;
+	public Activity CreateNewActivity(Activity newActivity) {
 
 		String sql = "INSERT INTO \"Activities\" Values (default, ?, ?, ?, ?, ?)";
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
-				java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
+				java.sql.PreparedStatement query = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 			// connection.setAutoCommit(true);
 
 			connection.setAutoCommit(false);
 			query.setString(1, newActivity.getName());
 			query.setString(2, newActivity.getDescription());
-			//query.setTimestamp(3, newActivity.getStartActivity()).;
-			//query.setTimestamp(4, newActivity.getEndActivity());
-			// query.setInt(5, newActivity.getEvent().getId());
+			query.setTimestamp(3, Timestamp.valueOf(newActivity.getStartActivity()));
+			query.setTimestamp(4, Timestamp.valueOf(newActivity.getEndActivity()));
+			query.setInt(5, newActivity.getIdEvent());
 			query.executeUpdate(); // insert/update/delete
-			int updatedRows = query.getUpdateCount();
+
+			try (ResultSet resultSet = query.getGeneratedKeys() // pour récupérer l'id qui est en autoincrement, ne pas
+																// oublier Statement.RETURN_GENERATED_KEYS)
+			) {
+				if (resultSet.next()) {
+					int id = resultSet.getInt(1);
+					// System.out.println("bonjour" + id);
+					newActivity.setId(id);
+				}
+			}
 			connection.commit();
 
-			created = updatedRows > 0;
 		} catch (java.sql.SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
-
-		return created;
+		return newActivity;
 	}
 
 	public List<Event> FindAllEvents() {
@@ -156,17 +159,36 @@ public class EventRepositoryImpl {
               event.setDescription(rs.getString("description"));
               event.setStartEvent(rs.getTimestamp("dateDebut").toLocalDateTime());
               event.setEndEvent(rs.getTimestamp("dateFin").toLocalDateTime());
-              events.add(event);
-            
+              events.add(event);   
             }
-
         } catch (SQLException sqle) {
             sqle.printStackTrace();
             throw new RuntimeException(sqle);
         }
-
         return events;
-			
 	}
+	
+	/*public Integer FindIdEventByName(String eventName) {
+		
+		Integer idEvent = null;
+		
+		String sql = "Select id_event From \"Events\" Where \"eventName\" = ?";
+		
+		try (
+	            PreparedStatement preparedStatement = c.prepareStatement(sql)
+	        ) {
+	            preparedStatement.setString(1, password);
+	            try (
+	                ResultSet resultSet = preparedStatement.executeQuery()
+	            ) {
+	                if (resultSet.next()) { //récupérer la ou les colonne(s) demandée(s)
+	                    email = resultSet.getString(1);
+	                }
+	            }
+	        }
+			
+		
+		return idEvent;
+	}*/
 
 }

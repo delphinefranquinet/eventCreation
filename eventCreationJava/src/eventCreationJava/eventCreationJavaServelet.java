@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 @WebServlet("/*")
 public class eventCreationJavaServelet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -46,7 +45,6 @@ public class eventCreationJavaServelet extends HttpServlet {
 		} catch (Exception e) {
 			throw new ServletException(e);
 		}
-
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -70,21 +68,14 @@ public class eventCreationJavaServelet extends HttpServlet {
 			 * request.setAttribute("list", events);// add elements to req
 			 * request.getRequestDispatcher("/event.jsp").forward(request, response);
 			 */
-
 		}
-
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException { // tu envoies des données // tu vas créer
 		HttpSession session = request.getSession(true);// endroit de memorisation qui dure plusieurs requetes et qui est
 														// lié au client (5 clients, chacun aura sa sesssion) (espace
 														// memoire)
-
 		try {
 			String path = request.getPathInfo();
 			ObjectMapper mapper = new ObjectMapper();
@@ -124,7 +115,6 @@ public class eventCreationJavaServelet extends HttpServlet {
 					event.setStartEvent(parameters.startEvent);
 					event.setEndEvent(parameters.endEvent);
 					event.setIdResponsable(idResponsable);
-
 					event = repository.CreateNewEvent(event);
 
 					String json = mapper.writeValueAsString(event); // convertir en format json
@@ -135,20 +125,35 @@ public class eventCreationJavaServelet extends HttpServlet {
 				} else {
 					response.setStatus(401); // si connexion NOK, code erreur (google)
 				}
+			} else if (path.startsWith("/activity")) {
+
+				CreateActivityParameters parameters = mapper.readValue(request.getInputStream(), CreateActivityParameters.class);
+				Integer idEvent = (Integer) session.getAttribute("idEvent");
+
+				if (idEvent != null) {
+
+					Activity activity = new Activity();
+					activity.setName(parameters.name);
+					activity.setDescription(parameters.description);
+					activity.setStartActivity(parameters.startActivity);
+					activity.setEndActivity(parameters.endActivity);
+					activity.setIdEvent(idEvent);
+					activity = repository.CreateNewActivity(activity);
+
+					String json = mapper.writeValueAsString(activity); // convertir en format json
+					System.out.println(json);
+					setHeaders(response);
+					response.setContentType("application/json"); // le type du contenu est du json
+					response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
+					response.getWriter().write(json); // on écrit le json dans la réponse
+				} else {
+					response.setStatus(401); // si connexion NOK, code erreur (google)
+				}
 			}
-			// response.addHeader("", "*"); //"la clé""*"n'importe lequel
-			// Access-Control-Allow-Origin = dns + port
-			// Access-Control-Allow-Headers = accepte les headers
-			// Access-Control-Allow-Methods = accepte les differentes methodes, post get ...
-
-			// System.out.println(person);
-			// System.out.println(password);
-
 		} catch (Exception e) {
 			response.setStatus(500);
 			e.printStackTrace(); // affiche une exception sur le canal d'erreur (console)
 		}
-
 	}
 
 	@Override
@@ -167,3 +172,11 @@ public class eventCreationJavaServelet extends HttpServlet {
 	}
 
 }
+
+// response.addHeader("", "*"); //"la clé""*"n'importe lequel
+// Access-Control-Allow-Origin = dns + port
+// Access-Control-Allow-Headers = accepte les headers
+// Access-Control-Allow-Methods = accepte les differentes methodes, post get ...
+
+// System.out.println(person);
+// System.out.println(password);
