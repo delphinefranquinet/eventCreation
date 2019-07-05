@@ -9,18 +9,19 @@ import { EventManage } from '../modeles/eventManage.modele';
 export class EventService {
   constructor(private http: HttpClient) {}
 
+
   public postEvent(event: EventManage): Observable<EventManage> {
 
      return this.http
        .post<EventManage>(`${environment.baseUrl}/createEvent`, event, { withCredentials: true })
        .pipe(catchError((error: any) => Observable.throw(error.json())));
    }
- /* public getEvent(): Observable<Event[]> {
+  public getEvent(): Observable<EventManage[]> {
     return this.http
-      .get<Event[]>(`${environment.baseUrl}/events`)
+      .get<EventManage[]>(`${environment.baseUrl}/home`)
       .pipe(catchError((error: any) => Observable.throw(error.json())));
   }
-
+/*
   public createEvent(payload: Event): Observable<Event> {
     return this.http
       .post<Event>(`${environment.baseUrl}/events`, payload)

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { from } from 'rxjs';
@@ -20,7 +20,7 @@ export class CreateEventComponent implements OnInit {
   public eventForm: FormGroup;
   public now = new Date();
   public eventError = false;
-
+  @Input() eventz: EventManage;
 // tslint:disable-next-line: max-line-length
   constructor(private router: Router, private authService: AuthenticationService, private fb: FormBuilder, private eventService: EventService) {
     this.event = new EventManage();
