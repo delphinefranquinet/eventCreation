@@ -158,7 +158,7 @@ public class EventRepositoryImpl {
 	public List<Event> FindAllEvents() {
 
 		List<Event> events = new ArrayList<>();
-		String sql = "Select id_event, \"eventName\", description, \"dateDebut\", \"dateFin\" From \"Events\"";
+		String sql = "Select id_event, \"eventName\", description, \"dateDebut\", \"dateFin\", id_person From \"Events\"";
 
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql)) {
@@ -176,6 +176,7 @@ public class EventRepositoryImpl {
 					event.setStartEvent(localDateTime); // stock l'information dans l'event
 
 					event.setEndEvent(rs.getTimestamp(5).toLocalDateTime()); // idem 3 lignes
+					event.setIdResponsable(rs.getInt(6));
 
 					events.add(event);
 				}
