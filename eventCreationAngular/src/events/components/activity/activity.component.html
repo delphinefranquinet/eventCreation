@@ -1,20 +1,46 @@
 <table>
-    <tr>
-      <th><button class="accordion"> <a [routerLink]="['/home']">HOME</a>  </button>
-      <td>
-       <button class="accordion"><a [routerLink]="['/signin']"> SIGN IN</a></button>
-         <div class="panel">
-          </div>
-          </td>
-          <td>
-              <button class="accordion"><a [routerLink]="['/login']"> LOGIN</a></button>
-                <div class="panel">
-                 </div>
-                 </td>
-                 <td>
-                    <button class="accordion"><a [routerLink]="['/inscription']">INSCRIPTION</a></button>
-                      <div class="panel">
-                       </div>
-                       </td>
-    </tr>
+  <tr>
+    <th><button class="accordion"> <a [routerLink]="['/home']">HOME</a>  </button>
+    <td>
+     <button class="accordion"><a [routerLink]="['/signin']"> SIGN IN</a></button>
+       <div class="panel">
+        </div>
+        </td>
+        <td>
+            <button class="accordion"><a [routerLink]="['/login']"> LOGIN</a></button>
+              <div class="panel">
+               </div>
+               </td>
+  </tr>
 </table>
+
+
+
+<form [formGroup]= "activityForm" (ngSubmit)="submitForm()">
+
+  <div>
+    <label for="name">Name of activity:</label>
+    <input type="text" id="name" name="name" formControlName="name"/>
+  </div>
+
+  <div>
+      <label for="description">Description Of activity:</label>
+      <input type="text" id="description" name="description" formControlName="description"/>
+  </div>
+
+ <div>
+    <label for="startActivity">Activity starts the :</label>
+    <input type="datetime-local" id="startActivity" name="startActivity" formControlName="startActivity"/>
+  </div>
+
+  <div>
+    <label for="endActivity">aActivity ends the :</label>
+    <input type="datetime-local" id="endActivity" name="endActivity" formControlName="endActivity"/>
+  </div>
+
+  <div>
+    <input type="submit" [disabled]="!activityForm.valid"/>
+  </div>
+  </form>
+
+

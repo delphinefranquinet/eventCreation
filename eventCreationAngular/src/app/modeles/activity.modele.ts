@@ -1,6 +1,8 @@
 
 export class Activity {
 
-  public nameOfActivity: string;
-  public descriptionActivit: string;
+  public name: string;
+  public description: string;
+  public startActivity: Date;
+  public endActivity: Date;
 }

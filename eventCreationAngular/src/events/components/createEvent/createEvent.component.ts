@@ -28,7 +28,7 @@ export class CreateEventComponent implements OnInit {
     this.eventForm = this.fb.group({
 
       name: this.fb.control(this.event.name, [Validators.required]),
-      description: this.fb.control(this.event.descriptionEvent, [Validators.required]),
+      description: this.fb.control(this.event.description, [Validators.required]),
       startEvent: this.fb.control(this.event.startEvent, [Validators.required]),
       endEvent: this.fb.control(this.event.endEvent, [Validators.required]),
     });
@@ -42,23 +42,23 @@ export class CreateEventComponent implements OnInit {
     this.router.navigate(['/activity']);
   }
 
-  public hasnameOfEventError() {
-    const control = this.eventForm.get('nameOfEvent');
+  public hasNameError() {
+    const control = this.eventForm.get('name');
     return control.errors && control.errors.required;
   }
 
-  public hasbeginsError() {
-    const control = this.eventForm.get('begins');
+  public hasStartEventError() {
+    const control = this.eventForm.get('startEvent');
     return control.errors && control.errors.required;
   }
 
-  public hasendsError() {
-    const control = this.eventForm.get('ends');
+  public hasEndEventError() {
+    const control = this.eventForm.get('endEvent');
     return control.errors && control.errors.required;
   }
 
-  public hasdescriptionError() {
-    const control = this.eventForm.get('descriptionOfEvent');
+  public hasDescriptionError() {
+    const control = this.eventForm.get('description');
     return control.errors && control.errors.required;
   }
 
@@ -71,10 +71,10 @@ export class CreateEventComponent implements OnInit {
 
     const newEvent = new EventManage();
 
-    newEvent.name = newValues.nameOfEvent;
-    newEvent.descriptionEvent = newValues.descriptionEvent;
-    newEvent.startEvent = newValues.begins;
-    newEvent.endEvent = newValues.ends;
+    newEvent.name = newValues.name;
+    newEvent.description = newValues.description;
+    newEvent.startEvent = newValues.startEvent;
+    newEvent.endEvent = newValues.endEvent;
     this.event = newEvent;
 
     this.eventService

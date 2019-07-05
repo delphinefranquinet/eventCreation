@@ -16,6 +16,7 @@ import { PersonService } from './services/person.service';
 import { EventService } from './services/event.service';
 import { ActivityComponent } from '../events/components/activity/activity.component';
 import { InscriptionComponent } from '../events/components/inscription/inscription.component';
+import { ActivityService } from './services/activity.service';
 
 
 
@@ -37,7 +38,7 @@ import { InscriptionComponent } from '../events/components/inscription/inscripti
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [ AuthGuard, AuthenticationService, HttpClient, LoginService, PersonService, EventService],
+  providers: [ AuthGuard, AuthenticationService, HttpClient, LoginService, PersonService, EventService, ActivityService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
