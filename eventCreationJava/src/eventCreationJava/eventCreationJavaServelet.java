@@ -115,6 +115,8 @@ public class eventCreationJavaServelet extends HttpServlet {
 					event.setEndEvent(parameters.endEvent);
 					event.setIdResponsable(idResponsable);
 					event = repository.CreateNewEvent(event);
+					
+					session.setAttribute("idEvent", event.getId());
 
 					String json = mapper.writeValueAsString(event); // convertir en format json
 					System.out.println(json);
