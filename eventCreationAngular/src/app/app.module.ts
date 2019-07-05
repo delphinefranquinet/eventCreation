@@ -8,16 +8,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from '../events/components/login/login.component';
 import { AuthenticationService } from './services/authentication.service.ts.service';
 import { AuthGuard } from './guards/auth.guard';
-import { SinInComponent } from '../events/components/signIn/sinIn.component';
 import { SignInLoginComponent } from '../events/components/signInLogin/signInLogin.component';
 import { LoginService } from './services/login.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { PersonService } from './services/person.service';
 import { EventService } from './services/event.service';
 import { ActivityComponent } from '../events/components/activity/activity.component';
-import { InscriptionComponent } from '../events/components/inscription/inscription.component';
+import { RegisterComponent } from '../events/components/register/register.component';
 import { ActivityService } from './services/activity.service';
-
+import { RegisterService } from './services/register.service';
 
 
 @NgModule({
@@ -26,10 +25,9 @@ import { ActivityService } from './services/activity.service';
     HomeComponent,
     CreateEventComponent,
     LoginComponent,
-    SinInComponent,
     SignInLoginComponent,
     ActivityComponent,
-    InscriptionComponent
+    RegisterComponent
    ],
   imports: [
     BrowserModule,
@@ -38,7 +36,8 @@ import { ActivityService } from './services/activity.service';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [ AuthGuard, AuthenticationService, HttpClient, LoginService, PersonService, EventService, ActivityService],
+// tslint:disable-next-line: max-line-length
+  providers: [ AuthGuard, AuthenticationService, HttpClient, LoginService, PersonService, EventService, ActivityService, RegisterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
