@@ -2,6 +2,7 @@ package eventCreationJava;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -166,5 +167,28 @@ public class EventRepositoryImpl {
         }
         return events;
 	}
+	
+	/*public Integer FindIdEventByName(String eventName) {
+		
+		Integer idEvent = null;
+		
+		String sql = "Select id_event From \"Events\" Where \"eventName\" = ?";
+		
+		try (
+	            PreparedStatement preparedStatement = c.prepareStatement(sql)
+	        ) {
+	            preparedStatement.setString(1, password);
+	            try (
+	                ResultSet resultSet = preparedStatement.executeQuery()
+	            ) {
+	                if (resultSet.next()) { //récupérer la ou les colonne(s) demandée(s)
+	                    email = resultSet.getString(1);
+	                }
+	            }
+	        }
+			
+		
+		return idEvent;
+	}*/
 
 }
