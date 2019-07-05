@@ -5,29 +5,7 @@
 -- Dumped from database version 11.2
 -- Dumped by pg_dump version 11.2
 
--- Started on 2019-07-05 11:19:55
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- TOC entry 2857 (class 1262 OID 16862)
--- Name: EventInscription; Type: DATABASE; Schema: -; Owner: postgres
---
-
-CREATE DATABASE "EventInscription" WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'French_Belgium.1252' LC_CTYPE = 'French_Belgium.1252';
-
-
-ALTER DATABASE "EventInscription" OWNER TO postgres;
-
-\connect "EventInscription"
+-- Started on 2019-07-05 11:26:03
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -77,7 +55,7 @@ CREATE SEQUENCE public."Activities_id_activity_seq"
 ALTER TABLE public."Activities_id_activity_seq" OWNER TO postgres;
 
 --
--- TOC entry 2858 (class 0 OID 0)
+-- TOC entry 2857 (class 0 OID 0)
 -- Dependencies: 197
 -- Name: Activities_id_activity_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -119,7 +97,7 @@ CREATE SEQUENCE public."Events_id_event_seq"
 ALTER TABLE public."Events_id_event_seq" OWNER TO postgres;
 
 --
--- TOC entry 2859 (class 0 OID 0)
+-- TOC entry 2858 (class 0 OID 0)
 -- Dependencies: 199
 -- Name: Events_id_event_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -157,7 +135,7 @@ CREATE SEQUENCE public."Inscription_activity_id_inscription_seq"
 ALTER TABLE public."Inscription_activity_id_inscription_seq" OWNER TO postgres;
 
 --
--- TOC entry 2860 (class 0 OID 0)
+-- TOC entry 2859 (class 0 OID 0)
 -- Dependencies: 202
 -- Name: Inscription_activity_id_inscription_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -198,7 +176,7 @@ CREATE SEQUENCE public.persons_id_person_seq
 ALTER TABLE public.persons_id_person_seq OWNER TO postgres;
 
 --
--- TOC entry 2861 (class 0 OID 0)
+-- TOC entry 2860 (class 0 OID 0)
 -- Dependencies: 201
 -- Name: persons_id_person_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -244,10 +222,8 @@ ALTER TABLE ONLY public.persons ALTER COLUMN id_person SET DEFAULT nextval('publ
 -- Data for Name: Activities; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public."Activities" (id_activity, "nameActivity", "descriptionActivity", "startActivity", "endActivity", id_event) FROM stdin;
-10	Yoga	Initiation au yoga	2019-07-19 10:30:00+02	2019-07-19 11:30:00+02	1
-11	Tai Chi	Initiation au Tai Chi	2019-07-19 11:30:00+02	2019-07-19 12:30:00+02	1
-\.
+INSERT INTO public."Activities" VALUES (10, 'Yoga', 'Initiation au yoga', '2019-07-19 10:30:00+02', '2019-07-19 11:30:00+02', 1);
+INSERT INTO public."Activities" VALUES (11, 'Tai Chi', 'Initiation au Tai Chi', '2019-07-19 11:30:00+02', '2019-07-19 12:30:00+02', 1);
 
 
 --
@@ -256,19 +232,17 @@ COPY public."Activities" (id_activity, "nameActivity", "descriptionActivity", "s
 -- Data for Name: Events; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public."Events" (id_event, "eventName", description, "dateDebut", "dateFin", id_person) FROM stdin;
-1	Détente et Bien-être	Initiation au Yoga et Tai Chi	2019-07-19 10:30:00+02	2019-07-19 12:45:00+02	1
-2	newEvent	1234	2018-12-12 12:30:00+01	2018-12-12 13:30:00+01	1
-3	newEvent	1234	2018-12-12 12:30:00+01	2018-12-12 13:30:00+01	1
-4	newEvent	1234	2018-12-12 12:30:00+01	2018-12-12 13:30:00+01	1
-5	newEvent	1234	2018-12-12 12:30:00+01	2018-12-12 13:30:00+01	1
-7	newEvent	1234	2018-12-12 12:30:00+01	2018-12-12 13:30:00+01	1
-8	newEvent	1234	2018-12-12 12:30:00+01	2018-12-12 13:30:00+01	1
-9	newEvent	1234	2018-12-12 12:30:00+01	2018-12-12 13:30:00+01	1
-10	newEvent	1234	2018-12-12 12:30:00+01	2018-12-12 13:30:00+01	1
-11	newEvent	1234	2018-12-12 12:30:00+01	2018-12-12 13:30:00+01	1
-12	newEvent	1234	2018-12-12 12:30:00+01	2018-12-12 13:30:00+01	1
-\.
+INSERT INTO public."Events" VALUES (1, 'Détente et Bien-être', 'Initiation au Yoga et Tai Chi', '2019-07-19 10:30:00+02', '2019-07-19 12:45:00+02', 1);
+INSERT INTO public."Events" VALUES (2, 'newEvent', '1234', '2018-12-12 12:30:00+01', '2018-12-12 13:30:00+01', 1);
+INSERT INTO public."Events" VALUES (3, 'newEvent', '1234', '2018-12-12 12:30:00+01', '2018-12-12 13:30:00+01', 1);
+INSERT INTO public."Events" VALUES (4, 'newEvent', '1234', '2018-12-12 12:30:00+01', '2018-12-12 13:30:00+01', 1);
+INSERT INTO public."Events" VALUES (5, 'newEvent', '1234', '2018-12-12 12:30:00+01', '2018-12-12 13:30:00+01', 1);
+INSERT INTO public."Events" VALUES (7, 'newEvent', '1234', '2018-12-12 12:30:00+01', '2018-12-12 13:30:00+01', 1);
+INSERT INTO public."Events" VALUES (8, 'newEvent', '1234', '2018-12-12 12:30:00+01', '2018-12-12 13:30:00+01', 1);
+INSERT INTO public."Events" VALUES (9, 'newEvent', '1234', '2018-12-12 12:30:00+01', '2018-12-12 13:30:00+01', 1);
+INSERT INTO public."Events" VALUES (10, 'newEvent', '1234', '2018-12-12 12:30:00+01', '2018-12-12 13:30:00+01', 1);
+INSERT INTO public."Events" VALUES (11, 'newEvent', '1234', '2018-12-12 12:30:00+01', '2018-12-12 13:30:00+01', 1);
+INSERT INTO public."Events" VALUES (12, 'newEvent', '1234', '2018-12-12 12:30:00+01', '2018-12-12 13:30:00+01', 1);
 
 
 --
@@ -277,8 +251,6 @@ COPY public."Events" (id_event, "eventName", description, "dateDebut", "dateFin"
 -- Data for Name: Inscription_activity; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public."Inscription_activity" (id_inscription, id_person, id_activity) FROM stdin;
-\.
 
 
 --
@@ -287,14 +259,12 @@ COPY public."Inscription_activity" (id_inscription, id_person, id_activity) FROM
 -- Data for Name: persons; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.persons (id_person, "namePerson", "firstnamePerson", login, password) FROM stdin;
-1	Franquinet	Delphine	delphine122	1234
-2	Al-Sudani	Zahraa	Zahraa	1234
-\.
+INSERT INTO public.persons VALUES (1, 'Franquinet', 'Delphine', 'delphine122', '1234');
+INSERT INTO public.persons VALUES (2, 'Al-Sudani', 'Zahraa', 'Zahraa', '1234');
 
 
 --
--- TOC entry 2862 (class 0 OID 0)
+-- TOC entry 2861 (class 0 OID 0)
 -- Dependencies: 197
 -- Name: Activities_id_activity_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -303,7 +273,7 @@ SELECT pg_catalog.setval('public."Activities_id_activity_seq"', 11, true);
 
 
 --
--- TOC entry 2863 (class 0 OID 0)
+-- TOC entry 2862 (class 0 OID 0)
 -- Dependencies: 199
 -- Name: Events_id_event_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -312,7 +282,7 @@ SELECT pg_catalog.setval('public."Events_id_event_seq"', 12, true);
 
 
 --
--- TOC entry 2864 (class 0 OID 0)
+-- TOC entry 2863 (class 0 OID 0)
 -- Dependencies: 202
 -- Name: Inscription_activity_id_inscription_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -321,7 +291,7 @@ SELECT pg_catalog.setval('public."Inscription_activity_id_inscription_seq"', 1, 
 
 
 --
--- TOC entry 2865 (class 0 OID 0)
+-- TOC entry 2864 (class 0 OID 0)
 -- Dependencies: 201
 -- Name: persons_id_person_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -433,7 +403,7 @@ ALTER TABLE ONLY public."Events"
     ADD CONSTRAINT "FKPersonneResponsable" FOREIGN KEY (id_person) REFERENCES public.persons(id_person);
 
 
--- Completed on 2019-07-05 11:19:56
+-- Completed on 2019-07-05 11:26:03
 
 --
 -- PostgreSQL database dump complete
