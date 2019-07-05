@@ -176,6 +176,33 @@ public class EventRepositoryImpl {
 		}
 		return events;
 	}
+	
+	public List<Activity> FindAllActivityByIdEvent (int id){
+		
+		List<Activity> activities = new ArrayList<>();
+		
+		try (Connection c = DriverManager.getConnection(url, user, password);
+				Statement s = c.createStatement();
+				ResultSet rs = s.executeQuery(
+						"Select id_event, \"eventName\", description, \"dateDebut\", \"dateFin\" From \"Events\"")) {
+			while (rs.next()) {
+
+				Activity activity = new Activity();
+				activity.setId(rs.getInt("id"));
+				activity.setName(rs.getString("eventName"));
+				activity.setDescription(rs.getString("description"));
+				activity.setStartActivity(rs.getTimestamp("startActivity").toLocalDateTime());
+				activity.setEndActivity(rs.getTimestamp("endActivity").toLocalDateTime());
+				activities.add(activity);
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			throw new RuntimeException(sqle);
+		}
+		
+		return activities;
+		
+	}
 
 	/*
 	 * public Integer FindIdEventByName(String eventName) {
