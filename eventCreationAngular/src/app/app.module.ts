@@ -15,9 +15,9 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { PersonService } from './services/person.service';
 import { EventService } from './services/event.service';
 import { ActivityComponent } from '../events/components/activity/activity.component';
-import { InscriptionComponent } from '../events/components/inscription/inscription.component';
+import { RegisterComponent } from '../events/components/register/register.component';
 import { ActivityService } from './services/activity.service';
-
+import { RegisterService } from './services/register.service';
 
 
 @NgModule({
@@ -29,7 +29,7 @@ import { ActivityService } from './services/activity.service';
     SinInComponent,
     SignInLoginComponent,
     ActivityComponent,
-    InscriptionComponent
+    RegisterComponent
    ],
   imports: [
     BrowserModule,
@@ -38,7 +38,8 @@ import { ActivityService } from './services/activity.service';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [ AuthGuard, AuthenticationService, HttpClient, LoginService, PersonService, EventService, ActivityService],
+// tslint:disable-next-line: max-line-length
+  providers: [ AuthGuard, AuthenticationService, HttpClient, LoginService, PersonService, EventService, ActivityService, RegisterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
