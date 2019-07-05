@@ -8,7 +8,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from '../events/components/login/login.component';
 import { AuthenticationService } from './services/authentication.service.ts.service';
 import { AuthGuard } from './guards/auth.guard';
-import { SinInComponent } from '../events/components/signIn/sinIn.component';
 import { SignInLoginComponent } from '../events/components/signInLogin/signInLogin.component';
 import { LoginService } from './services/login.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -26,7 +25,6 @@ import { RegisterService } from './services/register.service';
     HomeComponent,
     CreateEventComponent,
     LoginComponent,
-    SinInComponent,
     SignInLoginComponent,
     ActivityComponent,
     RegisterComponent
