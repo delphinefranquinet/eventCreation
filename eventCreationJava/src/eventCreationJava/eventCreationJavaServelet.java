@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 @WebServlet("/*")
 public class eventCreationJavaServelet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -133,14 +132,32 @@ public class eventCreationJavaServelet extends HttpServlet {
 				} else {
 					response.setStatus(401); // si connexion NOK, code erreur (google)
 				}
-			}
-			// response.addHeader("", "*"); //"la clé""*"n'importe lequel
-			// Access-Control-Allow-Origin = dns + port
-			// Access-Control-Allow-Headers = accepte les headers
-			// Access-Control-Allow-Methods = accepte les differentes methodes, post get ...
+			} else if (path.startsWith("/activity")) {
 
-			// System.out.println(person);
-			// System.out.println(password);
+				CreateActivityParameters parameters = mapper.readValue(request.getInputStream(), CreateActivityParameters.class);
+				Integer idEvent = (Integer) session.getAttribute("idEvent");
+
+				if (idEvent != null) {
+
+					Activity activity = new Activity();
+					activity.setName(parameters.name);
+					activity.setDescription(parameters.description);
+					activity.setStartActivity(parameters.startActivity);
+					activity.setEndActivity(parameters.endActivity);
+					activity.setIdEvent(idEvent);
+
+					activity = repository.CreateNewActivity(activity);
+
+					String json = mapper.writeValueAsString(activity); // convertir en format json
+					System.out.println(json);
+					setHeaders(response);
+					response.setContentType("application/json"); // le type du contenu est du json
+					response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
+					response.getWriter().write(json); // on écrit le json dans la réponse
+				} else {
+					response.setStatus(401); // si connexion NOK, code erreur (google)
+				}
+			}
 
 		} catch (Exception e) {
 			response.setStatus(500);
@@ -164,3 +181,11 @@ public class eventCreationJavaServelet extends HttpServlet {
 	}
 
 }
+
+// response.addHeader("", "*"); //"la clé""*"n'importe lequel
+// Access-Control-Allow-Origin = dns + port
+// Access-Control-Allow-Headers = accepte les headers
+// Access-Control-Allow-Methods = accepte les differentes methodes, post get ...
+
+// System.out.println(person);
+// System.out.println(password);
