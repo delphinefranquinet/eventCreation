@@ -59,13 +59,22 @@ public class eventCreationJavaServelet extends HttpServlet {
 
 			List<Event> events = repository.FindAllEvents();
 			System.out.println(events);
-
 			String json = mapper.writeValueAsString(events); // convertir en format json
 			setHeaders(response);
 			response.setContentType("application/json"); // le type du contenu est du json
 			response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
 			response.getWriter().write(json); // on écrit le json dans la réponse
 
+		}else if (path.startsWith("/home/event/")) {
+			
+			String[] parts = path.split("/");
+			String idEvent = parts[3];
+			int id = Integer.parseInt(idEvent);
+			List<Activity> activities = repository.FindAllActivityByIdEvent(id);
+			String json = mapper.writeValueAsString(activities); // convertir en format json 
+			response.setContentType("application/json"); // le type du contenu est du json
+			response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
+			response.getWriter().write(json); // on écrit le json dans la réponse
 		}
 	}
 
