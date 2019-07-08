@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
   }
 
   next() {
-    this.router.navigate(['/createEvent']);
+    this.router.navigate(['/home']);
   }
 
   public submitForm() {

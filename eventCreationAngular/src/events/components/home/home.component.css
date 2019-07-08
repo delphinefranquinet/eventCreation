@@ -1,14 +1,13 @@
 .container {
 
     position: relative;
-
     height: 50%;
     width: 100%;
 }
 
 #mySidenav a {
   position: absolute;
-  left: -20px;
+  left: -10px;
   transition: 0.3s;
   padding: 15px;
   width: 100px;
@@ -35,8 +34,9 @@
 
 #register {
   top: 170px;
-  background-color: rgb(243, 135, 33);
+  background-color: #f4433681;
 }
+
 
 
 .title{
