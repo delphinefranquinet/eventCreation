@@ -217,13 +217,14 @@ public class EventRepositoryImpl {
 			throws SQLException {
 
 		if (newInscriptionActivity.getIdPerson() > 0 && newInscriptionActivity.getIdPerson() > 0) {
-			String sql = "INSERT INTO \"Inscription_activity\" Values (DEFAULT, (SELECT id_person FROM persons WHERE id_person = 1),(SELECT id_activity FROM \"Activities\" WHERE id_activity = 10))";
+			String sql = "INSERT INTO \"Inscription_activity\" Values (DEFAULT, (SELECT id_person FROM persons WHERE id_person = ?),(SELECT id_activity FROM \"Activities\" WHERE id_activity = ?))";
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql,
 							Statement.RETURN_GENERATED_KEYS);) {
 				connection.setAutoCommit(false);
 				query.setInt(1, newInscriptionActivity.getIdPerson());
 				query.setInt(2, newInscriptionActivity.getIdActivity());
+				query.executeUpdate();
 				try (ResultSet resultSet = query.getGeneratedKeys()
 
 				) {
