@@ -1,45 +1,34 @@
-<table>
-  <tr>
-    <th><button class="accordion"> <a [routerLink]="['/home']">HOME</a>  </button>
-    <td>
-     <button class="accordion"><a [routerLink]="['/register']">REGISTER</a></button>
-       <div class="panel">
-        </div>
-        </td>
-        <td>
-            <button class="accordion"><a [routerLink]="['/login']"> LOGIN</a></button>
-              <div class="panel">
-               </div>
-               </td>
-  </tr>
-</table>
+
+<div id="mySidenav">
+    <a [routerLink]="['/home']" id="home"> Home </a>
+    <a [routerLink]="['/signInLogin']" id="Create"> Create your event </a>
+    <a [routerLink]="['/login']" id="login"> Login </a>
+    <a [routerLink]="['/register']" id="register"> Register </a>
+</div>
 
 
 
-<form [formGroup]= "registerForm" (ngSubmit)="submitForm()">
 
-  <div>
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" formControlName="name"/>
+<form [formGroup]= "registerForm" (ngSubmit)="submitForm()" style="max-width:500px;margin:auto">
+
+  <div for="name" class="input-container">
+    <input class="input-field" placeholder="name" type="text" id="name" name="name" formControlName="name"/>
+  </div>
+
+  <div for="firstname" class="input-container">
+      <input  class="input-field" placeholder="firstname" type="text" id="firstname" name="firstname" formControlName="firstname"/>
+  </div>
+
+ <div for="login" class="input-container">
+    <input  class="input-field" placeholder="Username" type="text" id="login" name="login" formControlName="login"/>
+  </div>
+
+  <div for="password" class="input-container">
+    <input  class="input-field" placeholder="Password" type="password" id="password" name="password" formControlName="password"/>
   </div>
 
   <div>
-      <label for="firstname">First Name:</label>
-      <input type="text" id="firstname" name="firstname" formControlName="firstname"/>
-  </div>
-
- <div>
-    <label for="login">Login :</label>
-    <input type="text" id="login" name="login" formControlName="login"/>
-  </div>
-
-  <div>
-    <label for="password">Password :</label>
-    <input type="password" id="password" name="password" formControlName="password"/>
-  </div>
-
-  <div>
-    <input type="submit" [disabled]="!registerForm.valid" value="Send"/>
+    <input type="button" class="btn" type="submit" [disabled]="!registerForm.valid" value="Send"/>
   </div>
   </form>
 

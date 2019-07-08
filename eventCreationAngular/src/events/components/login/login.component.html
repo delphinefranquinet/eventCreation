@@ -1,39 +1,28 @@
-<table>
-    <tr>
-      <th><button class="accordion"> <a [routerLink]="['/home']">HOME</a>  </button>
-      <td>
-       <button class="accordion"><a [routerLink]="['/signin']"> SIGN IN</a></button>
-         <div class="panel">
-          </div>
-          </td>
-          <td>
-              <button class="accordion"><a [routerLink]="['/login']"> LOGIN</a></button>
-                <div class="panel">
-                 </div>
-                 </td>
-    </tr>
-</table>
+
+<div id="mySidenav">
+    <a [routerLink]="['/home']" id="home"> Home </a>
+    <a [routerLink]="['/signInLogin']" id="Create"> Create your event </a>
+    <a [routerLink]="['/login']" id="login"> Login </a>
+    <a [routerLink]="['/register']" id="register"> Register </a>
+</div>
 
 
-<form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+<form [formGroup]="loginForm" (ngSubmit)="submitForm()" style="max-width:500px;margin:auto">
 
-  <div>
-   <label for="login">Login </label>
-   <input type="text" id="login" name="login" formControlName="login"/>
-   <span *ngIf="hasLoginError()">*Required</span>
+  <div for="login" class="input-container">
+   <input class="input-field" placeholder="Username" type="text" id="login" name="login" formControlName="login"/>
+   <span *ngIf="hasLoginError()">*</span>
   </div>
 
-  <div>
-    <label for="password">Password </label>
-    <input type="password" id="pwd" name="password" formControlName="password"/>
-    <span *ngIf="hasPasswordError()">*Required</span>
+
+    <div for="password" class="input-container">
+    <input class="input-field" placeholder="Password" type="password" id="pwd" name="password" formControlName="password"/>
+    <span *ngIf="hasPasswordError()">*</span>
   </div>
 
 <br>
-<input  type="submit" name="send" [disabled]="!loginForm.valid" value="Send"  >
-<div *ngIf="connectionError">Login or Password incorrect</div><!-- (click)="next()"></div>-->
-<!---->
-{{logins | json}}
+<input  type="submit" class="btn"  [disabled]="!loginForm.valid" value="Send" >
+<div *ngIf="connectionError">Login or Password incorrect</div>
 
 </form>
 
