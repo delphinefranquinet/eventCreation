@@ -8,7 +8,7 @@ import { EventManage } from '../../../app/modeles/eventManage.modele';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  public editedEvent: EventManage;
+
   public event: EventManage;
   public events: EventManage[];
 

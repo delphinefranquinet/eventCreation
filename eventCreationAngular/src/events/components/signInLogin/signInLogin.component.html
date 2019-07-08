@@ -1,3 +1,5 @@
+<div class="container">
+<div class="TopRight">
 <table>
     <tr>
       <th><button class="accordion"> <a [routerLink]="['/home']">HOME</a>  </button>
@@ -13,3 +15,20 @@
                  </td>
     </tr>
 </table>
+</div>
+
+<div class="eventBorder">
+
+  <div  *ngFor="let activity of activities">
+      <div class="activity-title"> <a [routerLink]="['/inscription']">{{activity.name}} </a>
+
+    </div>
+    <div class="activity">
+      {{activity.description}}
+      <br>
+      {{activity.startActivity}}
+      <br>
+      {{activity.endActivity}}
+      <br>
+    </div>
+  </div>

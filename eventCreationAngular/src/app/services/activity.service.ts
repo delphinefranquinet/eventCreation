@@ -13,6 +13,12 @@ export class ActivityService {
 
     constructor(private http: HttpClient) {}
 
+    public getActivity(): Observable<Activity[]> {
+      return this.http
+        .get<Activity[]>(`${environment.baseUrl}/signInLogin`)
+        .pipe(catchError((error: any) => Observable.throw(error.json())));
+    }
+
     public postActivity(event: Activity): Observable<Activity> {
 
        return this.http
