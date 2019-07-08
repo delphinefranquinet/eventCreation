@@ -1,0 +1,25 @@
+
+<div id="mySidenav">
+    <a [routerLink]="['/home']" id="home"> Home </a>
+    <a [routerLink]="['/signInLogin']" id="Create"> Create your event </a>
+    <a [routerLink]="['/login']" id="login"> Login </a>
+    <a [routerLink]="['/register']" id="register"> Register </a>
+</div>
+
+
+<div  *ngFor="let activity of activities">
+    <div class="activity-title"> <a [routerLink]="['/event']">{{event.name}} </a>
+
+  </div>
+
+  <div  *ngFor="let activity of activities"></div>
+  <div class="activity-title"> <a [routerLink]="['/activityInscription']">{{activity.name}} </a>
+  <div class="activity">
+    {{activity.description}}
+    <br>
+    {{activity.startActivity}}
+    <br>
+    {{activity.endActivity}}
+    <br>
+  </div>
+</div>

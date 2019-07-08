@@ -1,22 +1,22 @@
 <div class="container">
-  <img  width=50% alt="Event Logo" src="\assets\img\evenement-decoration-salle-mulhouse-alsace.jpg">
- <div class="TopRight">
-   <table >
-  <tr>
-    <th><button><a [routerLink]="['/signInLogin']">Create your event </a></button> </th>
-      <td><button ><a [routerLink]="['/register']"> REGISTER</a></button></td>
+  <img  width=100% alt="Event Logo" src="\assets\img\evenement-decoration-salle-mulhouse-alsace.jpg">
 
-       <td><button><a [routerLink]="['/login']"> LOGIN</a></button> </td>
-  </tr>
-</table>
+ 
+<div id="mySidenav">
+    <a [routerLink]="['/signInLogin']" id="Create"> Create your event </a>
+    <a [routerLink]="['/login']" id="login"> Login </a>
+    <a [routerLink]="['/register']" id="register"> Register </a>
+
+  </div>
+
+<div class="title">
+    <h1>We make your {{ title }} awesome!</h1>
 </div>
-</div>
-     <h1 class="title">We make your {{ title }} awesome!</h1>
 
 <div class="eventBorder">
 
 <div  *ngFor="let event of events">
-    <div class="event-title"> <a [routerLink]="['/signInLogin']">{{event.name}} </a>
+    <div class="event-title"> <a [routerLink]="['/event']">{{event.name}} </a>
 
   </div>
   <div class="events">
@@ -27,4 +27,5 @@
     {{event.endEvent}}
     <br>
   </div>
+
 </div>
