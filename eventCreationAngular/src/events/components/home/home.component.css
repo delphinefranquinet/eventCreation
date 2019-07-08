@@ -1,8 +1,19 @@
 .container {
-  height: 50%;
-  width: 100%;
-}
 
+    position: relative;
+    text-align: center;
+    height: 50%;
+    width: 100%;
+}
+.sidebar{
+
+}
+.title{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 /* Bottom right text */
 .text-block {
   position: center;
@@ -10,4 +21,20 @@
   right: 30px;
   color: black;
 
+}
+ .events {
+  position: center;
+  bottom: 30px;
+  right: 30px;
+
+ }
+.event-title
+{
+  font: 15px arial, sans-serif;
+  font-size: 150%;
+}
+.TopRight{
+  position: absolute;
+  top: 8px;
+  right: 16px;
 }
