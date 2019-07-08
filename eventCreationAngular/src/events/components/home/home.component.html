@@ -9,7 +9,9 @@
 
 </div>
 
-<div *ngFor="let event of events">
-    <button class="button"> <a [routerLink]="['/event/?id']">{{event.name}} </a>
-</button>
+<div *ngFor="let event of events" class="grid-container">
+  <div class="grid-item"><a [routerLink]="['/event}']">{{event.name}}</a></div>
 </div>
+
+
+

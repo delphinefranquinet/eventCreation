@@ -22,12 +22,11 @@ export class EventComponent implements OnInit {
         this.eventService.getEventByID(id).subscribe(
           event => {
 
-            this.event = event;
+            this.event =  event;
           }
           );
-       });
-
- 
+        });
 
       }
-}
+      }
+
