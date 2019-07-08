@@ -1,15 +1,11 @@
-<table>
-    <tr>
-      <th><button class="accordion"> <a [routerLink]="['/home']">HOME</a>  </button>
-      <td>
-       <button class="accordion"><a [routerLink]="['/register']">REGISTER</a></button>
-         <div class="panel">
-          </div>
-          </td>
-          <td>
-              <button class="accordion"><a [routerLink]="['/login']"> LOGIN</a></button>
-                <div class="panel">
-                 </div>
-                 </td>
-    </tr>
-</table>
+
+<div class="center">
+ <h1>Already have an account</h1>
+  <button class="button"><a [routerLink]="['/login']"> LOGIN</a></button>
+  <h1>New account</h1>
+  <button class="button"><a [routerLink]="['/register']">REGISTER</a></button>
+  <br>
+  <br>
+  <br>
+  <button class="button"><a [routerLink]="['/home']">Home</a></button>
+</div>
