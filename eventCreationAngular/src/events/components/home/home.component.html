@@ -1,37 +1,30 @@
+<div class="container">
+  <img  width=50% alt="Event Logo" src="\assets\img\evenement-decoration-salle-mulhouse-alsace.jpg">
+ <div class="TopRight">
+   <table >
+  <tr>
+    <th><button><a [routerLink]="['/signInLogin']">Create your event </a></button> </th>
+      <td><button ><a [routerLink]="['/register']"> REGISTER</a></button></td>
 
-  <img class="container" width=50% alt="Event Logo" src="\assets\img\evenement-decoration-salle-mulhouse-alsace.jpg">
-
-     <h1>We make your {{ title }} awesome!</h1>
-
-<h2>What do you want to do?</h2>
-<table>
-    <tr>
-      <th><button class="accordion"><a [routerLink]="['/signInLogin']">
-            Create your event </a></button>
-
-        <div class="panel">
-        </div></th>
-        <td>
-        <button class="accordion"><a [routerLink]="['/register']"> REGISTER</a></button>
-        <div class="panel">
-         </div>
-         </td>
-         <td>
-             <button class="accordion"><a [routerLink]="['/login']"> LOGIN</a></button>
-               <div class="panel">
-                </div>
-                </td>
-     <!-- <td>
-         <div class=container> <button class="accordion"><a [routerLink]="['/activity']"> See upcoming events</a></button></div>
-         <div class="panel">
-
-          </div>
-          </td>-->
-    </tr>
+       <td><button><a [routerLink]="['/login']"> LOGIN</a></button> </td>
+  </tr>
 </table>
-{{event}}
-<!--<div *ngFor="let event of events; index as i;"
-  [style.zIndex]="i" class="event">
-  <p>****</p>
-</div>-->
+</div>
+</div>
+     <h1 class="title">We make your {{ title }} awesome!</h1>
 
+<div class="eventBorder">
+
+<div  *ngFor="let event of events">
+    <div class="event-title"> <a [routerLink]="['/signInLogin']">{{event.name}} </a>
+
+  </div>
+  <div class="events">
+    {{event.description}}
+    <br>
+    {{event.startEvent}}
+    <br>
+    {{event.endEvent}}
+    <br>
+  </div>
+</div>
