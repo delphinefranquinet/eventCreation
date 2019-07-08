@@ -180,7 +180,33 @@ public class eventCreationJavaServelet extends HttpServlet {
 				response.setContentType("application/json"); // le type du contenu est du json
 				response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
 				response.getWriter().write(json); // on écrit le json dans la réponse
+				
+			} else if (path.startsWith("/inscriptionActivity")){
+				
+				Integer idActivity = (Integer) session.getAttribute("idActivity");
+				Integer idPerson = (Integer) session.getAttribute("idPerson");
+				setHeaders(response);
+				if (idActivity != null && idPerson != null) {
+					
+					InscriptionActivity parameters = mapper.readValue(request.getInputStream(),
+							InscriptionActivity.class);
+					InscriptionActivity newInscriptionActivity = new InscriptionActivity();
+					newInscriptionActivity.setIdPerson(idPerson);
+					newInscriptionActivity.setIdActivity(idActivity);
+					
+					newInscriptionActivity = repository.CreateNewInscriptionActivity(newInscriptionActivity);
+
+					session.setAttribute("idInscriptionActivity", newInscriptionActivity.getIdInscriptionActivity());
+
+					String json = mapper.writeValueAsString(newInscriptionActivity); // convertir en format json
+					System.out.println(json);
+					response.setContentType("application/json"); // le type du contenu est du json
+					response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
+					response.getWriter().write(json); // on écrit le json dans la réponse
+				}
+				
 			}
+				
 		} catch (Exception e) {
 			response.setStatus(500);
 			e.printStackTrace(); // affiche une exception sur le canal d'erreur (console)

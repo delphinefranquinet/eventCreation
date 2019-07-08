@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class EventRepositoryImpl {
 
 	protected String user;
@@ -190,7 +189,6 @@ public class EventRepositoryImpl {
 	public List<Activity> FindAllActivityByIdEvent(int id) {
 
 		List<Activity> activities = new ArrayList<>();
-	
 
 		try (Connection c = DriverManager.getConnection(url, user, password);
 				Statement s = c.createStatement();
@@ -214,6 +212,39 @@ public class EventRepositoryImpl {
 		return activities;
 
 	}
+
+	public InscriptionActivity CreateNewInscriptionActivity(InscriptionActivity newInscriptionActivity)
+			throws SQLException {
+
+		if (newInscriptionActivity.getIdPerson() > 0 && newInscriptionActivity.getIdPerson() > 0) {
+			String sql = "INSERT INTO \"Inscription_activity\" Values (DEFAULT, (SELECT id_person FROM persons WHERE id_person = 1),(SELECT id_activity FROM \"Activities\" WHERE id_activity = 10))";
+			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+					java.sql.PreparedStatement query = connection.prepareStatement(sql,
+							Statement.RETURN_GENERATED_KEYS);) {
+				connection.setAutoCommit(false);
+				query.setInt(1, newInscriptionActivity.getIdPerson());
+				query.setInt(2, newInscriptionActivity.getIdActivity());
+				try (ResultSet resultSet = query.getGeneratedKeys()
+
+				) {
+					if (resultSet.next()) {
+						int id = resultSet.getInt(1);
+
+						newInscriptionActivity.setIdInscriptionActivity(id);
+					}
+				}
+				connection.commit();
+
+			} catch (java.sql.SQLException sqle) {
+				throw new RuntimeException(sqle);
+			}
+		}
+
+		return newInscriptionActivity;
+
+	}
+
+
 
 	/*
 	 * public Integer FindIdEventByName(String eventName) {
