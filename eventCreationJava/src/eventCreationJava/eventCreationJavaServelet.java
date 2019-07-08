@@ -2,6 +2,7 @@ package eventCreationJava;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
@@ -50,8 +51,7 @@ public class eventCreationJavaServelet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException { // tu recuperes des données et je n'envoie rien
 		
-	
-		
+		HttpSession session = request.getSession(true);
 		String path = request.getPathInfo();
 		ObjectMapper mapper = new ObjectMapper();
 
@@ -65,16 +65,48 @@ public class eventCreationJavaServelet extends HttpServlet {
 			response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
 			response.getWriter().write(json); // on écrit le json dans la réponse
 
-		}else if (path.startsWith("/home/event/")) {
-			
+		} else if (path.startsWith("/home/event/")) {
+
 			String[] parts = path.split("/");
 			String idEvent = parts[3];
 			int id = Integer.parseInt(idEvent);
 			List<Activity> activities = repository.FindAllActivityByIdEvent(id);
-			String json = mapper.writeValueAsString(activities); // convertir en format json 
+			String json = mapper.writeValueAsString(activities); // convertir en format json
 			response.setContentType("application/json"); // le type du contenu est du json
 			response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
 			response.getWriter().write(json); // on écrit le json dans la réponse
+			
+		}else if (path.startsWith("/activity")){
+			
+			String[] parts = path.split("/");
+			String id = parts[2];
+			int idActivity = Integer.parseInt(id);
+			Integer idPerson = (Integer) session.getAttribute("idPerson");
+			setHeaders(response);
+			
+			if (id != null && idPerson != null) {
+				
+				InscriptionActivity newInscriptionActivity = new InscriptionActivity();
+				newInscriptionActivity.setIdPerson(idPerson);
+				newInscriptionActivity.setIdActivity(idActivity);
+				
+				try {
+					newInscriptionActivity = repository.CreateNewInscriptionActivity(newInscriptionActivity);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				session.setAttribute("idInscriptionActivity", newInscriptionActivity.getIdInscriptionActivity());
+
+				String json = mapper.writeValueAsString(newInscriptionActivity); // convertir en format json
+				System.out.println(json);
+				response.setContentType("application/json"); // le type du contenu est du json
+				response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
+				response.getWriter().write(json); // on écrit le json dans la réponse
+
+			}
+			
 		}
 	}
 
@@ -181,31 +213,7 @@ public class eventCreationJavaServelet extends HttpServlet {
 				response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
 				response.getWriter().write(json); // on écrit le json dans la réponse
 				
-			} else if (path.startsWith("/inscriptionActivity")){
-				
-				Integer idActivity = (Integer) session.getAttribute("idActivity");
-				Integer idPerson = (Integer) session.getAttribute("idPerson");
-				setHeaders(response);
-				if (idActivity != null && idPerson != null) {
-					
-					InscriptionActivity parameters = mapper.readValue(request.getInputStream(),
-							InscriptionActivity.class);
-					InscriptionActivity newInscriptionActivity = new InscriptionActivity();
-					newInscriptionActivity.setIdPerson(idPerson);
-					newInscriptionActivity.setIdActivity(idActivity);
-					
-					newInscriptionActivity = repository.CreateNewInscriptionActivity(newInscriptionActivity);
-
-					session.setAttribute("idInscriptionActivity", newInscriptionActivity.getIdInscriptionActivity());
-
-					String json = mapper.writeValueAsString(newInscriptionActivity); // convertir en format json
-					System.out.println(json);
-					response.setContentType("application/json"); // le type du contenu est du json
-					response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
-					response.getWriter().write(json); // on écrit le json dans la réponse
-				}
-				
-			}
+			} 
 				
 		} catch (Exception e) {
 			response.setStatus(500);
