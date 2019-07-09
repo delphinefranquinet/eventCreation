@@ -21,6 +21,11 @@ export class EventService {
       .get<EventManage[]>(`${environment.baseUrl}/home`)
       .pipe(catchError((error: any) => Observable.throw(error.json())));
   }
+  public getEventByID(id: string): Observable<EventManage> {
+    return this.http
+      .get<EventManage>(`${environment.baseUrl}/event/${id}`)
+      .pipe(catchError((error: any) => Observable.throw(error.json())));
+  }
 /*
   public createEvent(payload: Event): Observable<Event> {
     return this.http

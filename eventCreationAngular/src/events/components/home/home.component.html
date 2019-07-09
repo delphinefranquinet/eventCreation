@@ -1,31 +1,17 @@
 <div class="container">
   <img  width=100% alt="Event Logo" src="\assets\img\evenement-decoration-salle-mulhouse-alsace.jpg">
 
- 
 <div id="mySidenav">
-    <a [routerLink]="['/signInLogin']" id="Create"> Create your event </a>
+    <a [routerLink]="['/createEvent']" id="Create"> Create your event </a>
     <a [routerLink]="['/login']" id="login"> Login </a>
     <a [routerLink]="['/register']" id="register"> Register </a>
-
-  </div>
-
-<div class="title">
-    <h1>We make your {{ title }} awesome!</h1>
-</div>
-
-<div class="eventBorder">
-
-<div  *ngFor="let event of events">
-    <div class="event-title"> <a [routerLink]="['/event']">{{event.name}} </a>
-
-  </div>
-  <div class="events">
-    {{event.description}}
-    <br>
-    {{event.startEvent}}
-    <br>
-    {{event.endEvent}}
-    <br>
   </div>
 
 </div>
+
+<div *ngFor="let event of events" class="grid-container">
+  <div class="grid-item"><a [routerLink]="['/event}']">{{event.name}}</a></div>
+</div>
+
+
+

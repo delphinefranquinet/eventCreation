@@ -1,0 +1,74 @@
+
+#mySidenav a {
+  position: absolute;
+  left: -10px;
+  transition: 0.3s;
+  padding: 15px;
+  width: 100px;
+  text-decoration: none;
+  font-size: 20px;
+  color: white;
+  border-radius: 0 5px 5px 0;
+}
+
+#mySidenav a:hover {
+  left: 0;
+}
+
+
+#home {
+  top: 10px;
+  background-color: #f44336;
+}
+#Create {
+  top: 80px;
+  background-color: #4CAF50;
+}
+
+#login {
+  top: 170px;
+  background-color: #2196F3;
+}
+
+#register {
+  top: 240px;
+  background-color: #f4433681;
+}
+
+
+.input-container {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  margin-left: 15%;
+  margin-right: 15%;
+  outline: none;
+}
+
+.input-field:focus {
+  border: 2px solid dodgerblue;
+}
+
+/* Set a style for the submit button */
+.btn {
+  background-color: dodgerblue;
+  color: white;
+  padding: 15px 20px;
+  border: none;
+  cursor: pointer;
+  width: 70%;
+  opacity: 0.9;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+.btn:hover {
+  opacity: 1;
+}

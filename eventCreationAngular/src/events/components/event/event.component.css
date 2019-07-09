@@ -1,0 +1,63 @@
+
+#mySidenav a {
+position: absolute;
+left: -10px;
+transition: 0.3s;
+padding: 15px;
+width: 100px;
+text-decoration: none;
+font-size: 20px;
+color: white;
+border-radius: 0 5px 5px 0;
+}
+
+#mySidenav a:hover {
+left: 0;
+}
+
+#home {
+  top: 10px;
+  background-color: #f44336;
+}
+#Create {
+  top: 80px;
+  background-color: #4CAF50;
+}
+
+#login {
+  top: 170px;
+  background-color: #2196F3;
+}
+
+#register {
+  top: 240px;
+  background-color: #f4433681;
+}
+
+
+
+.title{
+position: absolute;
+top: 20%;
+left: 50%;
+transform: translate(-50%, -50%);
+}
+/* Bottom right text */
+.text-block {
+position: center;
+bottom: 30px;
+right: 30px;
+color: black;
+
+}
+.events {
+position: center;
+bottom: 30px;
+right: 30px;
+
+}
+.event-title
+{
+font: 15px arial, sans-serif;
+font-size: 150%;
+}

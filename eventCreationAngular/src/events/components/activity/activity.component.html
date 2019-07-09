@@ -1,6 +1,6 @@
 
 <div id="mySidenav">
-    <a [routerLink]="['/home']" id="Create"> Home </a>
+    <a [routerLink]="['/home']" id="home"> Home </a>
     <a [routerLink]="['/signInLogin']" id="Create"> Create your event </a>
     <a [routerLink]="['/login']" id="login"> Login </a>
     <a [routerLink]="['/register']" id="register"> Register </a>
@@ -30,6 +30,7 @@
     <input type="submit" class="btn" [disabled]="!activityForm.valid" value="Send"/>
     <div *ngIf="activityError">Your activity has been created !</div>
   </div>
+
   </form>
 
 
