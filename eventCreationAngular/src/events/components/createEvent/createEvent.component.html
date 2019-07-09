@@ -26,6 +26,7 @@
 
     <div>
       <input type="submit" class="btn" [disabled]="!eventForm.valid" value="Send"/>
+      <div *ngIf="eventError">You are not loged in !</div>
     </div>
     </form>
 

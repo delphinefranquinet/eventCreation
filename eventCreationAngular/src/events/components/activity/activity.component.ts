@@ -3,7 +3,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Activity } from '../../../app/modeles/activity.modele';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthenticationService } from '../../../app/services/authentication.service.ts.service';
+
 import { Router } from '@angular/router';
 import { ActivityService } from '../../../app/services/activity.service';
 
@@ -20,7 +20,7 @@ export class ActivityComponent implements OnInit {
   public activityError = false;
 
 // tslint:disable-next-line: max-line-length
-  constructor(private router: Router, private authService: AuthenticationService, private fb: FormBuilder, private activityService: ActivityService) {
+  constructor(private router: Router, private fb: FormBuilder, private activityService: ActivityService) {
   this.activity = new Activity();
 
   this.activityForm = this.fb.group({
@@ -59,9 +59,6 @@ export class ActivityComponent implements OnInit {
   public hasDescriptionError() {
     const control = this.activityForm.get('description');
     return control.errors && control.errors.required;
-  }
-  public isConnect() {
-    return this.authService.isConnected();
   }
 
   public submitForm(){

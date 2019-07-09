@@ -11,18 +11,24 @@ import { Activity } from '../../../app/modeles/activity.modele';
 })
 export class EventComponent implements OnInit {
 
-  public event: EventManage;
-  public activity: Activity;
+ public eventName: string;
+ public eventStart: Date;
+ public eventEnd: Date;
+
+  public activities: Activity[];
+
   constructor(private route: ActivatedRoute, private eventService: EventService) { }
 
    ngOnInit() {
       this.route.params.subscribe(params => {
         const id: string = params.id;
-        console.log(id);
+
         this.eventService.getEventByID(id).subscribe(
           event => {
+            this.eventName = event.name;
+            this.eventStart = event.startEvent;
+            this.eventEnd = event.endEvent;
 
-            this.event =  event;
           }
           );
         });

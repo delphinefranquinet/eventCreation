@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthenticationService } from '../../../app/services/authentication.service.ts.service';
 import {  Router } from '@angular/router';
 import { Login } from '../../../app/modeles/login.modele';
 import { LoginService } from '../../../app/services/login.service';
@@ -20,7 +19,7 @@ export class LoginComponent implements OnInit {
   public connectionError: boolean = false;
 
 
-  constructor(private router: Router, private authService: AuthenticationService, private fb: FormBuilder, private loginService: LoginService) {
+  constructor(private router: Router, private fb: FormBuilder, private loginService: LoginService) {
 
     this.logins = new Login();
 
@@ -48,6 +47,7 @@ export class LoginComponent implements OnInit {
     this.loginService
     .postLogin(this.logins).subscribe//postlogin envoie un observale / observable =  la prochaine fois qu'un evenement aura lieu, exécute ca ...(person => console.log(person));
      (person =>  this.connection(person));
+
     }
 
   public hasLoginError() {
@@ -60,9 +60,6 @@ export class LoginComponent implements OnInit {
     return control.errors && control.errors.required && control.invalid;
   }
 
-  public isConnect() {
-    return this.authService.isConnected();
-  }
 
   public connection(person: Person) {
     if (person === null) {

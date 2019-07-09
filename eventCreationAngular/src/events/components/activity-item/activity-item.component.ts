@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ActivityService } from '../../../app/services/activity.service';
 
 @Component({
   selector: 'app-activity-item',
@@ -7,9 +9,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ActivityItemComponent implements OnInit {
 
-  constructor() { }
+  public activityName: string;
+  public activityStart: Date;
+  public activityEnd: Date;
+
+  constructor(private route: ActivatedRoute, private activityService: ActivityService) { }
 
   ngOnInit() {
-  }
+    this.route.params.subscribe(params => {
+      const id: string = params.id;
 
-}
+      this.activityService.getEventByID(id).subscribe(
+        activity => {
+          this.activityName = activity.name;
+          this.activityStart = activity.activityStart;
+          this.activityEnd = activity.activityEnd;
+
+        }
+        );
+      });
+
+    }
+    }
+

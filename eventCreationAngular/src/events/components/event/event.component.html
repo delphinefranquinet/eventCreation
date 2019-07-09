@@ -6,21 +6,8 @@
     <a [routerLink]="['/register']" id="register"> Register </a>
 </div>
 
-<!--
-<div  *ngFor="let event of events">
-    <div class="activity-title"> <a [routerLink]="['/event']">{{event.name}} </a>
 
-
-  <div  *ngFor="let event of events"></div>
-  <div> <a [routerLink]="['/activityInscription']">{{activity.name}} </a>
-
-    {{activity.description}}
-    <br>
-    {{activity.startActivity}}
-    <br>
-    {{activity.endActivity}}
-    <br>
-  </div>
--->
-<div>{{event}}</div>
-
+<div> <a [routerLink]="['/activity-item']">{{ eventName }}</a></div>
+<div>{{ eventStart}}</div>
+<div>{{ eventEnd}}</div>
+<div 
