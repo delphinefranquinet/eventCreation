@@ -221,6 +221,11 @@ public class eventCreationJavaServelet extends HttpServlet {
 			e.printStackTrace(); // affiche une exception sur le canal d'erreur (console)
 		}
 	}
+	
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+	}
 
 	@Override
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response)
