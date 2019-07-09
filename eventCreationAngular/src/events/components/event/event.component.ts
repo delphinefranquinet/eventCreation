@@ -21,8 +21,8 @@ export class EventComponent implements OnInit {
         console.log(id);
         this.eventService.getEventByID(id).subscribe(
           event => {
-
-            this.event =  event;
+            console.log("toto");
+            this.event = event;
           }
           );
         });

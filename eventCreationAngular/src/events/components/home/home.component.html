@@ -10,7 +10,7 @@
 </div>
 
 <div *ngFor="let event of events" class="grid-container">
-  <div class="grid-item"><a [routerLink]="['/event}']">{{event.name}}</a></div>
+  <div class="grid-item"><a [routerLink]="['/event', event.id]">{{event.name}}</a></div>
 </div>
 
 
