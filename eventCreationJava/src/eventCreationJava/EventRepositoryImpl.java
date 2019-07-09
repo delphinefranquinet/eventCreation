@@ -327,10 +327,18 @@ public class EventRepositoryImpl {
 		}
 		return deleted;
 	}
-
-
-
 	/*
+	public Activity FindActivityById(int id) {
+		Activity activity = null;
+		
+		if (id > 0) {
+			String sql = "";
+		}
+		
+		return activity;
+	}
+
+	
 	 * public Integer FindIdEventByName(String eventName) {
 	 * 
 	 * Integer idEvent = null;
