@@ -263,35 +263,29 @@ public class EventRepositoryImpl {
 	return event;
 }
 
-	public InscriptionActivity CreateNewInscriptionActivity(InscriptionActivity newInscriptionActivity)
+	public boolean CreateNewInscriptionActivity( Integer idPerson, Integer idActivity)
 			throws SQLException {
-
-		if (newInscriptionActivity.getIdPerson() > 0 && newInscriptionActivity.getIdPerson() > 0) {
-			String sql = "INSERT INTO \"Inscription_activity\" Values (DEFAULT, (SELECT id_person FROM persons WHERE id_person = ?),(SELECT id_activity FROM \"Activities\" WHERE id_activity = ?))";
+		boolean add = false;
+		
+		if (idPerson != null && idActivity != null) {
+			String sql = "INSERT INTO \"Inscription_activity\" Values (DEFAULT, ?, ?)";
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql,
 							Statement.RETURN_GENERATED_KEYS);) {
 				connection.setAutoCommit(false);
-				query.setInt(1, newInscriptionActivity.getIdPerson());
-				query.setInt(2, newInscriptionActivity.getIdActivity());
+				query.setInt(1, idPerson);
+				query.setInt(2, idActivity);
 				query.executeUpdate();
-				try (ResultSet resultSet = query.getGeneratedKeys()
-
-				) {
-					if (resultSet.next()) {
-						int id = resultSet.getInt(1);
-
-						newInscriptionActivity.setIdInscriptionActivity(id);
-					}
-				}
+				int updatedRows = query.getUpdateCount();
 				connection.commit();
+				add = updatedRows > 0;
 
 			} catch (java.sql.SQLException sqle) {
-				throw new RuntimeException(sqle);
+				//throw new RuntimeException(sqle); 
 			}
 		}
 
-		return newInscriptionActivity;
+		return add;
 
 	}
 	
