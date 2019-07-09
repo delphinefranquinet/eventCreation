@@ -15,7 +15,7 @@ export class ActivityService {
 
     public getActivity(): Observable<Activity[]> {
       return this.http
-        .get<Activity[]>(`${environment.baseUrl}/signInLogin`)
+        .get<Activity[]>(`${environment.baseUrl}/activity-item`)
         .pipe(catchError((error: any) => Observable.throw(error.json())));
     }
 
@@ -26,6 +26,11 @@ export class ActivityService {
          .pipe(catchError((error: any) => Observable.throw(error.json())));
      }
 
+     public getActivityByID(id: string): Observable<Activity> {
+      return this.http
+        .get<Activity>(`${environment.baseUrl}/activity-item/${id}`)
+        .pipe(catchError((error: any) => Observable.throw(error.json())));
+    }
 
 }
 

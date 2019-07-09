@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../../../app/services/authentication.service.ts.service';
+
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterService } from '../../../app/services/register.service';
@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
   public registerError = false;
 
 // tslint:disable-next-line: max-line-length
-  constructor(private router: Router, private authService: AuthenticationService, private fb: FormBuilder, private activityService: RegisterService) {
+  constructor(private router: Router, private fb: FormBuilder, private activityService: RegisterService) {
   this.register = new Register();
 
   this.registerForm = this.fb.group({
@@ -60,9 +60,7 @@ export class RegisterComponent implements OnInit {
     const control = this.registerForm.get('password');
     return control.errors && control.errors.required;
   }
-  public isConnect() {
-    return this.authService.isConnected();
-  }
+
 
   public submitForm(){
     const newValues = this.registerForm.value;

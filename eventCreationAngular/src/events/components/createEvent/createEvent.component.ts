@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
 import { from } from 'rxjs';
-import { AuthenticationService } from '../../../app/services/authentication.service.ts.service';
 import { Router } from '@angular/router';
 import { EventService } from '../../../app/services/event.service';
 import {EventManage} from '../../../app/modeles/eventManage.modele';
@@ -22,7 +20,7 @@ export class CreateEventComponent implements OnInit {
   public eventError = false;
   @Input() eventz: EventManage;
 // tslint:disable-next-line: max-line-length
-  constructor(private router: Router, private authService: AuthenticationService, private fb: FormBuilder, private eventService: EventService) {
+  constructor(private router: Router, private fb: FormBuilder, private eventService: EventService) {
     this.event = new EventManage();
 
     this.eventForm = this.fb.group({
@@ -60,10 +58,6 @@ export class CreateEventComponent implements OnInit {
   public hasDescriptionError() {
     const control = this.eventForm.get('description');
     return control.errors && control.errors.required;
-  }
-
-  public isConnect() {
-    return this.authService.isConnected();
   }
 
   public submitForm(){

@@ -6,8 +6,6 @@ import { HomeComponent } from 'src/events/components/home/home.component';
 import { CreateEventComponent } from '../events/components/createEvent/createEvent.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from '../events/components/login/login.component';
-import { AuthenticationService } from './services/authentication.service.ts.service';
-import { AuthGuard } from './guards/auth.guard';
 import { SignInLoginComponent } from '../events/components/signInLogin/signInLogin.component';
 import { LoginService } from './services/login.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -41,7 +39,7 @@ import { ClientSpaceComponent } from '../events/components/clientSpace/clientSpa
     ReactiveFormsModule
   ],
 // tslint:disable-next-line: max-line-length
-  providers: [ AuthGuard, AuthenticationService, HttpClient, LoginService, PersonService, EventService, ActivityService, RegisterService],
+  providers: [HttpClient, LoginService, PersonService, EventService, ActivityService, RegisterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
