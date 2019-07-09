@@ -194,7 +194,7 @@ public class EventRepositoryImpl {
 		List<Activity> activities = new ArrayList<Activity>();
 		
 		if (id > 0) {
-		String sql = "Select \"eventName\", description, \"dateDebut\", \"dateFin\" From \"Events\" e join \"Activities\" a on e.id_event = a.id_event Where e.id_event = ?" ;
+		String sql = "Select \"eventName\", description, \"dateDebut\", \"dateFin\" From \"Events\" e left join \"Activities\" a on e.id_event = a.id_event Where e.id_event = ?" ;
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 			
@@ -221,6 +221,7 @@ public class EventRepositoryImpl {
 								if (resultSet2.next()) {
 									
 									Activity activity = new Activity();
+									activity.setId(resultSet2.getInt("id_activity"));
 									activity.setName(resultSet2.getString("nameActivity"));
 									activity.setDescription(resultSet2.getString("descriptionActivity"));
 									activity.setStartActivity(resultSet2.getTimestamp("startActivity").toLocalDateTime());
@@ -242,6 +243,7 @@ public class EventRepositoryImpl {
 						}
 						
 						event = new Event();
+						event.setId(id);
 						event.setName(name);
 						event.setDescription(description);
 						event.setStartEvent(startEvent);
@@ -260,30 +262,6 @@ public class EventRepositoryImpl {
 
 	return event;
 }
-		
-
-/*		try (Connection c = DriverManager.getConnection(url, user, password);
-				Statement s = c.createStatement();
-				ResultSet rs = s.executeQuery(
-						"SELECT id_activity, \"nameActivity\", \"descriptionActivity\", \"startActivity\", \"endActivity\" FROM \"Activities\" WHERE id_event = 1")) {
-			while (rs.next()) {
-
-				Activity activity = new Activity();
-				activity.setId(rs.getInt("id"));
-				activity.setName(rs.getString("eventName"));
-				activity.setDescription(rs.getString("description"));
-				activity.setStartActivity(rs.getTimestamp("startActivity").toLocalDateTime());
-				activity.setEndActivity(rs.getTimestamp("endActivity").toLocalDateTime());
-				activities.add(activity);
-			}
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-			throw new RuntimeException(sqle);
-		}
-
-		return event;
-
-	}*/
 
 	public InscriptionActivity CreateNewInscriptionActivity(InscriptionActivity newInscriptionActivity)
 			throws SQLException {
@@ -317,15 +295,44 @@ public class EventRepositoryImpl {
 
 	}
 	
-	/*public boolean deleteEventById(int id) {
-		
+	public boolean deleteEventById(int idEvent, int idResponsable) {
+
 		boolean deleted = false;
-		if (id > 0) {
-			
-		}
+
+		String SqlIdPersonString = "Select id_person From \"Events\" Where id_event = ?";
+		int idPerson = Integer.parseInt(SqlIdPersonString);
+
+		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+				java.sql.PreparedStatement idPersonString = connection.prepareStatement(SqlIdPersonString);) {
+
+			idPersonString.setInt(1, idEvent);
+
+			if (idEvent > 0 && idResponsable == idPerson) {
 				
+				String sqlDeleteActivities = "delete from \"Activities\" Where id_event = ?";
+				String sqlDeleteEvent = "delete from \"Events\" Where id_event = ?";
+				try (
+						java.sql.Connection connection2 = java.sql.DriverManager.getConnection(url, user, password);
+		                PreparedStatement deleteActivitiesStatement = connection2.prepareStatement(sqlDeleteActivities);
+		                PreparedStatement deleteEventStatement = connection2.prepareStatement(sqlDeleteEvent)
+		            ) {
+		                connection.setAutoCommit(false); 
+		                
+		                deleteActivitiesStatement.setInt(1, idEvent); 
+		                deleteActivitiesStatement.executeUpdate();
+		                deleteEventStatement.setInt(1, idEvent);
+		                deleteEventStatement.executeUpdate();
+		                connection.commit();
+		                deleted = deleteEventStatement.getUpdateCount() > 0;
+		            } catch (Exception e) {
+		                throw new RuntimeException(e);
+		            }
+			}
+		} catch (java.sql.SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
 		return deleted;
-	}*/
+	}
 
 
 
