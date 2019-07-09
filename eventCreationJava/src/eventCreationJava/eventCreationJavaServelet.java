@@ -86,9 +86,9 @@ public class eventCreationJavaServelet extends HttpServlet {
 				setHeaders(response);
 				try {
 					if (repository.CreateNewInscriptionActivity(idPerson, idActivity)) {
-						response.setStatus(200);
+						response.getWriter().write("insciption ok");
 					} else {
-						response.setStatus(400);
+						response.getWriter().write("insciption NOK");
 					}
 
 				} catch (SQLException e) {
