@@ -70,8 +70,8 @@ public class eventCreationJavaServelet extends HttpServlet {
 			String[] parts = path.split("/");
 			String idEvent = parts[2];
 			int id = Integer.parseInt(idEvent);
-			List<Activity> activities = repository.FindAllActivityByIdEvent(id);
-			String json = mapper.writeValueAsString(activities); // convertir en format json
+			Event event = repository.FindEventAndAllActivityByIdEvent(id);
+			String json = mapper.writeValueAsString(event); // convertir en format json
 			response.setContentType("application/json"); // le type du contenu est du json
 			response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
 			response.getWriter().write(json); // on écrit le json dans la réponse

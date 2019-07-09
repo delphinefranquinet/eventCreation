@@ -9,7 +9,9 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
 
 public class EventRepositoryImpl {
 
@@ -186,11 +188,80 @@ public class EventRepositoryImpl {
 		return events;
 	}
 
-	public List<Activity> FindAllActivityByIdEvent(int id) {
+	public Event FindEventAndAllActivityByIdEvent(int id) {
+		
+		Event event = null;
+		List<Activity> activities = new ArrayList<Activity>();
+		
+		if (id > 0) {
+		String sql = "Select \"eventName\", description, \"dateDebut\", \"dateFin\" From \"Events\" e join \"Activities\" a on e.id_event = a.id_event Where e.id_event = 1" ;
+		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+				java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 
-		List<Activity> activities = new ArrayList<>();
+			try (java.sql.ResultSet rs = query.executeQuery();) {
 
-		try (Connection c = DriverManager.getConnection(url, user, password);
+				if (rs.next()) {
+					
+					String name = rs.getString(1);
+					String description = rs.getString(2);
+					LocalDateTime startEvent = rs.getTimestamp(3).toLocalDateTime();
+					LocalDateTime endEvent = rs.getTimestamp(4).toLocalDateTime();
+					
+					if (activities != null) {
+
+						sql = "SELECT id_activity, \"nameActivity\", \"descriptionActivity\", \"startActivity\", \"endActivity\" FROM \"Activities\" a join \"Events\" e on a.id_event = e.id_event WHERE a.id_event = 1";
+
+						try (java.sql.Connection connection2 = java.sql.DriverManager.getConnection(url, user,
+								password); java.sql.PreparedStatement query2 = connection.prepareStatement(sql);) {
+
+							try (java.sql.ResultSet resultSet2 = query2.executeQuery();) {
+
+								if (resultSet2.next()) {
+									
+									Activity activity = new Activity();
+									activity.setId(rs.getInt("id"));
+									activity.setName(rs.getString("eventName"));
+									activity.setDescription(rs.getString("description"));
+									activity.setStartActivity(rs.getTimestamp("startActivity").toLocalDateTime());
+									activity.setEndActivity(rs.getTimestamp("endActivity").toLocalDateTime());
+									activities.add(activity);
+
+									while (rs.next()) {
+										activity.setId(rs.getInt("id"));
+										activity.setName(rs.getString("eventName"));
+										activity.setDescription(rs.getString("description"));
+										activity.setStartActivity(rs.getTimestamp("startActivity").toLocalDateTime());
+										activity.setEndActivity(rs.getTimestamp("endActivity").toLocalDateTime());
+										activities.add(activity);
+									}
+								} else {
+									activities = Collections.emptyList();
+								}
+							}
+						}
+						
+						event = new Event();
+						event.setName(name);
+						event.setActivities(activities);
+						event.setStartEvent(startEvent);
+						event.setEndEvent(endEvent);
+						event.setActivities(activities);
+						
+						
+					}
+
+				}
+			} 
+		}catch (java.sql.SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+	}
+
+	return event;
+}
+		
+
+/*		try (Connection c = DriverManager.getConnection(url, user, password);
 				Statement s = c.createStatement();
 				ResultSet rs = s.executeQuery(
 						"SELECT id_activity, \"nameActivity\", \"descriptionActivity\", \"startActivity\", \"endActivity\" FROM \"Activities\" WHERE id_event = 1")) {
@@ -209,9 +280,9 @@ public class EventRepositoryImpl {
 			throw new RuntimeException(sqle);
 		}
 
-		return activities;
+		return event;
 
-	}
+	}*/
 
 	public InscriptionActivity CreateNewInscriptionActivity(InscriptionActivity newInscriptionActivity)
 			throws SQLException {

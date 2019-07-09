@@ -2,6 +2,8 @@ package eventCreationJava;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -23,11 +25,14 @@ public class Event implements Serializable{
 	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDateTime endEvent;
 	private Integer idResponsable;
+	private List<Activity> activities = new ArrayList<>();
+	
+	
 	
 	@Override
 	public String toString() {
 		return "Event [id=" + id + ", name=" + name + ", description=" + description + ", startEvent=" + startEvent
-				+ ", endEvent=" + endEvent + ", idResponsable=" + idResponsable + "]";
+				+ ", endEvent=" + endEvent + ", idResponsable=" + idResponsable + ", activities=" + activities + "]";
 	}
 	public Integer getId() {
 		return id;
@@ -65,11 +70,15 @@ public class Event implements Serializable{
 	public void setIdResponsable(Integer idResponsable) {
 		this.idResponsable = idResponsable;
 	}
+	public List<Activity> getActivities() {
+		return activities;
+	}
+	public void setActivities(List<Activity> activities) {
+		this.activities = activities;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	
 	
-	
-
 }
