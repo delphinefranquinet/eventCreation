@@ -186,7 +186,7 @@ public class EventRepositoryImpl {
 		}
 
 		return events;
-	}
+	} 
 
 	public Event FindEventAndAllActivityByIdEvent(int id) {
 		
@@ -215,25 +215,24 @@ public class EventRepositoryImpl {
 
 						try (java.sql.Connection connection2 = java.sql.DriverManager.getConnection(url, user,
 								password); java.sql.PreparedStatement query2 = connection.prepareStatement(sql);) {
-							query.setInt(1, id);
+							query2.setInt(1, id);
 							try (java.sql.ResultSet resultSet2 = query2.executeQuery();) {
 
 								if (resultSet2.next()) {
 									
 									Activity activity = new Activity();
-									activity.setId(rs.getInt("id"));
-									activity.setName(rs.getString("eventName"));
-									activity.setDescription(rs.getString("description"));
-									activity.setStartActivity(rs.getTimestamp("startActivity").toLocalDateTime());
-									activity.setEndActivity(rs.getTimestamp("endActivity").toLocalDateTime());
+									activity.setName(resultSet2.getString("nameActivity"));
+									activity.setDescription(resultSet2.getString("descriptionActivity"));
+									activity.setStartActivity(resultSet2.getTimestamp("startActivity").toLocalDateTime());
+									activity.setEndActivity(resultSet2.getTimestamp("endActivity").toLocalDateTime());
 									activities.add(activity);
 
-									while (rs.next()) {
-										activity.setId(rs.getInt("id"));
-										activity.setName(rs.getString("eventName"));
-										activity.setDescription(rs.getString("description"));
-										activity.setStartActivity(rs.getTimestamp("startActivity").toLocalDateTime());
-										activity.setEndActivity(rs.getTimestamp("endActivity").toLocalDateTime());
+									while (resultSet2.next()) {
+										activity.setId(resultSet2.getInt("id"));
+										activity.setName(resultSet2.getString("nameActivity"));
+										activity.setDescription(resultSet2.getString("descriptionActivity"));
+										activity.setStartActivity(resultSet2.getTimestamp("startActivity").toLocalDateTime());
+										activity.setEndActivity(resultSet2.getTimestamp("endActivity").toLocalDateTime());
 										activities.add(activity);
 									}
 								} else {

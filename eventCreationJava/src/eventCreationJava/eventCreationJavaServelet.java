@@ -45,7 +45,7 @@ public class eventCreationJavaServelet extends HttpServlet {
 			repository = new EventRepositoryImpl(user, password, url);
 		} catch (Exception e) {
 			throw new ServletException(e);
-		}
+		} 
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
