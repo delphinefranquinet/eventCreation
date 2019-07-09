@@ -244,6 +244,16 @@ public class EventRepositoryImpl {
 		return newInscriptionActivity;
 
 	}
+	
+	/*public boolean deleteEventById(int id) {
+		
+		boolean deleted = false;
+		if (id > 0) {
+			
+		}
+				
+		return deleted;
+	}*/
 
 
 
