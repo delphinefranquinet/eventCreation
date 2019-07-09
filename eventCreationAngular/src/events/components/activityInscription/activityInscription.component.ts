@@ -24,10 +24,10 @@ export class ActivityInscriptionComponent implements OnInit {
 
       this.activityService.getActivityByID(id).subscribe(
         activity => {
+          console.log(id);
           this.activityName = activity.name;
           this.activityStart = activity.startActivity;
           this.activityEnd = activity.endActivity;
-
         }
         );
       });

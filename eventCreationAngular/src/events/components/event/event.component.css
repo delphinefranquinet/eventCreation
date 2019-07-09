@@ -27,21 +27,19 @@ left: 0;
   background-color: #f44336;
 }
 #Create {
-top: 10px;
-background-color: #4CAF50;
+  top: 80px;
+  background-color: #4CAF50;
 }
 
 #login {
-top: 100px;
-background-color: #2196F3;
+  top: 170px;
+  background-color: #2196F3;
 }
 
 #register {
-top: 170px;
-background-color: #f4433681;
+  top: 240px;
+  background-color: #f4433681;
 }
-
-
 .coupon {
   border: 5px dotted #bbb;
   width: 70%;
