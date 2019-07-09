@@ -26,6 +26,7 @@ export class EventComponent implements OnInit {
         this.eventService.getEventByID(id).subscribe(
           event => {
             this.eventName = event.name;
+            console.log( this.eventName);
             this.eventStart = event.startEvent;
             this.eventEnd = event.endEvent;
 

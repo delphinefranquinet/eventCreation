@@ -65,7 +65,7 @@ public class eventCreationJavaServelet extends HttpServlet {
 			response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
 			response.getWriter().write(json); // on écrit le json dans la réponse
 
-		} else if (path.startsWith("/event/")) {
+		} else if (path.startsWith("/event")) {
 
 			String[] parts = path.split("/");
 			String idEvent = parts[2];

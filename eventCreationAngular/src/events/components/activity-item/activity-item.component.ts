@@ -19,7 +19,7 @@ export class ActivityItemComponent implements OnInit {
     this.route.params.subscribe(params => {
       const id: string = params.id;
 
-      this.activityService.getEventByID(id).subscribe(
+      this.activityService.getActivityByID(id).subscribe(
         activity => {
           this.activityName = activity.name;
           this.activityStart = activity.activityStart;

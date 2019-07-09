@@ -7,7 +7,9 @@
 </div>
 
 
-<div> <a [routerLink]="['/activity-item']">{{ eventName }}</a></div>
+<!--<div> <a [routerLink]="['/activity-item']">{{ eventName }}</a></div>-->
+
+<div>{{ eventName |json }}</div>
 <div>{{ eventStart}}</div>
 <div>{{ eventEnd}}</div>
-<div 
+
