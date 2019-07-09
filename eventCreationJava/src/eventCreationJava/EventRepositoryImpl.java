@@ -194,9 +194,11 @@ public class EventRepositoryImpl {
 		List<Activity> activities = new ArrayList<Activity>();
 		
 		if (id > 0) {
-		String sql = "Select \"eventName\", description, \"dateDebut\", \"dateFin\" From \"Events\" e join \"Activities\" a on e.id_event = a.id_event Where e.id_event = 1" ;
+		String sql = "Select \"eventName\", description, \"dateDebut\", \"dateFin\" From \"Events\" e join \"Activities\" a on e.id_event = a.id_event Where e.id_event = ?" ;
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
+			
+			query.setInt(1, id);
 
 			try (java.sql.ResultSet rs = query.executeQuery();) {
 
@@ -209,11 +211,11 @@ public class EventRepositoryImpl {
 					
 					if (activities != null) {
 
-						sql = "SELECT id_activity, \"nameActivity\", \"descriptionActivity\", \"startActivity\", \"endActivity\" FROM \"Activities\" a join \"Events\" e on a.id_event = e.id_event WHERE a.id_event = 1";
+						sql = "SELECT id_activity, \"nameActivity\", \"descriptionActivity\", \"startActivity\", \"endActivity\" FROM \"Activities\" a join \"Events\" e on a.id_event = e.id_event WHERE a.id_event = ?";
 
 						try (java.sql.Connection connection2 = java.sql.DriverManager.getConnection(url, user,
 								password); java.sql.PreparedStatement query2 = connection.prepareStatement(sql);) {
-
+							query.setInt(1, id);
 							try (java.sql.ResultSet resultSet2 = query2.executeQuery();) {
 
 								if (resultSet2.next()) {
@@ -242,7 +244,7 @@ public class EventRepositoryImpl {
 						
 						event = new Event();
 						event.setName(name);
-						event.setActivities(activities);
+						event.setDescription(description);
 						event.setStartEvent(startEvent);
 						event.setEndEvent(endEvent);
 						event.setActivities(activities);
