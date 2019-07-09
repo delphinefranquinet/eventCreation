@@ -228,7 +228,7 @@ public class EventRepositoryImpl {
 									activities.add(activity);
 
 									while (resultSet2.next()) {
-										activity.setId(resultSet2.getInt("id"));
+										
 										activity.setName(resultSet2.getString("nameActivity"));
 										activity.setDescription(resultSet2.getString("descriptionActivity"));
 										activity.setStartActivity(resultSet2.getTimestamp("startActivity").toLocalDateTime());
