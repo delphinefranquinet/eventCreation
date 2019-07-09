@@ -16,7 +16,7 @@ export class ActivityItemComponent implements OnInit {
   constructor(private route: ActivatedRoute, private activityService: ActivityService) { }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+   /* this.route.params.subscribe(params => {
       const id: string = params.id;
 
       this.activityService.getActivityByID(id).subscribe(
@@ -27,7 +27,7 @@ export class ActivityItemComponent implements OnInit {
 
         }
         );
-      });
+      });*/
 
     }
     }

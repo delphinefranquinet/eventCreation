@@ -1,3 +1,9 @@
+.container {
+
+  position: relative;
+  height: 50%;
+  width: 100%;
+}
 
 #mySidenav a {
 position: absolute;
@@ -15,33 +21,24 @@ border-radius: 0 5px 5px 0;
 left: 0;
 }
 
-#home {
-  top: 10px;
-  background-color: #f44336;
-}
+
 #Create {
-  top: 80px;
-  background-color: #4CAF50;
+top: 10px;
+background-color: #4CAF50;
 }
 
 #login {
-  top: 170px;
-  background-color: #2196F3;
+top: 100px;
+background-color: #2196F3;
 }
 
 #register {
-  top: 240px;
-  background-color: #f4433681;
+top: 170px;
+background-color: #f4433681;
 }
 
 
 
-.title{
-position: absolute;
-top: 20%;
-left: 50%;
-transform: translate(-50%, -50%);
-}
 /* Bottom right text */
 .text-block {
 position: center;
@@ -58,6 +55,23 @@ right: 30px;
 }
 .event-title
 {
-font: 15px arial, sans-serif;
-font-size: 150%;
+font: 10px arial, sans-serif;
+font-size: 100%;
+}
+.grid-container {
+display: grid;
+grid-template-columns: auto auto auto auto;
+background-color: rgb(247, 243, 240);
+padding: 20px;
+}
+.grid-item {
+background-color: rgba(32, 170, 159, 0.8);
+font-size: 20px;
+text-align: center;
+transition: 0.3s;
+padding: 15px;
+width: 100px;
+text-decoration: none;
+color: white;
+border-radius: 5px 5px 5px 5px;
 }

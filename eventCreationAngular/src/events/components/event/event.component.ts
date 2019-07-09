@@ -14,8 +14,9 @@ export class EventComponent implements OnInit {
  public eventName: string;
  public eventStart: Date;
  public eventEnd: Date;
-
-  public activities: Activity[];
+ public descreption: string;
+ public activities: Activity[];
+ public activityError: boolean;
 
   constructor(private route: ActivatedRoute, private eventService: EventService) { }
 
@@ -26,14 +27,22 @@ export class EventComponent implements OnInit {
         this.eventService.getEventByID(id).subscribe(
           event => {
             this.eventName = event.name;
-            console.log( this.eventName);
+            this.descreption = event.description;
             this.eventStart = event.startEvent;
             this.eventEnd = event.endEvent;
-
+            this.activities = event.activities;
           }
           );
         });
 
       }
-      }
 
+
+      public activityExistance(activities: Activity[]){
+        if (activities === null) {
+          this.activityError = true;
+         } else {
+           this.activityError = false;
+      }
+    }
+  }
