@@ -224,7 +224,31 @@ public class eventCreationJavaServelet extends HttpServlet {
 	
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
+		HttpSession session = request.getSession(true);
+
+		try {
+			String path = request.getPathInfo();
+			ObjectMapper mapper = new ObjectMapper();
+
+			if (path.startsWith("/deleteEvent")) {
+				
+				int idResponsable = (Integer) session.getAttribute("idPerson");
+				int idEvent = request.getPathInfo().lastIndexOf("/");
+				
+				boolean deleted = repository.deleteEventById(idEvent, idResponsable);
+				
+				response.setContentType("application/json"); // le type du contenu est du json
+				response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
+				String.format("{\"deleted\": %s}", deleted);
+			}
+			
+			
+		} catch (Exception e) {
+			response.setStatus(500);
+			e.printStackTrace(); // affiche une exception sur le canal d'erreur (console)
+		}
+
 	}
 
 	@Override
