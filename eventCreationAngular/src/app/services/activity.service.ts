@@ -15,7 +15,7 @@ export class ActivityService {
 
     public getActivity(): Observable<Activity[]> {
       return this.http
-        .get<Activity[]>(`${environment.baseUrl}/activityInscription`)
+        .get<Activity[]>(`${environment.baseUrl}/activity`)
         .pipe(catchError((error: any) => Observable.throw(error.json())));
     }
 
@@ -26,9 +26,9 @@ export class ActivityService {
          .pipe(catchError((error: any) => Observable.throw(error.json())));
      }
 
-     public getActivityByID(id: string): Observable<Activity> {
+     public getInscription(id: string): Observable<boolean> {
       return this.http
-        .get<Activity>(`${environment.baseUrl}/activityInscription/${id}`)
+        .get<boolean>(`${environment.baseUrl}/activityInscription/${id}`)
         .pipe(catchError((error: any) => Observable.throw(error.json())));
     }
 

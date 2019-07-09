@@ -19,10 +19,8 @@ export class EventComponent implements OnInit {
  public activities: Activity[];
  public activityError: boolean;
  public activity: Activity;
- public activityName: string;
- public activityStart: Date;
- public activityEnd: Date;
-  constructor(private route: ActivatedRoute,private activityService: ActivityService, private eventService: EventService) { }
+
+  constructor(private route: ActivatedRoute, private activityService: ActivityService, private eventService: EventService) { }
 
    ngOnInit() {
       this.route.params.subscribe(params => {
@@ -43,11 +41,13 @@ export class EventComponent implements OnInit {
       }
 
 
-      public activityExistance(activities: Activity[]){
-        if (activities === null) {
-          this.activityError = true;
-         } else {
-           this.activityError = false;
-      }
+    public inscription(id: string) {
+      if ( this.activityError !== null) {
+      this.activityService.getInscription(id).subscribe(activity => this.activity = activity);
+
+        this.activityError = true;
+       } else {
+         this.activityError = false;
+
+       }}
     }
-  }

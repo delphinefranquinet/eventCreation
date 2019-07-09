@@ -15,6 +15,7 @@ export class ActivityInscriptionComponent implements OnInit {
   public activityEnd: Date;
   public activityError: boolean;
   public activity: Activity;
+  public descreption: string;
 
   constructor(private route: ActivatedRoute, private activityService: ActivityService) { }
 
@@ -22,24 +23,18 @@ export class ActivityInscriptionComponent implements OnInit {
     this.route.params.subscribe(params => {
       const id: string = params.id;
 
-      this.activityService.getActivityByID(id).subscribe(
+      this.activityService.getActivity().subscribe(
         activity => {
           console.log(id);
-          this.activityName = activity.name;
-          this.activityStart = activity.startActivity;
-          this.activityEnd = activity.endActivity;
+          // this.activityName = activity.name;
+          // this.activityStart = activity.startActivity;
+          // this.descreption = activity.description;
+          // this.activityEnd = activity.endActivity;
         }
         );
       });
 
     }
 
-    public activityExistance(activities: Activity[]) {
-      if (activities === null) {
-        this.activityError = true;
-       } else {
-         this.activityError = false;
-    }
-  }
     }
 
