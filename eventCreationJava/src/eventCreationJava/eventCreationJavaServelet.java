@@ -76,38 +76,27 @@ public class eventCreationJavaServelet extends HttpServlet {
 			response.setContentType("application/json"); // le type du contenu est du json
 			response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
 			response.getWriter().write(json); // on écrit le json dans la réponse
-			
-		}else if (path.startsWith("/activity")){
-			
-			String[] parts = path.split("/");
-			String id = parts[2];
-			int idActivity = Integer.parseInt(id);
+
+		} else if (path.startsWith("/activityInscription")) {
 			Integer idPerson = (Integer) session.getAttribute("idPerson");
-			setHeaders(response);
-			
-			if (id != null && idPerson != null) {
-				
-				InscriptionActivity newInscriptionActivity = new InscriptionActivity();
-				newInscriptionActivity.setIdPerson(idPerson);
-				newInscriptionActivity.setIdActivity(idActivity);
-				
+			if (idPerson != null) {
+				String[] parts = path.split("/");
+				String id = parts[2];
+				Integer idActivity = Integer.parseInt(id);
+				setHeaders(response);
 				try {
-					newInscriptionActivity = repository.CreateNewInscriptionActivity(newInscriptionActivity);
+					if (repository.CreateNewInscriptionActivity(idPerson, idActivity)) {
+						response.setStatus(200);
+					} else {
+						response.setStatus(400);
+					}
+
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
-				session.setAttribute("idInscriptionActivity", newInscriptionActivity.getIdInscriptionActivity());
-
-				String json = mapper.writeValueAsString(newInscriptionActivity); // convertir en format json
-				System.out.println(json);
-				response.setContentType("application/json"); // le type du contenu est du json
-				response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
-				response.getWriter().write(json); // on écrit le json dans la réponse
-
+			}else {
+				response.setStatus(401);
 			}
-			
 		}
 	}
 
@@ -129,7 +118,9 @@ public class eventCreationJavaServelet extends HttpServlet {
 				Person person = repository.connexion(parameters.login, parameters.password);
 
 				if (person != null) {
-					session.setAttribute("idResponsable", person.getId()); // pour récupérer l'id du responsable
+					session.setAttribute("idPerson", person.getId()); // pour récupérer l'id du responsable
+					System.out.println("idPerson " + session.getAttribute("idPerson"));
+					
 				}
 
 				String json = mapper.writeValueAsString(person); // convertir en format json
@@ -140,7 +131,7 @@ public class eventCreationJavaServelet extends HttpServlet {
 
 			} else if (path.startsWith("/createEvent")) {
 
-				Integer idResponsable = (Integer) session.getAttribute("idResponsable");
+				Integer idResponsable = (Integer) session.getAttribute("idPerson");
 				setHeaders(response);
 
 				if (idResponsable != null) {
@@ -206,7 +197,8 @@ public class eventCreationJavaServelet extends HttpServlet {
 				
 				newPerson = repository.CreateNewPerson(newPerson);
 				
-				session.setAttribute("id", newPerson.getId());
+				session.setAttribute("idPerson", newPerson.getId());
+				
 
 				String json = mapper.writeValueAsString(newPerson); // convertir en format json
 				System.out.println(json);
