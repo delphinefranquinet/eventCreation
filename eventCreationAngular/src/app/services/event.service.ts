@@ -26,6 +26,12 @@ export class EventService {
       .get<EventManage>(`${environment.baseUrl}/event/${id}`)
       .pipe(catchError((error: any) => Observable.throw(error.json())));
   }
+
+  public removeEvent(payload: Event): Observable<Event> {
+    return this.http
+      .delete<any>(`${environment.baseUrl}/event/${payload}`)
+      .pipe(catchError((error: any) => Observable.throw(error.json())));
+  }
 /*
   public createEvent(payload: Event): Observable<Event> {
     return this.http
@@ -39,9 +45,5 @@ export class EventService {
       .pipe(catchError((error: any) => Observable.throw(error.json())));
   }
 
-  public removeEvent(payload: Event): Observable<Event> {
-    return this.http
-      .delete<any>(`${environment.baseUrl}/contacts/${payload}`)
-      .pipe(catchError((error: any) => Observable.throw(error.json())));
-  }*/
+ */
 }

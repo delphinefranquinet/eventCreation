@@ -1,4 +1,4 @@
-<!--
+
 <div id="mySidenav">
     <a [routerLink]="['/home']" id="home"> Home </a>
     <a [routerLink]="['/createEvent']" id="Create"> Create your event </a>
@@ -7,28 +7,29 @@
 </div>
 
 
-<div> <a [routerLink]="['/activity-item']">{{ eventName }}</a></div>-->
 
-<div class="">{{ eventName }}</div>
-<div>{{ descreption }}</div>
-<div>{{ eventStart}}</div>
-<div>{{ eventEnd}}</div>
+  <div class="coupon">
+      <div class="container">
+        <h3>{{ eventName }}</h3>
+        <div>{{ descreption }}</div>
+        <div>{{ eventStart}}</div>
+        <div>{{ eventEnd}}</div>
 
-
-<!--
-
-  <div >{{ activities |json}}</div>
- <div class="grid-item"> <a [routerLink]="['/activity-item',activity-item.id]">{{activity.name}} </a></div>
-  </div>-->
-
-  <div *ngIf="!activityError"  class="grid-container">
-      <div  *ngFor="let activity of activities">
-            <div class="grid-item">{{activity.name}}</div>
-            <div class="grid-item">{{activity.description}}</div>
-            <div class="grid-item">{{activity.startActivity}}</div>
-            <div class="grid-item">{{activity.endActivity}}</div>
       </div>
+      <div class="contain" style="background-color:white">
 
-
-
-  </div>
+            <div *ngIf="!activityError">
+                <div  *ngFor="let activity of activities">
+                      <div><h4>{{activity.name}}</h4></div>
+                      <div>{{activity.description}}</div>
+                      <div>{{activity.startActivity}}</div>
+                      <div>{{activity.endActivity}}</div>
+                     <button class="btn"> <a [routerLink]="['/activityInscription', activity.id]">Inscription</a></button>
+                </div>
+            </div>
+      </div>
+     <!-- <div class="contain">
+        <p>Use Promo Code: <span class="promo">BOH232</span></p>
+        <p class="expire">Expires: Jan 03, 2021</p>
+      </div>-->
+    </div>

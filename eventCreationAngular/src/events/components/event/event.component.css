@@ -22,6 +22,10 @@ left: 0;
 }
 
 
+#home {
+  top: 10px;
+  background-color: #f44336;
+}
 #Create {
 top: 10px;
 background-color: #4CAF50;
@@ -38,6 +42,29 @@ background-color: #f4433681;
 }
 
 
+.coupon {
+  border: 5px dotted #bbb;
+  width: 70%;
+  height: 70%;
+  border-radius: 15px;
+  margin: 0 auto;
+  max-width: 600px;
+  max-height: 600px;
+}
+
+.contain {
+  padding: 2px 16px;
+  background-color: #f1f1f1;
+}
+
+.promo {
+  background: #ccc;
+  padding: 3px;
+}
+
+.expire {
+  color: red;
+}
 
 /* Bottom right text */
 .text-block {
@@ -57,21 +84,4 @@ right: 30px;
 {
 font: 10px arial, sans-serif;
 font-size: 100%;
-}
-.grid-container {
-display: grid;
-grid-template-columns: auto auto auto auto;
-background-color: rgb(247, 243, 240);
-padding: 20px;
-}
-.grid-item {
-background-color: rgba(32, 170, 159, 0.8);
-font-size: 20px;
-text-align: center;
-transition: 0.3s;
-padding: 15px;
-width: 100px;
-text-decoration: none;
-color: white;
-border-radius: 5px 5px 5px 5px;
 }

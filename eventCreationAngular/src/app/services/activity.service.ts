@@ -15,22 +15,27 @@ export class ActivityService {
 
     public getActivity(): Observable<Activity[]> {
       return this.http
-        .get<Activity[]>(`${environment.baseUrl}/activity-item`)
+        .get<Activity[]>(`${environment.baseUrl}/activityInscription`)
         .pipe(catchError((error: any) => Observable.throw(error.json())));
     }
 
-    public postActivity(event: Activity): Observable<Activity> {
+    public postActivity(activity: Activity): Observable<Activity> {
 
        return this.http
-         .post<Activity>(`${environment.baseUrl}/activity`, event, { withCredentials: true })
+         .post<Activity>(`${environment.baseUrl}/activity`, activity, { withCredentials: true })
          .pipe(catchError((error: any) => Observable.throw(error.json())));
      }
 
      public getActivityByID(id: string): Observable<Activity> {
       return this.http
-        .get<Activity>(`${environment.baseUrl}/activity-item/${id}`)
+        .get<Activity>(`${environment.baseUrl}/activityInscription/${id}`)
         .pipe(catchError((error: any) => Observable.throw(error.json())));
     }
 
+    public removeActivity(payload: Activity): Observable<Activity> {
+      return this.http
+        .delete<any>(`${environment.baseUrl}/event/${payload}`)
+        .pipe(catchError((error: any) => Observable.throw(error.json())));
+    }
 }
 

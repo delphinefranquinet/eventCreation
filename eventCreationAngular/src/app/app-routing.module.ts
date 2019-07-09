@@ -7,7 +7,7 @@ import { SignInLoginComponent } from '../events/components/signInLogin/signInLog
 import { ActivityComponent } from '../events/components/activity/activity.component';
 import { RegisterComponent } from '../events/components/register/register.component';
 import { EventComponent } from '../events/components/event/event.component';
-import { ClientSpaceComponent } from '../events/components/clientSpace/clientSpace.component';
+import { ActivityInscriptionComponent } from '../events/components/activityInscription/activityInscription.component';
 
 
 
@@ -19,6 +19,7 @@ const routes: Routes = [
   {path: 'createEvent' , component: CreateEventComponent},
   {path: 'activity' , component: ActivityComponent},
   {path: 'register' , component:  RegisterComponent},
+  {path: 'activityInscription/:id' , component: ActivityInscriptionComponent},
   {path: 'event/:id' , component:  EventComponent},
   {path: '**', redirectTo: '/home'}
 ];

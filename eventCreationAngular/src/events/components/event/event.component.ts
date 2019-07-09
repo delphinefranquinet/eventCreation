@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../../../app/services/event.service';
 import { EventManage } from '../../../app/modeles/eventManage.modele';
 import { Activity } from '../../../app/modeles/activity.modele';
+import { ActivityService } from '../../../app/services/activity.service';
 
 @Component({
   selector: 'app-event',
@@ -17,8 +18,11 @@ export class EventComponent implements OnInit {
  public descreption: string;
  public activities: Activity[];
  public activityError: boolean;
-
-  constructor(private route: ActivatedRoute, private eventService: EventService) { }
+ public activity: Activity;
+ public activityName: string;
+ public activityStart: Date;
+ public activityEnd: Date;
+  constructor(private route: ActivatedRoute,private activityService: ActivityService, private eventService: EventService) { }
 
    ngOnInit() {
       this.route.params.subscribe(params => {
@@ -31,6 +35,7 @@ export class EventComponent implements OnInit {
             this.eventStart = event.startEvent;
             this.eventEnd = event.endEvent;
             this.activities = event.activities;
+
           }
           );
         });

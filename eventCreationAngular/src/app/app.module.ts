@@ -17,6 +17,7 @@ import { ActivityService } from './services/activity.service';
 import { RegisterService } from './services/register.service';
 import { EventComponent } from '../events/components/event/event.component';
 import { ClientSpaceComponent } from '../events/components/clientSpace/clientSpace.component';
+import { ActivityInscriptionComponent } from '../events/components/activityInscription/activityInscription.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { ClientSpaceComponent } from '../events/components/clientSpace/clientSpa
     ActivityComponent,
     RegisterComponent,
     EventComponent,
-    ClientSpaceComponent
+    ClientSpaceComponent,
+    ActivityInscriptionComponent
    ],
   imports: [
     BrowserModule,
