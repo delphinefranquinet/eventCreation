@@ -26,9 +26,9 @@ export class ActivityService {
          .pipe(catchError((error: any) => Observable.throw(error.json())));
      }
 
-     public getInscription(id: string): Observable<boolean> {
+     public getInscription(id: string): Observable<string> {
       return this.http
-        .get<boolean>(`${environment.baseUrl}/activityInscription/${id}`)
+        .get<string>(`${environment.baseUrl}/activityInscription/${id}`)
         .pipe(catchError((error: any) => Observable.throw(error.json())));
     }
 

@@ -40,14 +40,14 @@ export class EventComponent implements OnInit {
 
       }
 
-
+/*
     public inscription(id: string) {
       if ( this.activityError !== null) {
-      this.activityService.getInscription(id).subscribe(activity => this.activity = activity);
+      this.activityService.getInscription(id).subscribe(answer => this.activity = answer);
 
         this.activityError = true;
        } else {
          this.activityError = false;
 
-       }}
+       }}*/
     }
