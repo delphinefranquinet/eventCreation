@@ -338,7 +338,7 @@ public class EventRepositoryImpl {
 		return deleted;
 	}
 
-	public Event UpdateEventNameByIdEvent(Event newEvent) {
+	public Event UpdateEventByIdEvent(Event newEvent) {
 
 		String sql = "update \"Events\" set \"eventName\" = ? , description = ?, \"dateDebut\" = ?, \"dateFin\" = ?, place = ? Where id_event = ?";
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
