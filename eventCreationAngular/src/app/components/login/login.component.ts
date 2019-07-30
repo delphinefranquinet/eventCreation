@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
   public submitForm() {
     const newValues = this.loginForm.value;
     const newLogin = new Login();
-    newLogin.email = newValues.login;
+    newLogin.email = newValues.email;
     newLogin.password = newValues.password;
     this.logins = newLogin;
 

@@ -11,9 +11,9 @@ export class LoginService {
 
   constructor(private http: HttpClient) { }
 
-  public postLogin(login: Login): Observable<Person> {
+  public postLogin(email: Login): Observable<Person> {
     return this.http
-      .post<Person>(`${environment.baseUrl}/login`, login, { withCredentials: true });
+      .post<Person>(`${environment.baseUrl}/login`, email, { withCredentials: true });
   }
 
 }
