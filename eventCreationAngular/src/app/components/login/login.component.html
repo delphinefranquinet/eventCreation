@@ -9,8 +9,8 @@
 
 <form [formGroup]="loginForm" (ngSubmit)="submitForm()" style="max-width:500px;margin:auto">
 
-  <div for="login" class="input-container">
-   <input class="input-field" placeholder="Username" type="text" id="login" name="login" formControlName="login"/>
+  <div for="email" class="input-container">
+   <input class="input-field" placeholder="Username" type="text" id="email" name="email" formControlName="email"/>
    <span *ngIf="hasLoginError()">*</span>
   </div>
 
