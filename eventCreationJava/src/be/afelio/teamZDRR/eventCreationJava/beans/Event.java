@@ -25,14 +25,15 @@ public class Event implements Serializable{
 	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDateTime endEvent;
 	private Integer idResponsable;
+	private String place;
 	private List<Activity> activities = new ArrayList<>();
-	
 	
 	
 	@Override
 	public String toString() {
 		return "Event [id=" + id + ", name=" + name + ", description=" + description + ", startEvent=" + startEvent
-				+ ", endEvent=" + endEvent + ", idResponsable=" + idResponsable + ", activities=" + activities + "]";
+				+ ", endEvent=" + endEvent + ", idResponsable=" + idResponsable + ", place=" + place + ", activities="
+				+ activities + "]";
 	}
 	public Integer getId() {
 		return id;
@@ -70,6 +71,12 @@ public class Event implements Serializable{
 	public void setIdResponsable(Integer idResponsable) {
 		this.idResponsable = idResponsable;
 	}
+	public String getPlace() {
+		return place;
+	}
+	public void setPlace(String place) {
+		this.place = place;
+	}
 	public List<Activity> getActivities() {
 		return activities;
 	}
@@ -79,6 +86,9 @@ public class Event implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+	
+	
 	
 	
 }

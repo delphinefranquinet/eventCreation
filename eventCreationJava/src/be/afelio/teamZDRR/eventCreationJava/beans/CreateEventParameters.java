@@ -20,11 +20,13 @@ public class CreateEventParameters {
 	@JsonSerialize(using = LocalDateSerializer.class)
 	public LocalDateTime endEvent;
 	public Integer idResponsable;
+	public String place;
+	
 	
 	@Override
 	public String toString() {
 		return "CreateEventParameters [id=" + id + ", name=" + name + ", description=" + description + ", startEvent="
-				+ startEvent + ", endEvent=" + endEvent + ", idResponsable=" + idResponsable + "]";
+				+ startEvent + ", endEvent=" + endEvent + ", idResponsable=" + idResponsable + ", place=" + place + "]";
 	}
 
 }
