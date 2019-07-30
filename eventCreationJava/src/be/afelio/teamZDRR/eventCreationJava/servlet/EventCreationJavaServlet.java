@@ -1,4 +1,4 @@
-package eventCreationJava;
+package be.afelio.teamZDRR.eventCreationJava.servlet;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -16,8 +16,17 @@ import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import be.afelio.teamZDRR.eventCreationJava.beans.Activity;
+import be.afelio.teamZDRR.eventCreationJava.beans.CreateActivityParameters;
+import be.afelio.teamZDRR.eventCreationJava.beans.CreateEventParameters;
+import be.afelio.teamZDRR.eventCreationJava.beans.CreateLoginParameters;
+import be.afelio.teamZDRR.eventCreationJava.beans.CreatePersonParameters;
+import be.afelio.teamZDRR.eventCreationJava.beans.Event;
+import be.afelio.teamZDRR.eventCreationJava.beans.Person;
+import be.afelio.teamZDRR.eventCreationJava.impl.EventRepositoryImpl;
+
 @WebServlet("/*")
-public class eventCreationJavaServelet extends HttpServlet {
+public class EventCreationJavaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected EventRepositoryImpl repository;
@@ -29,11 +38,11 @@ public class eventCreationJavaServelet extends HttpServlet {
 		try {
 			Class.forName("org.postgresql.Driver"); // charger la class (driver) postgres
 			String path = getServletContext().getRealPath("/WEB-INF/database.properties"); // je demande le chemin au
-																							// contexte / il crée le
+																							// contexte / il crï¿½e le
 																							// chemin vers le fichier
-			Properties properties = new Properties(); // properties clé et valeurs sont des string, il est capable de
-														// lire les fichier qui ont un format adapté
-			try ( // le fichier pourrait être absent try() = closable
+			Properties properties = new Properties(); // properties clï¿½ et valeurs sont des string, il est capable de
+														// lire les fichier qui ont un format adaptï¿½
+			try ( // le fichier pourrait ï¿½tre absent try() = closable
 					java.io.InputStream in = new FileInputStream(path); // objet capable de lire le fichier
 			) {
 				properties.load(in); // va aller chercher le contenu du fichier pour remplir
@@ -49,7 +58,7 @@ public class eventCreationJavaServelet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException { // tu recuperes des données et je n'envoie rien
+			throws ServletException, IOException { // tu recuperes des donnï¿½es et je n'envoie rien
 		
 		HttpSession session = request.getSession(true);
 		String path = request.getPathInfo();
@@ -62,8 +71,8 @@ public class eventCreationJavaServelet extends HttpServlet {
 			String json = mapper.writeValueAsString(events); // convertir en format json
 			setHeaders(response);
 			response.setContentType("application/json"); // le type du contenu est du json
-			response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
-			response.getWriter().write(json); // on écrit le json dans la réponse
+			response.setCharacterEncoding("UTF-8");// ce sera ï¿½crit en utf8
+			response.getWriter().write(json); // on ï¿½crit le json dans la rï¿½ponse
 
 		} else if (path.startsWith("/event")) {
 
@@ -74,8 +83,8 @@ public class eventCreationJavaServelet extends HttpServlet {
 			String json = mapper.writeValueAsString(event); // convertir en format json
 			setHeaders(response);
 			response.setContentType("application/json"); // le type du contenu est du json
-			response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
-			response.getWriter().write(json); // on écrit le json dans la réponse
+			response.setCharacterEncoding("UTF-8");// ce sera ï¿½crit en utf8
+			response.getWriter().write(json); // on ï¿½crit le json dans la rï¿½ponse
 
 		} else if (path.startsWith("/activityInscription")) {
 			Integer idPerson = (Integer) session.getAttribute("idPerson");
@@ -101,9 +110,9 @@ public class eventCreationJavaServelet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException { // tu envoies des données // tu vas créer
+			throws ServletException, IOException { // tu envoies des donnï¿½es // tu vas crï¿½er
 		HttpSession session = request.getSession(true);// endroit de memorisation qui dure plusieurs requetes et qui est
-														// lié au client (5 clients, chacun aura sa sesssion) (espace
+														// liï¿½ au client (5 clients, chacun aura sa sesssion) (espace
 														// memoire)
 		try {
 			String path = request.getPathInfo();
@@ -114,11 +123,11 @@ public class eventCreationJavaServelet extends HttpServlet {
 				CreateLoginParameters parameters = mapper.readValue(request.getInputStream(),
 						CreateLoginParameters.class);
 
-				// request.getInputStream() = flu de données sur lequel je peux lire
+				// request.getInputStream() = flu de donnï¿½es sur lequel je peux lire
 				Person person = repository.connexion(parameters.login, parameters.password);
 
 				if (person != null) {
-					session.setAttribute("idPerson", person.getId()); // pour récupérer l'id du responsable
+					session.setAttribute("idPerson", person.getId()); // pour rï¿½cupï¿½rer l'id du responsable
 					System.out.println("idPerson " + session.getAttribute("idPerson"));
 					
 				}
@@ -126,8 +135,8 @@ public class eventCreationJavaServelet extends HttpServlet {
 				String json = mapper.writeValueAsString(person); // convertir en format json
 				setHeaders(response);
 				response.setContentType("application/json"); // le type du contenu est du json
-				response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
-				response.getWriter().write(json); // on écrit le json dans la réponse
+				response.setCharacterEncoding("UTF-8");// ce sera ï¿½crit en utf8
+				response.getWriter().write(json); // on ï¿½crit le json dans la rï¿½ponse
 
 			} else if (path.startsWith("/createEvent")) {
 
@@ -152,8 +161,8 @@ public class eventCreationJavaServelet extends HttpServlet {
 					String json = mapper.writeValueAsString(event); // convertir en format json
 					System.out.println(json);
 					response.setContentType("application/json"); // le type du contenu est du json
-					response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
-					response.getWriter().write(json); // on écrit le json dans la réponse
+					response.setCharacterEncoding("UTF-8");// ce sera ï¿½crit en utf8
+					response.getWriter().write(json); // on ï¿½crit le json dans la rï¿½ponse
 				} else {
 					response.setStatus(401); // si connexion NOK, code erreur (google)
 				}
@@ -177,8 +186,8 @@ public class eventCreationJavaServelet extends HttpServlet {
 					String json = mapper.writeValueAsString(activity); // convertir en format json
 					System.out.println(json);
 					response.setContentType("application/json"); // le type du contenu est du json
-					response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
-					response.getWriter().write(json); // on écrit le json dans la réponse
+					response.setCharacterEncoding("UTF-8");// ce sera ï¿½crit en utf8
+					response.getWriter().write(json); // on ï¿½crit le json dans la rï¿½ponse
 				} else {
 					response.setStatus(401); // si connexion NOK, code erreur (google)
 				}
@@ -203,8 +212,8 @@ public class eventCreationJavaServelet extends HttpServlet {
 				String json = mapper.writeValueAsString(newPerson); // convertir en format json
 				System.out.println(json);
 				response.setContentType("application/json"); // le type du contenu est du json
-				response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
-				response.getWriter().write(json); // on écrit le json dans la réponse
+				response.setCharacterEncoding("UTF-8");// ce sera ï¿½crit en utf8
+				response.getWriter().write(json); // on ï¿½crit le json dans la rï¿½ponse
 				
 			} 
 				
@@ -231,7 +240,7 @@ public class eventCreationJavaServelet extends HttpServlet {
 				boolean deleted = repository.deleteEventById(idEvent, idResponsable);
 				
 				response.setContentType("application/json"); // le type du contenu est du json
-				response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
+				response.setCharacterEncoding("UTF-8");// ce sera ï¿½crit en utf8
 				String.format("{\"deleted\": %s}", deleted);
 			}
 			
@@ -254,13 +263,13 @@ public class eventCreationJavaServelet extends HttpServlet {
 		response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
 		response.addHeader("Access-Control-Allow-Methods", "*");
 		response.addHeader("Access-Control-Allow-Credentials", "true");
-		response.addHeader("Access-Control-Allow-Headers", "content-type"); // pour que ca soit accepté par tous les
+		response.addHeader("Access-Control-Allow-Headers", "content-type"); // pour que ca soit acceptï¿½ par tous les
 																			// browser content-type pour le headers
 	}
 
 }
 
-// response.addHeader("", "*"); //"la clé""*"n'importe lequel
+// response.addHeader("", "*"); //"la clï¿½""*"n'importe lequel
 // Access-Control-Allow-Origin = dns + port
 // Access-Control-Allow-Headers = accepte les headers
 // Access-Control-Allow-Methods = accepte les differentes methodes, post get ...

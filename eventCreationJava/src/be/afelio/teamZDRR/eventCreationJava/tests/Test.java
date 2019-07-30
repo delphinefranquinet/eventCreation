@@ -1,6 +1,9 @@
-package eventCreationJava;
+package be.afelio.teamZDRR.eventCreationJava.tests;
 
 import java.sql.SQLException;
+
+import be.afelio.teamZDRR.eventCreationJava.beans.InscriptionActivity;
+import be.afelio.teamZDRR.eventCreationJava.impl.EventRepositoryImpl;
 
 public class Test {
 
@@ -13,7 +16,7 @@ public class Test {
 		newInscriptionActivity.setIdPerson(2);
 		
 				
-		InscriptionActivity newInscription = repository.CreateNewInscriptionActivity(newInscriptionActivity);
+		// InscriptionActivity newInscription = repository.CreateNewInscriptionActivity(newInscriptionActivity);
 		System.out.println("ok");
 		}catch(Exception e) {
 			System.out.println("erreur");
