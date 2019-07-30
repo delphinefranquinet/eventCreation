@@ -224,6 +224,51 @@ public class EventCreationJavaServlet extends HttpServlet {
 		}
 	}
 	
+	protected void doPut(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		HttpSession session = request.getSession(true);
+
+		try {
+			String path = request.getPathInfo();
+			ObjectMapper mapper = new ObjectMapper();
+			
+			if (path.startsWith("/updateEvent")) {
+				CreateEventParameters parameters = mapper.readValue(request.getInputStream(),
+						CreateEventParameters.class);
+				
+				int idResponsable = (Integer) session.getAttribute("idPerson");
+				int idEvent = request.getPathInfo().lastIndexOf("/");
+				
+				Event event = new Event();
+				event.setName(parameters.name);
+				event.setDescription(parameters.description);
+				event.setStartEvent(parameters.startEvent);
+				event.setEndEvent(parameters.endEvent);
+				event.setIdResponsable(parameters.idResponsable);
+				event.setPlace(parameters.place);
+				event = repository.UpdateEventByIdEvent(idResponsable, idEvent, event);
+
+				session.setAttribute("idEvent", event.getId());
+
+				String json = mapper.writeValueAsString(event); 
+				System.out.println(json);
+				response.setContentType("application/json"); 
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write(json); 
+				
+				
+			}
+			
+			
+		} catch (Exception e) {
+			response.setStatus(500);
+			e.printStackTrace(); // affiche une exception sur le canal d'erreur (console)
+		}
+		
+		
+	}
+	
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 

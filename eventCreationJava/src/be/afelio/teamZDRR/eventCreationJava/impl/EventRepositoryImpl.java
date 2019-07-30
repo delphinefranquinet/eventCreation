@@ -338,9 +338,9 @@ public class EventRepositoryImpl {
 		return deleted;
 	}
 
-	public Event UpdateEventByIdEvent(Event newEvent) {
+	public Event UpdateEventByIdEvent(int idResponsable, int idEvent, Event newEvent) {
 
-		String sql = "update \"Events\" set \"eventName\" = ? , description = ?, \"dateDebut\" = ?, \"dateFin\" = ?, place = ? Where id_event = ?";
+		String sql = "update \"Events\" set \"eventName\" = ? , description = ?, \"dateDebut\" = ?, \"dateFin\" = ?, id_person = " + idResponsable + ", place = ? Where id_event = " + idEvent;
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 
@@ -349,9 +349,9 @@ public class EventRepositoryImpl {
 			query.setString(2, newEvent.getDescription());
 			query.setTimestamp(3, Timestamp.valueOf(newEvent.getStartEvent())); // Timestamp.valueOf(startEvent)
 			query.setTimestamp(4, Timestamp.valueOf(newEvent.getEndEvent())); // Timestamp.valueOf(endEvent)
-			query.setInt(5, newEvent.getIdResponsable());
-			query.setString(6, newEvent.getPlace());
-			query.setInt(7, newEvent.getId());
+			//query.setInt(5, idResponsable);
+			query.setString(5, newEvent.getPlace());
+			//query.setInt(7, idEvent);
 			query.executeUpdate(); // insert/update/delete
 
 			connection.commit();
