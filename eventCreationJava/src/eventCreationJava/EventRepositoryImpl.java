@@ -26,14 +26,14 @@ public class EventRepositoryImpl {
 		this.url = url;
 	}
 
-	public Person connexion(String login, String mot_de_passe) {
+	public Person connexion(String email, String mot_de_passe) {
 
 		Person person = null;
 
-		String sql = "Select id_person, \"namePerson\", \"firstnamePerson\" From persons Where login = ? AND password = ?";
+		String sql = "Select id_person, \"namePerson\", \"firstnamePerson\" From persons Where email = ? AND password = ?";
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
-			query.setString(1, login);
+			query.setString(1, email);
 			query.setString(2, mot_de_passe);
 			try (ResultSet resultSet = query.executeQuery()) {
 				if (resultSet.next()) {
@@ -67,7 +67,7 @@ public class EventRepositoryImpl {
 			connection.setAutoCommit(false);// pour etre certain que les 2 aboutissent, sinon que les 2 échouent.
 			query.setString(1, newPerson.getName());
 			query.setString(2, newPerson.getFirstname());
-			query.setString(3, newPerson.getLogin());
+			query.setString(3, newPerson.getEmail());
 			query.setString(4, newPerson.getPassword());
 			query.executeUpdate(); // insert/update/delete
 			try (ResultSet resultSet = query.getGeneratedKeys() // pour récupérer l'id qui est en autoincrement, ne pas
@@ -93,7 +93,7 @@ public class EventRepositoryImpl {
 
 		// Timestamp timestamp = Timestamp.valueOf(localDateTime); Convertir
 		// localDateTime en Timestamp
-		String sql = "insert into \"Events\" values (default, ?, ?, ?, ?, ? )";
+		String sql = "insert into \"Events\" values (default, ?, ?, ?, ?, ?, ? )";
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 
@@ -103,6 +103,7 @@ public class EventRepositoryImpl {
 			query.setTimestamp(3, Timestamp.valueOf(newEvent.getStartEvent())); // Timestamp.valueOf(startEvent)
 			query.setTimestamp(4, Timestamp.valueOf(newEvent.getEndEvent())); // Timestamp.valueOf(endEvent)
 			query.setInt(5, newEvent.getIdResponsable());
+			query.setString(6, newEvent.getPlace());
 			query.executeUpdate(); // insert/update/delete
 
 			try (ResultSet resultSet = query.getGeneratedKeys() // pour récupérer l'id qui est en autoincrement, ne pas
@@ -158,7 +159,7 @@ public class EventRepositoryImpl {
 	public List<Event> FindAllEvents() {
 
 		List<Event> events = new ArrayList<>();
-		String sql = "Select id_event, \"eventName\", description, \"dateDebut\", \"dateFin\", id_person From \"Events\"";
+		String sql = "Select id_event, \"eventName\", description, \"dateDebut\", \"dateFin\", id_person, place From \"Events\"";
 
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql)) {
@@ -177,6 +178,7 @@ public class EventRepositoryImpl {
 
 					event.setEndEvent(rs.getTimestamp(5).toLocalDateTime()); // idem 3 lignes
 					event.setIdResponsable(rs.getInt(6));
+					event.setPlace(rs.getString(7));
 
 					events.add(event);
 				}
@@ -194,7 +196,7 @@ public class EventRepositoryImpl {
 		List<Activity> activities = new ArrayList<Activity>();
 		
 		if (id > 0) {
-		String sql = "Select \"eventName\", description, \"dateDebut\", \"dateFin\" From \"Events\" e left join \"Activities\" a on e.id_event = a.id_event Where e.id_event = ?" ;
+		String sql = "Select \"eventName\", description, \"dateDebut\", \"dateFin\", place From \"Events\" e left join \"Activities\" a on e.id_event = a.id_event Where e.id_event = ?" ;
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 			
@@ -208,6 +210,7 @@ public class EventRepositoryImpl {
 					String description = rs.getString(2);
 					LocalDateTime startEvent = rs.getTimestamp(3).toLocalDateTime();
 					LocalDateTime endEvent = rs.getTimestamp(4).toLocalDateTime();
+					String place = rs.getString(5);
 					
 					if (activities != null) {
 
@@ -248,6 +251,7 @@ public class EventRepositoryImpl {
 						event.setDescription(description);
 						event.setStartEvent(startEvent);
 						event.setEndEvent(endEvent);
+						event.setPlace(place);
 						event.setActivities(activities);
 						
 						

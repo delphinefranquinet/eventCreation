@@ -115,7 +115,7 @@ public class eventCreationJavaServelet extends HttpServlet {
 						CreateLoginParameters.class);
 
 				// request.getInputStream() = flu de données sur lequel je peux lire
-				Person person = repository.connexion(parameters.login, parameters.password);
+				Person person = repository.connexion(parameters.email, parameters.password);
 
 				if (person != null) {
 					session.setAttribute("idPerson", person.getId()); // pour récupérer l'id du responsable
@@ -145,6 +145,7 @@ public class eventCreationJavaServelet extends HttpServlet {
 					event.setStartEvent(parameters.startEvent);
 					event.setEndEvent(parameters.endEvent);
 					event.setIdResponsable(idResponsable);
+					event.setPlace(parameters.place);
 					event = repository.CreateNewEvent(event);
 
 					session.setAttribute("idEvent", event.getId());
@@ -192,7 +193,7 @@ public class eventCreationJavaServelet extends HttpServlet {
 				Person newPerson = new Person();
 				newPerson.setName(parameters.name);
 				newPerson.setFirstname(parameters.firstname);
-				newPerson.setLogin(parameters.login);
+				newPerson.setEmail(parameters.email);
 				newPerson.setPassword(parameters.password);
 				
 				newPerson = repository.CreateNewPerson(newPerson);
