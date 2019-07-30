@@ -1,4 +1,4 @@
-package eventCreationJava.utilJson;
+package be.afelio.teamZDRR.eventCreationJava.util.json;
 
 import java.io.IOException;
 import java.time.LocalDateTime;

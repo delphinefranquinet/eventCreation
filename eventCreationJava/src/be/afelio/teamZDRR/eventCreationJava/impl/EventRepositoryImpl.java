@@ -1,4 +1,4 @@
-package eventCreationJava;
+package be.afelio.teamZDRR.eventCreationJava.impl;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,6 +11,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import be.afelio.teamZDRR.eventCreationJava.beans.Activity;
+import be.afelio.teamZDRR.eventCreationJava.beans.Event;
+import be.afelio.teamZDRR.eventCreationJava.beans.Person;
 
 
 public class EventRepositoryImpl {
@@ -64,13 +68,13 @@ public class EventRepositoryImpl {
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 
-			connection.setAutoCommit(false);// pour etre certain que les 2 aboutissent, sinon que les 2 échouent.
+			connection.setAutoCommit(false);// pour etre certain que les 2 aboutissent, sinon que les 2 ï¿½chouent.
 			query.setString(1, newPerson.getName());
 			query.setString(2, newPerson.getFirstname());
 			query.setString(3, newPerson.getEmail());
 			query.setString(4, newPerson.getPassword());
 			query.executeUpdate(); // insert/update/delete
-			try (ResultSet resultSet = query.getGeneratedKeys() // pour récupérer l'id qui est en autoincrement, ne pas
+			try (ResultSet resultSet = query.getGeneratedKeys() // pour rï¿½cupï¿½rer l'id qui est en autoincrement, ne pas
 			// oublier Statement.RETURN_GENERATED_KEYS)
 			) {
 				if (resultSet.next()) {
@@ -97,7 +101,7 @@ public class EventRepositoryImpl {
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 
-			connection.setAutoCommit(false);// pour etre certain que les 2 aboutissent, sinon que les 2 échouent.
+			connection.setAutoCommit(false);// pour etre certain que les 2 aboutissent, sinon que les 2 ï¿½chouent.
 			query.setString(1, newEvent.getName());
 			query.setString(2, newEvent.getDescription());
 			query.setTimestamp(3, Timestamp.valueOf(newEvent.getStartEvent())); // Timestamp.valueOf(startEvent)
@@ -106,7 +110,7 @@ public class EventRepositoryImpl {
 			query.setString(6, newEvent.getPlace());
 			query.executeUpdate(); // insert/update/delete
 
-			try (ResultSet resultSet = query.getGeneratedKeys() // pour récupérer l'id qui est en autoincrement, ne pas
+			try (ResultSet resultSet = query.getGeneratedKeys() // pour rï¿½cupï¿½rer l'id qui est en autoincrement, ne pas
 																// oublier Statement.RETURN_GENERATED_KEYS)
 			) {
 				if (resultSet.next()) {
@@ -139,7 +143,7 @@ public class EventRepositoryImpl {
 			query.setInt(5, newActivity.getIdEvent());
 			query.executeUpdate(); // insert/update/delete
 
-			try (ResultSet resultSet = query.getGeneratedKeys() // pour récupérer l'id qui est en autoincrement, ne pas
+			try (ResultSet resultSet = query.getGeneratedKeys() // pour rï¿½cupï¿½rer l'id qui est en autoincrement, ne pas
 																// oublier Statement.RETURN_GENERATED_KEYS)
 			) {
 				if (resultSet.next()) {
@@ -172,7 +176,7 @@ public class EventRepositoryImpl {
 					event.setName(rs.getString(2));
 					event.setDescription(rs.getString(3));
 
-					Timestamp timestamp = rs.getTimestamp(4); // récupérer le timestamp
+					Timestamp timestamp = rs.getTimestamp(4); // rï¿½cupï¿½rer le timestamp
 					LocalDateTime localDateTime = timestamp.toLocalDateTime(); // convertir Timestamp en localDateTime
 					event.setStartEvent(localDateTime); // stock l'information dans l'event
 
@@ -351,8 +355,8 @@ public class EventRepositoryImpl {
 	 * 
 	 * try ( PreparedStatement preparedStatement = c.prepareStatement(sql) ) {
 	 * preparedStatement.setString(1, password); try ( ResultSet resultSet =
-	 * preparedStatement.executeQuery() ) { if (resultSet.next()) { //récupérer la
-	 * ou les colonne(s) demandée(s) email = resultSet.getString(1); } } }
+	 * preparedStatement.executeQuery() ) { if (resultSet.next()) { //rï¿½cupï¿½rer la
+	 * ou les colonne(s) demandï¿½e(s) email = resultSet.getString(1); } } }
 	 * 
 	 * 
 	 * return idEvent; }

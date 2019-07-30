@@ -1,17 +1,16 @@
-package eventCreationJava;
+package be.afelio.teamZDRR.eventCreationJava.beans;
 
-public class CreatePersonParameters {
-	
-	public Integer id;
-	public String name;
-	public String firstname;
-	public String email;
-	public String password;
+public class Person {
+	private Integer id;
+	private String name;
+	private String firstname;
+	private String email;
+	private String password;
 	
 	@Override
 	public String toString() {
-		return "CreatePersonParameters [id=" + id + ", name=" + name + ", firstname=" + firstname + ", email=" + email
-				+ ", password=" + password + "]";
+		return "Person [id=" + id + ", name=" + name + ", firstname=" + firstname + ", email=" + email + ", password="
+				+ password + "]";
 	}
 
 	public Integer getId() {

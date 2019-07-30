@@ -1,12 +1,12 @@
-package eventCreationJava;
+package be.afelio.teamZDRR.eventCreationJava.beans;
 
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import eventCreationJava.utilJson.LocalDateDeserializer;
-import eventCreationJava.utilJson.LocalDateSerializer;
+import be.afelio.teamZDRR.eventCreationJava.util.json.LocalDateDeserializer;
+import be.afelio.teamZDRR.eventCreationJava.util.json.LocalDateSerializer;
 
 public class CreateActivityParameters {
 	

@@ -1,10 +1,12 @@
-package eventCreationJava;
+package be.afelio.teamZDRR.eventCreationJava.tests;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import be.afelio.teamZDRR.eventCreationJava.beans.Event;
 
 public class TestJson {
 

@@ -1,4 +1,4 @@
-package eventCreationJava;
+package be.afelio.teamZDRR.eventCreationJava.exceptions;
 
 
 public class MyException extends Exception{
