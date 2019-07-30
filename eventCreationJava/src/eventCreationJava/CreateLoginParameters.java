@@ -2,13 +2,15 @@ package eventCreationJava;
 
 public class CreateLoginParameters {
 	
-	public String login;
+	public String email;
 	public String password;
+	
 	
 	@Override
 	public String toString() {
-		return "CreateConnexionParameters [login=" + login + ", password=" + password + "]";
+		return "CreateLoginParameters [email=" + email + ", password=" + password + "]";
 	}
+	
 	
 	
 
