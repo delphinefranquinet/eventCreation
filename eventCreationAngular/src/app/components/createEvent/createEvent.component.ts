@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { from } from 'rxjs';
 import { Router } from '@angular/router';
-import { EventService } from '../../../app/services/event.service';
-import {EventManage} from '../../../app/modeles/eventManage.modele';
+import { EventService } from '../../services/event.service';
+import {EventManage} from '../../models/eventManage.modele';
 
 @Component({
 

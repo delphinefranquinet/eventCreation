@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { Login } from '../modeles/login.modele';
+import { Login } from '../models/login.modele';
 
 @Injectable()
 export class PersonService {
@@ -11,25 +11,25 @@ export class PersonService {
 
   public getLogin(): Observable<Login[]> {
     return this.http
-      .get<Login[]>(`${environment.baseUrl}/logining`)
-      .pipe(catchError((error: any) => Observable.throw(error.json())));
+      .get<Login[]>(`${environment.baseUrl}/something`)
+      .pipe(catchError((error: any) => Observable.throw(error.error())));
   }
 
   public createLogin(payload: Login): Observable<Login> {
     return this.http
-      .post<Login>(`${environment.baseUrl}/logining`, payload)
-      .pipe(catchError((error: any) => Observable.throw(error.json())));
+      .post<Login>(`${environment.baseUrl}/something`, payload)
+      .pipe(catchError((error: any) => Observable.throw(error.error())));
   }
 
-  public updateLogin(payload: Login): Observable<Login> {
+  /*public updateLogin(payload: Login): Observable<Login> {
     return this.http
-      .put<Login>(`${environment.baseUrl}/logining/${payload.password}`, payload)
-      .pipe(catchError((error: any) => Observable.throw(error.json())));
+      .put<Login>(`${environment.baseUrl}/something/${payload.password}`, payload)
+      .pipe(catchError((error: any) => Observable.throw(error.error())));
   }
 
   public removeLogin(payload: Login): Observable<Login> {
     return this.http
-      .delete<any>(`${environment.baseUrl}/logining/${payload.login}`)
-      .pipe(catchError((error: any) => Observable.throw(error.json())));
-  }
+      .delete<any>(`${environment.baseUrl}/something/${payload.email}`)
+      .pipe(catchError((error: any) => Observable.throw(error.error())));
+  }*/
 }

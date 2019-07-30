@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EventService } from '../../../app/services/event.service';
-import { EventManage } from '../../../app/modeles/eventManage.modele';
-import { Activity } from '../../../app/modeles/activity.modele';
-import { ActivityService } from '../../../app/services/activity.service';
+import { EventService } from '../../services/event.service';
+import { EventManage } from '../../models/eventManage.modele';
+import { Activity } from '../../models/activity.modele';
+import { ActivityService } from '../../services/activity.service';
 
 @Component({
   selector: 'app-event',

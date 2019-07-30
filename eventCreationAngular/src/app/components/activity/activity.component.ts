@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Activity } from '../../../app/modeles/activity.modele';
+import { Activity } from '../../models/activity.modele';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
-import { ActivityService } from '../../../app/services/activity.service';
+import { ActivityService } from '../../services/activity.service';
 
 @Component({
   selector: 'app-activity',

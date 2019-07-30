@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ActivityService } from '../../../app/services/activity.service';
-import { Activity } from '../../../app/modeles/activity.modele';
+import { ActivityService } from '../../services/activity.service';
+import { Activity } from '../../models/activity.modele';
 
 @Component({
   selector: 'app-activityInscription',

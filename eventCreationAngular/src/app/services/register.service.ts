@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Register } from '../modeles/register.modele';
+import { Register } from '../models/register.modele';
 
 
 @Injectable()

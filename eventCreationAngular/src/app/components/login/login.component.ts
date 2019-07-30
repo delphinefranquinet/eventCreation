@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {  Router } from '@angular/router';
-import { Login } from '../../../app/modeles/login.modele';
+import { Login } from '../../models/login.modele';
 import { LoginService } from '../../../app/services/login.service';
-import { Person } from '../../../app/modeles/person.modele';
+import { Person } from '../../models/person.modele';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     this.logins = new Login();
 
     this.loginForm = this.fb.group({
-      login: this.fb.control(this.logins.login, [Validators.required]),
+      email: this.fb.control(this.logins.email, [Validators.required]),
       password: this.fb.control(this.logins.password, [Validators.required]),
 
     });
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
   public submitForm() {
     const newValues = this.loginForm.value;
     const newLogin = new Login();
-    newLogin.login = newValues.login;
+    newLogin.email = newValues.login;
     newLogin.password = newValues.password;
     this.logins = newLogin;
 
@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
     }
 
   public hasLoginError() {
-    const control = this.loginForm.get('login');
+    const control = this.loginForm.get('email');
     return control.errors && control.errors.required && control.invalid;
   }
 
