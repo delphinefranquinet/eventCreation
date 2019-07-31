@@ -480,7 +480,6 @@ public class EventRepositoryImpl {
 	}
 
 
-	  
 	 /* 
 	 * public Integer FindIdEventByName(String eventName) {
 	 * 
