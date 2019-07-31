@@ -269,11 +269,8 @@ public class EventCreationJavaServlet extends HttpServlet {
 				System.out.println(json);
 				response.setContentType("application/json"); 
 				response.setCharacterEncoding("UTF-8");
-				response.getWriter().write(json); 
-				
-				
+				response.getWriter().write(json);
 			}
-			
 			
 		} catch (Exception e) {
 			response.setStatus(500);
@@ -286,18 +283,17 @@ public class EventCreationJavaServlet extends HttpServlet {
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		HttpSession session = request.getSession(true);
-
 		try {
 			String path = request.getPathInfo();
-			ObjectMapper mapper = new ObjectMapper();
+			System.out.println("EventCreationJavaServlet.doDelete()");
 
 			if (path.startsWith("/deleteEvent")) {
 				
-				int idResponsable = (Integer) session.getAttribute("idPerson");
+				//int idResponsable = (Integer) session.getAttribute("idPerson");
 				int idEvent = request.getPathInfo().lastIndexOf("/");
+				System.out.println(idEvent);
 				
-				boolean deleted = repository.deleteEventById(idEvent, idResponsable);
+				boolean deleted = repository.deleteEventByIdEvent(idEvent);
 				
 				response.setContentType("application/json"); // le type du contenu est du json
 				response.setCharacterEncoding("UTF-8");// ce sera �crit en utf8

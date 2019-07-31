@@ -98,6 +98,7 @@ public class EventRepositoryImpl {
 		// Timestamp timestamp = Timestamp.valueOf(localDateTime); Convertir
 		// localDateTime en Timestamp
 		String sql = "insert into \"Events\" values (default, ?, ?, ?, ?, ?, ? )";
+		
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 
@@ -301,7 +302,32 @@ public class EventRepositoryImpl {
 
 	}
 
-	public boolean deleteEventById(int idEvent, int idResponsable) {
+	public Event UpdateEventByIdEvent(int idResponsable, int idEvent, Event newEvent) {
+
+		String sql = "update \"Events\" set \"eventName\" = ? , description = ?, \"dateDebut\" = ?, \"dateFin\" = ?, id_person = " + idResponsable + ", place = ? Where id_event = " + idEvent;
+		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+				java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
+
+			connection.setAutoCommit(false);// pour etre certain que les 2 aboutissent, sinon que les 2 �chouent.
+			query.setString(1, newEvent.getName());
+			query.setString(2, newEvent.getDescription());
+			query.setTimestamp(3, Timestamp.valueOf(newEvent.getStartEvent())); // Timestamp.valueOf(startEvent)
+			query.setTimestamp(4, Timestamp.valueOf(newEvent.getEndEvent())); // Timestamp.valueOf(endEvent)
+			//query.setInt(5, idResponsable);
+			query.setString(5, newEvent.getPlace());
+			//query.setInt(7, idEvent);
+			query.executeUpdate(); // insert/update/delete
+
+			connection.commit();
+
+		} catch (java.sql.SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+
+		return newEvent;
+	}
+	
+	/*public boolean deleteEventById(int idEvent, int idResponsable) {
 
 		boolean deleted = false;
 
@@ -336,32 +362,32 @@ public class EventRepositoryImpl {
 			throw new RuntimeException(sqle);
 		}
 		return deleted;
-	}
+	}*/
+	
+	public boolean deleteEventByIdEvent(int idEvent) { // TODO_LOW always true event if "false" expected (but works)
+		
+		boolean deleted = false;
 
-	public Event UpdateEventByIdEvent(int idResponsable, int idEvent, Event newEvent) {
+		if (idEvent > 0) {
+			System.out.println("EventRepositoryImpl.deleteEventByIdEvent()");
 
-		String sql = "update \"Events\" set \"eventName\" = ? , description = ?, \"dateDebut\" = ?, \"dateFin\" = ?, id_person = "
-				+ idResponsable + ", place = ? Where id_event = " + idEvent;
-		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
-				java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
+			String sqlDeleteEvent = "delete from \"Events\" where id_event = ? ";
 
-			connection.setAutoCommit(false);// pour etre certain que les 2 aboutissent, sinon que les 2 �chouent.
-			query.setString(1, newEvent.getName());
-			query.setString(2, newEvent.getDescription());
-			query.setTimestamp(3, Timestamp.valueOf(newEvent.getStartEvent())); // Timestamp.valueOf(startEvent)
-			query.setTimestamp(4, Timestamp.valueOf(newEvent.getEndEvent())); // Timestamp.valueOf(endEvent)
-			// query.setInt(5, idResponsable);
-			query.setString(5, newEvent.getPlace());
-			// query.setInt(7, idEvent);
-			query.executeUpdate(); // insert/update/delete
-
-			connection.commit();
-
-		} catch (java.sql.SQLException sqle) {
-			throw new RuntimeException(sqle);
+			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user,
+					password);
+					java.sql.PreparedStatement deleteEventStatement= connection
+							.prepareStatement(sqlDeleteEvent);) {
+				connection.setAutoCommit(false);
+				deleteEventStatement.setInt(1, idEvent);
+				deleteEventStatement.executeUpdate();
+				deleted = true;
+				connection.commit();
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
 		}
 
-		return newEvent;
+		return deleted;
 	}
 	
 	public List<Activity> FindAllActivitiesByIdEvent(int idEvent) {
