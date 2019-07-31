@@ -327,44 +327,37 @@ public class EventRepositoryImpl {
 		return newEvent;
 	}
 	
-	/*public boolean deleteEventById(int idEvent, int idResponsable) {
+	public boolean deleteEventByIdEvent(int idEvent) {
 
 		boolean deleted = false;
 
-		String SqlIdPersonString = "Select id_person From \"Events\" Where id_event = ?";
-		int idPerson = Integer.parseInt(SqlIdPersonString);
-
-		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
-				java.sql.PreparedStatement idPersonString = connection.prepareStatement(SqlIdPersonString);) {
-
-			idPersonString.setInt(1, idEvent);
-
-			if (idEvent > 0 && idResponsable == idPerson) {
+			if (idEvent > 0) {
+				
+				System.out.println("EventRepositoryImpl.deleteEventByIdEvent()");
 
 				String sqlDeleteActivities = "delete from \"Activities\" Where id_event = ?";
 				String sqlDeleteEvent = "delete from \"Events\" Where id_event = ?";
+				
 				try (java.sql.Connection connection2 = java.sql.DriverManager.getConnection(url, user, password);
 						PreparedStatement deleteActivitiesStatement = connection2.prepareStatement(sqlDeleteActivities);
 						PreparedStatement deleteEventStatement = connection2.prepareStatement(sqlDeleteEvent)) {
-					connection.setAutoCommit(false);
+					connection2.setAutoCommit(false);
 
 					deleteActivitiesStatement.setInt(1, idEvent);
 					deleteActivitiesStatement.executeUpdate();
 					deleteEventStatement.setInt(1, idEvent);
 					deleteEventStatement.executeUpdate();
-					connection.commit();
+					connection2.commit();
 					deleted = deleteEventStatement.getUpdateCount() > 0;
 				} catch (Exception e) {
 					throw new RuntimeException(e);
 				}
 			}
-		} catch (java.sql.SQLException sqle) {
-			throw new RuntimeException(sqle);
-		}
+		
 		return deleted;
-	}*/
+	}
 	
-	public boolean deleteEventByIdEvent(int idEvent) { // TODO_LOW always true event if "false" expected (but works)
+	/*public boolean deleteEventByIdEvent(int idEvent) { // TODO_LOW always true event if "false" expected (but works)
 		
 		boolean deleted = false;
 
@@ -388,7 +381,7 @@ public class EventRepositoryImpl {
 		}
 
 		return deleted;
-	}
+	}*/
 	
 	public List<Activity> FindAllActivitiesByIdEvent(int idEvent) {
 		List<Activity> activities = new ArrayList<Activity>();

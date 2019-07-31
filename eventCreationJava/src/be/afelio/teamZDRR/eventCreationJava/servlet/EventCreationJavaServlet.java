@@ -285,11 +285,12 @@ public class EventCreationJavaServlet extends HttpServlet {
 
 		try {
 			String path = request.getPathInfo();
+			ObjectMapper mapper = new ObjectMapper();
 			System.out.println("EventCreationJavaServlet.doDelete()");
 
 			if (path.startsWith("/deleteEvent")) {
+				System.out.println("marche");
 				
-				//int idResponsable = (Integer) session.getAttribute("idPerson");
 				int idEvent = request.getPathInfo().lastIndexOf("/");
 				System.out.println(idEvent);
 				
@@ -298,6 +299,8 @@ public class EventCreationJavaServlet extends HttpServlet {
 				response.setContentType("application/json"); // le type du contenu est du json
 				response.setCharacterEncoding("UTF-8");// ce sera �crit en utf8
 				String.format("{\"deleted\": %s}", deleted);
+				String json = mapper.writeValueAsString(deleted); 
+				response.getWriter().write(json);
 			}
 			
 			
