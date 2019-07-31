@@ -32,15 +32,15 @@ export class ClientSpaceComponent implements OnInit {
   public deleteEvent(eventToDelete: number) {
     console.log('deleteEvent\(' + eventToDelete + '\) triggered!');
     this.eventService.removeEvent(eventToDelete).subscribe(response => {
-      // console.log('Response, typeof response, response.toString(), JSON.stringify(response): ',
-      //   response, typeof response, response.toString(), JSON.stringify(response));
-      // if (JSON.stringify(response) === '{\"deleted\": true}') {
-      //   // dire que delete is done
-      // } else if (JSON.stringify(response) === '{\"deleted\": false}') {
-      //   // dire que delete pas OK
-      // } else {
-      //   console.log('Error with response format');
-      // }
+      console.log('Response, typeof response, response.toString(), JSON.stringify(response): ',
+        response, typeof response, response.toString(), JSON.stringify(response));
+      if (JSON.stringify(response) === '{\"deleted\": true}') {
+        // dire que delete is done
+      } else if (JSON.stringify(response) === '{\"deleted\": false}') {
+        // dire que delete pas OK
+      } else {
+        console.log('Error with response format');
+      }
     });
   }
 }
