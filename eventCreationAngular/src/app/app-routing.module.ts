@@ -8,6 +8,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { EventComponent } from './components/event/event.component';
 import { ActivityInscriptionComponent } from './components/inscription/activityInscription.component';
 import { HomeComponent } from './components/home/home.component';
+import { ClientSpaceComponent } from './components/clientSpace/clientSpace.component';
 
 
 
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'activityInscription/:id', component: ActivityInscriptionComponent },
   { path: 'event/:id', component: EventComponent },
+  { path: 'clientSpace', component: ClientSpaceComponent},
   { path: '**', redirectTo: '/home' }
 ];
 

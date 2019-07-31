@@ -16,6 +16,7 @@ export class EventComponent implements OnInit {
  public eventStart: Date;
  public eventEnd: Date;
  public descreption: string;
+ public eventPlace: string;
  public activities: Activity[];
  public activityError: boolean;
  public activity: Activity;
@@ -30,6 +31,7 @@ export class EventComponent implements OnInit {
           event => {
             this.eventName = event.name;
             this.descreption = event.description;
+            this.eventPlace = event.place;
             this.eventStart = event.startEvent;
             this.eventEnd = event.endEvent;
             this.activities = event.activities;

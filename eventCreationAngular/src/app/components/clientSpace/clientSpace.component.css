@@ -72,3 +72,26 @@
 .btn:hover {
   opacity: 1;
 }
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  background-color: rgb(247, 243, 240);
+  padding: 15px;
+
+}
+.grid-item {
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  background-color: rgba(32, 170, 159, 0.8);
+  font-size: 20px;
+  text-align: center;
+  transition: 0.3s;
+  padding: 15px;
+  width: 100px;
+  text-decoration: none;
+  color: white;
+  border-radius: 5px 5px 5px 5px;
+
+}

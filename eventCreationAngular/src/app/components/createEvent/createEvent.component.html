@@ -1,34 +1,42 @@
 <div class="container">
-<div id="mySidenav">
+  <div id="mySidenav">
     <a [routerLink]="['/home']" id="home"> Home </a>
     <a [routerLink]="['/createEvent']" id="Create"> Create your event </a>
     <a [routerLink]="['/login']" id="login"> Login </a>
     <a [routerLink]="['/register']" id="register"> Register </a>
-</div>
+  </div>
 
-  <form [formGroup]= "eventForm" (ngSubmit)="submitForm()">
+  <form [formGroup]="eventForm" (ngSubmit)="submitForm()">
 
     <div for="name" class="input-container">
-      <input class="input-field" placeholder="Name of event" type="text" id="name" name="name" formControlName="name"/>
+      <input class="input-field" placeholder="Name of event" type="text" id="name" name="name" formControlName="name" />
     </div>
 
-    <div for="description"class="input-container">
-        <input class="input-field" placeholder="Description" type="text" id="description" name="description" formControlName="description"/>
+    <div for="description" class="input-container">
+      <input class="input-field" placeholder="Description" type="text" id="description" name="description"
+        formControlName="description" />
     </div>
 
-   <div for="startEvent" class="input-container">
-      <input class="input-field" placeholder="Begins at" type="datetime-local" id="startEvent" name="startEvent" formControlName="startEvent"/>
+    <div for="place" class="input-container">
+      <input class="input-field" placeholder="place" type="text" id="place" name="place"
+        formControlName="place" />
+    </div>
+
+    <div for="startEvent" class="input-container">
+      <input class="input-field" placeholder="Begins at" type="datetime-local" id="startEvent" name="startEvent"
+        formControlName="startEvent" />
     </div>
 
     <div for="endEvent" class="input-container">
-      <input class="input-field" placeholder="Ends at" type="datetime-local" id="endEvent" name="endEvent" formControlName="endEvent"/>
+      <input class="input-field" placeholder="Ends at" type="datetime-local" id="endEvent" name="endEvent"
+        formControlName="endEvent" />
     </div>
 
     <div>
-      <input type="submit" class="btn" [disabled]="!eventForm.valid" value="Send"/>
+      <input type="submit" class="btn" [disabled]="!eventForm.valid" value="Send" />
       <div *ngIf="eventError">You are not loged in !</div>
     </div>
-    </form>
+  </form>
 
 
-  </div>
+</div>
