@@ -1,22 +1,21 @@
 
-<div id="mySidenav">
+<!-- <div id="mySidenav">
   <a [routerLink]="['/home']" id="home"> Home </a>
   <a [routerLink]="['/createEvent']" id="Create"> Create your event </a>
   <a [routerLink]="['/login']" id="login"> Login </a>
   <a [routerLink]="['/register']" id="register"> Register </a>
-</div>
-<div><button class="btn"><i class="fa fa-trash"></i></button></div>
-
-
-<div *ngFor="let event of events" class="grid-container">
-  <div class="grid-item">{{event.name}}</div>
-  <div class="grid-item">{{event.description}}</div>
-  <div class="grid-item">{{event.place}}</div>
-  <div class="grid-item">{{event.startEvent}}</div>
-  <div class="grid-item">{{event.endEvent}}</div>
+</div> -->
 
 
 
+<div *ngFor="let eventItem of events">
+  <div>{{eventItem.id}}</div>
+  <div>{{eventItem.name}}</div>
+  <div>{{eventItem.description}}</div>
+  <div>{{eventItem.place}}</div>
+  <div>{{eventItem.startEvent}}</div>
+  <div>{{eventItem.endEvent}}</div>
+  <div><button type="button" (click)="deleteEvent(eventItem.id)">Delete</button></div>
 </div>
 
 

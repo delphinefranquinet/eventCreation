@@ -259,13 +259,14 @@ public class EventCreationJavaServlet extends HttpServlet {
 				event.setDescription(parameters.description);
 				event.setStartEvent(parameters.startEvent);
 				event.setEndEvent(parameters.endEvent);
-				event.setIdResponsable(parameters.idResponsable);
+				event.setIdResponsable(idResponsable);
 				event.setPlace(parameters.place);
-				event = repository.UpdateEventByIdEvent(idResponsable, idEvent, event);
+				event.setId(idEvent);
+				Event UpdateEvent = repository.UpdateEventByIdEvent(idResponsable, idEvent, event);
 
-				session.setAttribute("idEvent", event.getId());
+				//session.setAttribute("idEvent", event.getId());
 
-				String json = mapper.writeValueAsString(event); 
+				String json = mapper.writeValueAsString(UpdateEvent); 
 				System.out.println(json);
 				response.setContentType("application/json"); 
 				response.setCharacterEncoding("UTF-8");
