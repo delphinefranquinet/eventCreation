@@ -37,7 +37,7 @@ export class EventService {
 
   public removeEvent(idOfEventToDelete: number): Observable<EventManage> {
     return this.http
-      .delete<any>(`${environment.baseUrl}/event/${idOfEventToDelete}`)
+      .delete<any>(`${environment.baseUrl}/deleteEvent/${idOfEventToDelete}`)
       .pipe(catchError((error: any) => Observable.throw(error.error())));
   }
 
