@@ -335,16 +335,12 @@ public class EventRepositoryImpl {
 				
 				System.out.println("EventRepositoryImpl.deleteEventByIdEvent()");
 
-				String sqlDeleteActivities = "delete from \"Activities\" Where id_event = ?";
 				String sqlDeleteEvent = "delete from \"Events\" Where id_event = ?";
 				
 				try (java.sql.Connection connection2 = java.sql.DriverManager.getConnection(url, user, password);
-						PreparedStatement deleteActivitiesStatement = connection2.prepareStatement(sqlDeleteActivities);
 						PreparedStatement deleteEventStatement = connection2.prepareStatement(sqlDeleteEvent)) {
 					connection2.setAutoCommit(false);
 
-					deleteActivitiesStatement.setInt(1, idEvent);
-					deleteActivitiesStatement.executeUpdate();
 					deleteEventStatement.setInt(1, idEvent);
 					deleteEventStatement.executeUpdate();
 					connection2.commit();
@@ -356,32 +352,6 @@ public class EventRepositoryImpl {
 		
 		return deleted;
 	}
-	
-	/*public boolean deleteEventByIdEvent(int idEvent) { // TODO_LOW always true event if "false" expected (but works)
-		
-		boolean deleted = false;
-
-		if (idEvent > 0) {
-			System.out.println("EventRepositoryImpl.deleteEventByIdEvent()");
-
-			String sqlDeleteEvent = "delete from \"Events\" where id_event = ? ";
-
-			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user,
-					password);
-					java.sql.PreparedStatement deleteEventStatement= connection
-							.prepareStatement(sqlDeleteEvent);) {
-				connection.setAutoCommit(false);
-				deleteEventStatement.setInt(1, idEvent);
-				deleteEventStatement.executeUpdate();
-				deleted = true;
-				connection.commit();
-			} catch (SQLException e) {
-				throw new RuntimeException(e);
-			}
-		}
-
-		return deleted;
-	}*/
 	
 	public List<Activity> FindAllActivitiesByIdEvent(int idEvent) {
 		List<Activity> activities = new ArrayList<Activity>();
