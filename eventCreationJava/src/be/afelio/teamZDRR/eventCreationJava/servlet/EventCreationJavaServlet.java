@@ -248,6 +248,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 			ObjectMapper mapper = new ObjectMapper();
 			
 			if (path.startsWith("/updateEvent")) {
+				setHeaders(response);
 				CreateEventParameters parameters = mapper.readValue(request.getInputStream(),
 						CreateEventParameters.class);
 				
@@ -294,6 +295,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 			System.out.println("EventCreationJavaServlet.doDelete()");
 
 			if (path.startsWith("/deleteEvent")) {
+				setHeaders(response);
 				System.out.println("marche");
 				
 				String[] parts = path.split("/");
