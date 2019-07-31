@@ -285,6 +285,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
+			
 			String path = request.getPathInfo();
 			ObjectMapper mapper = new ObjectMapper();
 			System.out.println("EventCreationJavaServlet.doDelete()");
@@ -292,14 +293,18 @@ public class EventCreationJavaServlet extends HttpServlet {
 			if (path.startsWith("/deleteEvent")) {
 				System.out.println("marche");
 				
-				int idEvent = request.getPathInfo().lastIndexOf("/");
-				System.out.println(idEvent);
+				String[] parts = path.split("/");
+				String idResponsable = parts[2];
+				int id = Integer.parseInt(idResponsable);
 				
-				boolean deleted = repository.deleteEventByIdEvent(idEvent);
+				//int idEvent = request.getPathInfo().lastIndexOf("/");
+				System.out.println(id);
+				
+				boolean deleted = repository.deleteEventByIdEvent(id);
 				
 				response.setContentType("application/json"); // le type du contenu est du json
 				response.setCharacterEncoding("UTF-8");// ce sera �crit en utf8
-				String.format("{\"deleted\": %s}", deleted);
+				//String.format("{\"deleted\": %s}", deleted);
 				String json = mapper.writeValueAsString(deleted); 
 				response.getWriter().write(json);
 			}
