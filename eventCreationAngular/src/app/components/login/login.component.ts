@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
   }
 
   next() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/clientSpace']);
   }
 
   public submitForm() {
@@ -45,7 +45,9 @@ export class LoginComponent implements OnInit {
     this.logins = newLogin;
 
     this.loginService
-    .postLogin(this.logins).subscribe//postlogin envoie un observale / observable =  la prochaine fois qu'un evenement aura lieu, exécute ca ...(person => console.log(person));
+    .postLogin(this.logins).subscribe
+    //postlogin envoie un observale
+    // observable =  la prochaine fois qu'un evenement aura lieu, exécute ca ...(person => console.log(person));
      (person =>  this.connection(person));
 
     }

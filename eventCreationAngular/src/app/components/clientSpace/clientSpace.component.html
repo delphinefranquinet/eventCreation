@@ -5,5 +5,18 @@
   <a [routerLink]="['/login']" id="login"> Login </a>
   <a [routerLink]="['/register']" id="register"> Register </a>
 </div>
+<div><button class="btn"><i class="fa fa-trash"></i></button></div>
+
+
+<div *ngFor="let event of events" class="grid-container">
+  <div class="grid-item">{{event.name}}</div>
+  <div class="grid-item">{{event.description}}</div>
+  <div class="grid-item">{{event.place}}</div>
+  <div class="grid-item">{{event.startEvent}}</div>
+  <div class="grid-item">{{event.endEvent}}</div>
+
+
+
+</div>
 
 

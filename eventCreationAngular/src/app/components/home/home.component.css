@@ -36,7 +36,10 @@
   top: 170px;
   background-color: #f4433681;
 }
-
+#clientSpace {
+  top: 240px;
+  background-color: #eb9515ef;
+}
 
 
 /* Bottom right text */
