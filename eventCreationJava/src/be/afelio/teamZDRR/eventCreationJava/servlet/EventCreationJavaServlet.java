@@ -252,7 +252,10 @@ public class EventCreationJavaServlet extends HttpServlet {
 						CreateEventParameters.class);
 				
 				int idResponsable = (Integer) session.getAttribute("idPerson");
-				int idEvent = request.getPathInfo().lastIndexOf("/");
+				
+				String[] parts = path.split("/");
+				String id = parts[2];
+				int idEvent = Integer.parseInt(id);
 				
 				Event event = new Event();
 				event.setName(parameters.name);
