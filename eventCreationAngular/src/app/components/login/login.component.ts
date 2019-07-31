@@ -33,8 +33,8 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  next() {
-    this.router.navigate(['/clientSpace']);
+  next(personId: number) {
+    this.router.navigate(['/clientSpace/' + personId]);
   }
 
   public submitForm() {
@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
      this.connectionError = true;
     } else {
       this.connectionError = false;
-      this.next();
+      this.next(person.id);
 
     }
       }

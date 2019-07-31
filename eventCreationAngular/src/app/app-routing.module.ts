@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'activityInscription/:id', component: ActivityInscriptionComponent },
   { path: 'event/:id', component: EventComponent },
-  { path: 'clientSpace', component: ClientSpaceComponent},
+  { path: 'clientSpace/:id', component: ClientSpaceComponent},
   { path: '**', redirectTo: '/home' }
 ];
 

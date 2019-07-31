@@ -37,7 +37,7 @@ export class ActivityComponent implements OnInit {
   }
 
   next() {
-    this.router.navigate(['/clientSpace']);
+    // this.router.navigate(['/clientSpace']);
   }
 
 
@@ -61,7 +61,7 @@ export class ActivityComponent implements OnInit {
     return control.errors && control.errors.required;
   }
 
-  public submitForm(){
+  public submitForm() {
     const newValues = this.activityForm.value;
 
     const newActivity = new Activity();

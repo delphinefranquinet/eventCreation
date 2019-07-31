@@ -1,14 +1,14 @@
 
-<!-- <div id="mySidenav">
+<div id="mySidenav">
   <a [routerLink]="['/home']" id="home"> Home </a>
   <a [routerLink]="['/createEvent']" id="Create"> Create your event </a>
   <a [routerLink]="['/login']" id="login"> Login </a>
   <a [routerLink]="['/register']" id="register"> Register </a>
-</div> -->
+</div>
 
 
 
-<div *ngFor="let eventItem of events">
+<div class="romansUglyClass" *ngFor="let eventItem of events">
   <div>{{eventItem.id}}</div>
   <div>{{eventItem.name}}</div>
   <div>{{eventItem.description}}</div>
