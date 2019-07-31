@@ -59,7 +59,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException { // tu recuperes des donn�es et je n'envoie rien
-		
+
 		HttpSession session = request.getSession(true);
 		String path = request.getPathInfo();
 		ObjectMapper mapper = new ObjectMapper();
@@ -103,11 +103,25 @@ public class EventCreationJavaServlet extends HttpServlet {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-			}else {
-				response.setStatus(401);
 			}
+		} else if (path.startsWith("/clientSpace")) {
+
+			String[] parts = path.split("/");
+			String idResponsable = parts[2];
+			int id = Integer.parseInt(idResponsable);
+			List<Event> events = repository.FindEventAndAllActivityByIdResponsable(id);
+			String json = mapper.writeValueAsString(events);
+			setHeaders(response);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(json);
+
+		} else {
+			response.setStatus(401);
 		}
 	}
+
+	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException { // tu envoies des donn�es // tu vas cr�er

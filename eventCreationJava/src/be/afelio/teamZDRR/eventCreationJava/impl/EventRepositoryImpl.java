@@ -340,7 +340,8 @@ public class EventRepositoryImpl {
 
 	public Event UpdateEventByIdEvent(int idResponsable, int idEvent, Event newEvent) {
 
-		String sql = "update \"Events\" set \"eventName\" = ? , description = ?, \"dateDebut\" = ?, \"dateFin\" = ?, id_person = " + idResponsable + ", place = ? Where id_event = " + idEvent;
+		String sql = "update \"Events\" set \"eventName\" = ? , description = ?, \"dateDebut\" = ?, \"dateFin\" = ?, id_person = "
+				+ idResponsable + ", place = ? Where id_event = " + idEvent;
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 
@@ -349,9 +350,9 @@ public class EventRepositoryImpl {
 			query.setString(2, newEvent.getDescription());
 			query.setTimestamp(3, Timestamp.valueOf(newEvent.getStartEvent())); // Timestamp.valueOf(startEvent)
 			query.setTimestamp(4, Timestamp.valueOf(newEvent.getEndEvent())); // Timestamp.valueOf(endEvent)
-			//query.setInt(5, idResponsable);
+			// query.setInt(5, idResponsable);
 			query.setString(5, newEvent.getPlace());
-			//query.setInt(7, idEvent);
+			// query.setInt(7, idEvent);
 			query.executeUpdate(); // insert/update/delete
 
 			connection.commit();
@@ -363,28 +364,118 @@ public class EventRepositoryImpl {
 		return newEvent;
 	}
 	
+	public List<Activity> FindAllActivitiesByIdEvent(int idEvent) {
+		List<Activity> activities = new ArrayList<Activity>();
+
+		if (idEvent > 0) {
+			String sql = "SELECT id_activity, \"nameActivity\", \"descriptionActivity\", \"startActivity\", \"endActivity\" FROM \"Activities\" a join \"Events\" e on a.id_event = e.id_event WHERE a.id_event = ?";
+
+			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
+				
+				query.setInt(1, idEvent);
+				
+				try (java.sql.ResultSet rs = query.executeQuery();) {
+					if (rs.next()) {
+						
+						Activity activity = new Activity();
+						activity.setId(rs.getInt("id_activity"));
+						activity.setName(rs.getString("nameActivity"));
+						activity.setDescription(rs.getString("descriptionActivity"));
+						activity.setStartActivity(
+								rs.getTimestamp("startActivity").toLocalDateTime());
+						activity.setEndActivity(
+								rs.getTimestamp("endActivity").toLocalDateTime());
+						activities.add(activity);
+
+						while (rs.next()) {
+
+							activity.setName(rs.getString("nameActivity"));
+							activity.setDescription(rs.getString("descriptionActivity"));
+							activity.setStartActivity(
+									rs.getTimestamp("startActivity").toLocalDateTime());
+							activity.setEndActivity(
+									rs.getTimestamp("endActivity").toLocalDateTime());
+							activities.add(activity);
+						}
+					} else {
+						activities = Collections.emptyList();
+						
+					}
+				}
+				
+				
+			} catch (java.sql.SQLException sqle) {
+				throw new RuntimeException(sqle);
+			}
+		}
+
+		return activities;
+	}
 	
-/*
- * public Activity FindActivityById(int id) { Activity activity = null;
- * 
- * if (id > 0) { String sql = ""; }
- * 
- * return activity; }
- * 
- * 
- * public Integer FindIdEventByName(String eventName) {
- * 
- * Integer idEvent = null;
- * 
- * String sql = "Select id_event From \"Events\" Where \"eventName\" = ?";
- * 
- * try ( PreparedStatement preparedStatement = c.prepareStatement(sql) ) {
- * preparedStatement.setString(1, password); try ( ResultSet resultSet =
- * preparedStatement.executeQuery() ) { if (resultSet.next()) { //r�cup�rer
- * la ou les colonne(s) demand�e(s) email = resultSet.getString(1); } } }
- * 
- * 
- * return idEvent; }
- */
+	public List<Event> FindEventAndAllActivityByIdResponsable(int idResponsable) {
+
+		List<Event> events = new ArrayList<Event>();
+		Event event = null;
+		
+		if (idResponsable > 0) {
+			
+			String sql = "Select \"eventName\", description, \"dateDebut\", \"dateFin\", place, id_event From \"Events\" Where id_person = ?";
+			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
+
+				query.setInt(1, idResponsable);
+
+				try (java.sql.ResultSet rs = query.executeQuery();) {
+					while (rs.next()) {
+						
+						String name = rs.getString(1);
+						String description = rs.getString(2);
+						LocalDateTime startEvent = rs.getTimestamp(3).toLocalDateTime();
+						LocalDateTime endEvent = rs.getTimestamp(4).toLocalDateTime();
+						String place = rs.getString(5);
+						int idEvent = rs.getInt(6);
+
+						List<Activity> activities = FindAllActivitiesByIdEvent(idEvent);
+
+						event = new Event();
+						event.setId(idEvent);
+						event.setName(name);
+						event.setDescription(description);
+						event.setStartEvent(startEvent);
+						event.setEndEvent(endEvent);
+						event.setPlace(place);
+						event.setIdResponsable(idResponsable);
+						event.setActivities(activities);
+
+						events.add(event);
+
+					}
+				}
+			} catch (java.sql.SQLException sqle) {
+				throw new RuntimeException(sqle);
+			}
+		}
+		System.out.println(events);
+		return events;
+	}
+
+
+	  
+	 /* 
+	 * public Integer FindIdEventByName(String eventName) {
+	 * 
+	 * Integer idEvent = null;
+	 * 
+	 * String sql = "Select id_event From \"Events\" Where \"eventName\" = ?";
+	 * 
+	 * try ( PreparedStatement preparedStatement = c.prepareStatement(sql) ) {
+	 * preparedStatement.setString(1, password); try ( ResultSet resultSet =
+	 * preparedStatement.executeQuery() ) { if (resultSet.next()) { //r�cup�rer
+	 * la ou les colonne(s) demand�e(s) email = resultSet.getString(1); } } }
+	 * 
+	 * 
+	 * return idEvent; }
+	 */
 
 }
