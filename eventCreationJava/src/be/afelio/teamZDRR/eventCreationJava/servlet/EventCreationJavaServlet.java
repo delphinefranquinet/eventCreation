@@ -259,13 +259,14 @@ public class EventCreationJavaServlet extends HttpServlet {
 				event.setDescription(parameters.description);
 				event.setStartEvent(parameters.startEvent);
 				event.setEndEvent(parameters.endEvent);
-				event.setIdResponsable(parameters.idResponsable);
+				event.setIdResponsable(idResponsable);
 				event.setPlace(parameters.place);
-				event = repository.UpdateEventByIdEvent(idResponsable, idEvent, event);
+				event.setId(idEvent);
+				Event UpdateEvent = repository.UpdateEventByIdEvent(idResponsable, idEvent, event);
 
-				session.setAttribute("idEvent", event.getId());
+				//session.setAttribute("idEvent", event.getId());
 
-				String json = mapper.writeValueAsString(event); 
+				String json = mapper.writeValueAsString(UpdateEvent); 
 				System.out.println(json);
 				response.setContentType("application/json"); 
 				response.setCharacterEncoding("UTF-8");
@@ -284,20 +285,28 @@ public class EventCreationJavaServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
+			
 			String path = request.getPathInfo();
+			ObjectMapper mapper = new ObjectMapper();
 			System.out.println("EventCreationJavaServlet.doDelete()");
 
 			if (path.startsWith("/deleteEvent")) {
+				System.out.println("marche");
 				
-				//int idResponsable = (Integer) session.getAttribute("idPerson");
-				int idEvent = request.getPathInfo().lastIndexOf("/");
-				System.out.println(idEvent);
+				String[] parts = path.split("/");
+				String idResponsable = parts[2];
+				int id = Integer.parseInt(idResponsable);
 				
-				boolean deleted = repository.deleteEventByIdEvent(idEvent);
+				//int idEvent = request.getPathInfo().lastIndexOf("/");
+				System.out.println(id);
+				
+				boolean deleted = repository.deleteEventByIdEvent(id);
 				
 				response.setContentType("application/json"); // le type du contenu est du json
 				response.setCharacterEncoding("UTF-8");// ce sera �crit en utf8
-				String.format("{\"deleted\": %s}", deleted);
+				//String.format("{\"deleted\": %s}", deleted);
+				String json = mapper.writeValueAsString(deleted); 
+				response.getWriter().write(json);
 			}
 			
 			
