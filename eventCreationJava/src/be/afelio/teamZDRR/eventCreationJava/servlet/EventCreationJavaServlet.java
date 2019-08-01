@@ -79,7 +79,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 			String[] parts = path.split("/");
 			String idEvent = parts[2];
 			int id = Integer.parseInt(idEvent);
-			Event event = repository.FindEventAndAllActivityByIdEvent(id);
+			Event event = repository.findEventAndAllActivityByIdEvent(id);
 			String json = mapper.writeValueAsString(event); // convertir en format json
 			setHeaders(response);
 			response.setContentType("application/json"); // le type du contenu est du json
@@ -94,7 +94,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 				Integer idActivity = Integer.parseInt(id);
 				setHeaders(response);
 				try {
-					if (repository.CreateNewInscriptionActivity(idPerson, idActivity)) {
+					if (repository.createNewInscriptionActivity(idPerson, idActivity)) {
 						response.getWriter().write("insciption ok");
 					} else {
 						response.getWriter().write("insciption NOK");
@@ -109,7 +109,18 @@ public class EventCreationJavaServlet extends HttpServlet {
 			String[] parts = path.split("/");
 			String idResponsable = parts[2];
 			int id = Integer.parseInt(idResponsable);
-			List<Event> events = repository.FindEventAndAllActivityByIdResponsable(id);
+			List<Event> events = repository.findEventAndAllActivityByIdResponsable(id);
+			String json = mapper.writeValueAsString(events);
+			setHeaders(response);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(json);
+		
+		}else if (path.startsWith("/search")) {
+			
+			String[] parts = path.split("/");
+			String EventName = parts[2];
+			List<Event> events = repository.findEventAndAllActivityByEventName(EventName);
 			String json = mapper.writeValueAsString(events);
 			setHeaders(response);
 			response.setContentType("application/json");
@@ -169,7 +180,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 					event.setEndEvent(parameters.endEvent);
 					event.setIdResponsable(idResponsable);
 					event.setPlace(parameters.place);
-					event = repository.CreateNewEvent(event);
+					event = repository.createNewEvent(event);
 
 					session.setAttribute("idEvent", event.getId());
 
@@ -196,7 +207,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 					activity.setStartActivity(parameters.startActivity);
 					activity.setEndActivity(parameters.endActivity);
 					activity.setIdEvent(idEvent);
-					activity = repository.CreateNewActivity(activity);
+					activity = repository.createNewActivity(activity);
 
 					String json = mapper.writeValueAsString(activity); // convertir en format json
 					System.out.println(json);
@@ -219,7 +230,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 				newPerson.setEmail(parameters.email);
 				newPerson.setPassword(parameters.password);
 				
-				newPerson = repository.CreateNewPerson(newPerson);
+				newPerson = repository.createNewPerson(newPerson);
 				
 				session.setAttribute("idPerson", newPerson.getId());
 				
@@ -266,7 +277,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 				event.setIdResponsable(idResponsable);
 				event.setPlace(parameters.place);
 				event.setId(idEvent);
-				Event UpdateEvent = repository.UpdateEventByIdEvent(idResponsable, idEvent, event);
+				Event UpdateEvent = repository.updateEventByIdEvent(idResponsable, idEvent, event);
 
 				//session.setAttribute("idEvent", event.getId());
 

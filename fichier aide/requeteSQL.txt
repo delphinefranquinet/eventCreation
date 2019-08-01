@@ -1,0 +1,6 @@
+INSERT INTO "Inscription_activity" Values (DEFAULT,4, 14)
+
+INSERT INTO "Activities" Values (default, 'Test2', 'ForTesting', '2019-07-19 10:30:00+02', '2019-07-19 12:30:00+02', 25)
+
+Select id_activity From "Activities" Where id_event = 25
+
