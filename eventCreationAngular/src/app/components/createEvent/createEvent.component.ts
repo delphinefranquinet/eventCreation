@@ -11,7 +11,7 @@ import { EventManage } from '../../models/eventManage.modele';
   styleUrls: ['./createEvent.component.css']
 })
 
-export class CreateEventComponent implements OnInit, OnDestroy {
+export class CreateEventComponent implements OnInit {
 
   public event: EventManage;
   public eventForm: FormGroup;
@@ -21,8 +21,8 @@ export class CreateEventComponent implements OnInit, OnDestroy {
   @Input() eventz: EventManage;
 
   constructor(private router: Router,
-              private fb: FormBuilder,
-              private eventService: EventService) {
+    private fb: FormBuilder,
+    private eventService: EventService) {
     this.event = new EventManage();
 
     this.eventForm = this.fb.group({
@@ -37,16 +37,6 @@ export class CreateEventComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    console.log('oninit');
-
-  }
-
-  ngOnDestroy() {
-    console.log('destroy');
-  }
-
-  next() {
-    this.router.navigate(['/activity']);
   }
 
   public hasNameError() {
@@ -69,6 +59,11 @@ export class CreateEventComponent implements OnInit, OnDestroy {
     return control.errors && control.errors.required;
   }
 
+  public hasPlaceEventError() {
+    const control = this.eventForm.get('place');
+    return control.errors && control.errors.required;
+  }
+
   public submitForm() {
     const newValues = this.eventForm.value;
 
@@ -82,19 +77,16 @@ export class CreateEventComponent implements OnInit, OnDestroy {
     this.event = newEvent;
 
     this.eventService
-      // tslint:disable-next-line: max-line-length
-      .postEvent(this.event).subscribe// postlogin envoie un observale / observable =  la prochaine fois qu'un evenement aura lieu, exécute ca ...(person => console.log(person));
-      (event => this.connection(event));
+
+      .postEvent(this.event).subscribe
+      /* postlogin envoie un observale / observable =
+       la prochaine fois qu'un evenement aura lieu, exécute ca ...(person => console.log(person));
+     */
+      (event => {
+        this.eventForm.reset();
+        this.eventError = true;
+      },
+        () => { this.eventError = false; });
   }
 
-
-  public connection(event: EventManage) {
-    if (event === null) {
-      this.eventError = true;
-    } else {
-      this.eventError = false;
-      this.next();
-
-    }
-  }
 }
