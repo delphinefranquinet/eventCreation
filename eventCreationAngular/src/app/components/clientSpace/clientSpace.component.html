@@ -1,14 +1,12 @@
 <div id="mySidenav">
   <a [routerLink]="['/home']" id="home"> Home </a>
-  <a [routerLink]="['/createEvent']" id="Create"> Create your event </a>
   <a [routerLink]="['/login']" id="login"> Login </a>
   <a [routerLink]="['/register']" id="register"> Register </a>
 </div>
 
 
-<div *ngFor="let eventItem of events" class="romansUglyClass">
-<!-- <div *ngFor="let eventItem of events" class="center"> FROM ZAHRAA-->
-  <div>{{eventItem.id}}</div>
+<!-- <div *ngFor="let eventItem of events" class="romansUglyClass"> -->
+<div *ngFor="let eventItem of events" class="center">
   <div>{{eventItem.name}}</div>
   <div>{{eventItem.description}}</div>
   <div>{{eventItem.place}}</div>
@@ -16,6 +14,5 @@
   <div>{{eventItem.endEvent}}</div>
   <div><button type="button" (click)="deleteEvent(eventItem.id)">Delete</button></div>
 </div>
-
-<div><button type="button"><a [routerLink]="['/createEvent']">Create an Event</a></button></div>
-<!-- LINE JUST ABOVE IS FROM ZAHRAA -->
+<br>
+<div class="center"><button type="button"><a [routerLink]="['/createEvent']">Create an Event</a></button></div>
