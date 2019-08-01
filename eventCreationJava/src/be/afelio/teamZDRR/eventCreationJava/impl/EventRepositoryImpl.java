@@ -281,10 +281,10 @@ public class EventRepositoryImpl {
 		boolean add = false;
 		boolean freeTime = false;
 		
-		//freeTime = LocalDateTimeComparison
+		freeTime = LocalDateTimeComparison(idPerson, idActivity);
 		
 		
-		if (idPerson != null && idActivity != null) {
+		if (idPerson != null && idActivity != null && freeTime) {
 			String sql = "INSERT INTO \"Inscription_activity\" Values (DEFAULT, ?, ?)";
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql,
@@ -612,7 +612,7 @@ public class EventRepositoryImpl {
 		LocalDateTime newLocalDateTimeStartActivity = null;
 
 		if (idActivity > 0) {
-			
+
 			String sql = "select \"startActivity\" From \"Activities\" Where id_activity = ?";
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
@@ -620,8 +620,10 @@ public class EventRepositoryImpl {
 				query.setInt(1, idActivity);
 
 				try (java.sql.ResultSet rs = query.executeQuery();) {
-				
-				newLocalDateTimeStartActivity  = rs.getTimestamp("startActivity").toLocalDateTime();
+					while (rs.next()) {
+
+						newLocalDateTimeStartActivity = rs.getTimestamp("startActivity").toLocalDateTime();
+					}
 				}
 			} catch (java.sql.SQLException sqle) {
 				throw new RuntimeException(sqle);
@@ -631,13 +633,13 @@ public class EventRepositoryImpl {
 
 		return newLocalDateTimeStartActivity;
 	}
-	
+
 	public LocalDateTime findLocalDateTimeEndNewActivity(int idActivity) {
 
 		LocalDateTime newLocalDateTimeEndActivity = null;
 
 		if (idActivity > 0) {
-			
+
 			String sql = "select \"endActivity\" From \"Activities\" Where id_activity = ?";
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
@@ -645,8 +647,9 @@ public class EventRepositoryImpl {
 				query.setInt(1, idActivity);
 
 				try (java.sql.ResultSet rs = query.executeQuery();) {
-					
-					newLocalDateTimeEndActivity  = rs.getTimestamp("endActivity").toLocalDateTime();
+					while (rs.next()) {
+						newLocalDateTimeEndActivity = rs.getTimestamp("endActivity").toLocalDateTime();
+					}
 				}
 			} catch (java.sql.SQLException sqle) {
 				throw new RuntimeException(sqle);
@@ -656,7 +659,7 @@ public class EventRepositoryImpl {
 		return newLocalDateTimeEndActivity;
 	}
 	
-	public boolean LocalDateTimeComparison(int idPerson, LocalDateTime newLocalDateTimeStartActivity, LocalDateTime newLocalDateTimeEndActivity) {
+	public boolean LocalDateTimeComparison(int idPerson, int idActivity) {
 		
 		boolean freeTime = false;
 		
@@ -666,10 +669,15 @@ public class EventRepositoryImpl {
 		int compareValueStartToEnd;
 		int compareValueEndToStart;
 		int compareValueEndToEnd;
+		LocalDateTime newLocalDateTimeStartActivity = null;
+		LocalDateTime newLocalDateTimeEndActivity = null;
 		
 		
 		localDateTimeStartActivities = findAllLocalDateTimeStartByIdActivities(idPerson);
 		localDateTimeEndActivities = findAllLocalDateTimeEndByIdActivities(idPerson);
+		newLocalDateTimeStartActivity = findLocalDateTimeStartNewActivity(idActivity);
+		newLocalDateTimeEndActivity = findLocalDateTimeEndNewActivity(idActivity);
+		
 		
 		if (localDateTimeStartActivities != null && localDateTimeEndActivities != null) {
 			
