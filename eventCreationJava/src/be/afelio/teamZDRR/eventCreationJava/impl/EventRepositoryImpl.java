@@ -528,7 +528,7 @@ public class EventRepositoryImpl {
 		return idActivities;
 	}
 	
-	/*public List<LocalDateTime> findAllLocalDateTimeStartByIdActivities(List<Integer> idActivities) {
+	public List<LocalDateTime> findAllLocalDateTimeStartByIdActivities(List<Integer> idActivities) {
 
 		List<LocalDateTime> LocalDateTimeStartActivities = new ArrayList<LocalDateTime>();
 
@@ -555,6 +555,6 @@ public class EventRepositoryImpl {
 		}
 
 		return LocalDateTimeStartActivities;
-	}*/
+	}
 
 }
