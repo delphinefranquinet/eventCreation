@@ -4,3 +4,10 @@ INSERT INTO "Activities" Values (default, 'Test2', 'ForTesting', '2019-07-19 10:
 
 Select id_activity From "Activities" Where id_event = 25
 
+
+Vérifier la contrainte conflits horaires
+
+Select id_activity From "Inscription_activity" Where id_person = 1
+
+Select "startActivity", "endActivity" From "Activities" Where id_activity = 10
+

@@ -502,21 +502,36 @@ public class EventRepositoryImpl {
 		return events;
 	}
 
+	public List<Integer> findIdActivityByIdPerson(int idPerson) {
 
+		List<Integer> idActivities = new ArrayList<Integer>();
+
+		if (idPerson > 0) {
+
+			String sql = "Select id_activity From \"Inscription_activity\" Where id_person = ?";
+			
+			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
+
+				query.setInt(1, idPerson);
+
+				try (java.sql.ResultSet rs = query.executeQuery();) {
+					
+					while (rs.next()) {
+						
+						int idActivity = rs.getInt(1);
+
+						idActivities.add(idActivity);
+					}
+				}
+			} catch (java.sql.SQLException sqle) {
+				throw new RuntimeException(sqle);
+			}
+		}
+
+		return idActivities;
+	}
 	  
-	 /* public Integer FindIdEventByName(String eventName) {
-	 * 
-	 * Integer idEvent = null;
-	 * 
-	 * String sql = "Select id_event From \"Events\" Where \"eventName\" = ?";
-	 * 
-	 * try ( PreparedStatement preparedStatement = c.prepareStatement(sql) ) {
-	 * preparedStatement.setString(1, password); try ( ResultSet resultSet =
-	 * preparedStatement.executeQuery() ) { if (resultSet.next()) { //r�cup�rer
-	 * la ou les colonne(s) demand�e(s) email = resultSet.getString(1); } } }
-	 * 
-	 * 
-	 * return idEvent; }
-	 */
+	
 
 }
