@@ -660,9 +660,9 @@ public class EventRepositoryImpl {
 	}
 	
 	public boolean LocalDateTimeComparison(int idPerson, int idActivity) {
-		
-		boolean freeTime = false;
-		
+
+		boolean freeTime = true;
+
 		List<LocalDateTime> localDateTimeStartActivities = new ArrayList<LocalDateTime>();
 		List<LocalDateTime> localDateTimeEndActivities = new ArrayList<LocalDateTime>();
 		int compareValueStartToStart;
@@ -671,34 +671,36 @@ public class EventRepositoryImpl {
 		int compareValueEndToEnd;
 		LocalDateTime newLocalDateTimeStartActivity = null;
 		LocalDateTime newLocalDateTimeEndActivity = null;
-		
-		
+
 		localDateTimeStartActivities = findAllLocalDateTimeStartByIdActivities(idPerson);
 		localDateTimeEndActivities = findAllLocalDateTimeEndByIdActivities(idPerson);
 		newLocalDateTimeStartActivity = findLocalDateTimeStartNewActivity(idActivity);
 		newLocalDateTimeEndActivity = findLocalDateTimeEndNewActivity(idActivity);
-		
-		
+
 		if (localDateTimeStartActivities != null && localDateTimeEndActivities != null) {
-			
+
 			for (int i = 0; i < localDateTimeStartActivities.size(); i++) {
-				
+
 				LocalDateTime localDateTimeStartActivity = localDateTimeStartActivities.get(i);
 				LocalDateTime localDateTimeEndActivity = localDateTimeStartActivities.get(i);
-				
+
 				compareValueStartToStart = newLocalDateTimeStartActivity.compareTo(localDateTimeStartActivity);
 				compareValueStartToEnd = newLocalDateTimeStartActivity.compareTo(localDateTimeEndActivity);
 				compareValueEndToStart = newLocalDateTimeEndActivity.compareTo(localDateTimeStartActivity);
 				compareValueEndToEnd = newLocalDateTimeEndActivity.compareTo(localDateTimeEndActivity);
-				
-				if((compareValueStartToStart >= 0 && compareValueStartToEnd <= 0) || (compareValueEndToStart <= 0 && compareValueEndToEnd >= 0)) {
+
+				if ((compareValueStartToStart >= 0 && compareValueStartToEnd <= 0)
+						|| (compareValueEndToStart <= 0 && compareValueEndToEnd >= 0)) {
 					freeTime = false;
-						
-				}else {
+
+				} else {
 					freeTime = true;
-				}	
-			}	
+				}
+			}
+		} else {
+			freeTime = true;
 		}
+		System.out.println(freeTime);
 		return freeTime;
 	}
 }
