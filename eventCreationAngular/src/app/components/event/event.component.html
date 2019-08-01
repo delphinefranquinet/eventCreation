@@ -1,7 +1,6 @@
 
 <div id="mySidenav">
     <a [routerLink]="['/home']" id="home"> Home </a>
-    <a [routerLink]="['/createEvent']" id="Create"> Create your event </a>
     <a [routerLink]="['/login']" id="login"> Login </a>
     <a [routerLink]="['/register']" id="register"> Register </a>
 </div>
@@ -24,7 +23,7 @@
                       <div>{{activity.description}}</div>
                       <div>{{activity.startActivity}}</div>
                       <div>{{activity.endActivity}}</div>
-                    <!-- <button (click)="inscription(activity.id)" class="btn">inscription</button>-->
+                   <button (click)="inscription(event.id)" class="btn">inscription</button>
                 </div>
             </div>
       </div>

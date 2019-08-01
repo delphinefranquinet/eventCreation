@@ -20,19 +20,14 @@
   top: 10px;
   background-color: #f44336;
 }
-#Create {
+#login {
   top: 80px;
   background-color: #4CAF50;
 }
 
-#login {
+#register {
   top: 170px;
   background-color: #2196F3;
-}
-
-#register {
-  top: 240px;
-  background-color: #f4433681;
 }
 
 .romansUglyClass {

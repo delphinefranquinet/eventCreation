@@ -24,8 +24,7 @@ export class ClientSpaceComponent implements OnInit {
       console.log('\"params.id\": ' + params.id);
       console.log('id of connected user is: ' + id);
       this.eventService.getEventsByIdResponsable(id).subscribe(
-        event => this.events = event
-      );
+        event => this.events = event);
     });
 
 

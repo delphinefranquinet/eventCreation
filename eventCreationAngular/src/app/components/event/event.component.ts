@@ -12,6 +12,7 @@ import { ActivityService } from '../../services/activity.service';
 })
 export class EventComponent implements OnInit {
 
+  public eventId: number;
  public eventName: string;
  public eventStart: Date;
  public eventEnd: Date;
@@ -29,6 +30,7 @@ export class EventComponent implements OnInit {
 
         this.eventService.getEventByID(id).subscribe(
           event => {
+            this.eventId = event.id;
             this.eventName = event.name;
             this.descreption = event.description;
             this.eventPlace = event.place;
