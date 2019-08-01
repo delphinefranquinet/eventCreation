@@ -279,7 +279,11 @@ public class EventRepositoryImpl {
 
 	public boolean createNewInscriptionActivity(Integer idPerson, Integer idActivity) throws SQLException {
 		boolean add = false;
-
+		boolean freeTime = false;
+		
+		//freeTime = LocalDateTimeComparison
+		
+		
 		if (idPerson != null && idActivity != null) {
 			String sql = "INSERT INTO \"Inscription_activity\" Values (DEFAULT, ?, ?)";
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
@@ -528,9 +532,11 @@ public class EventRepositoryImpl {
 		return idActivities;
 	}
 	
-	public List<LocalDateTime> findAllLocalDateTimeStartByIdActivities(List<Integer> idActivities) {
+	public List<LocalDateTime> findAllLocalDateTimeStartByIdActivities(int idPerson) {
 
 		List<LocalDateTime> LocalDateTimeStartActivities = new ArrayList<LocalDateTime>();
+		
+		List<Integer> idActivities = findIdActivityByIdPerson(idPerson);
 
 		if (idActivities != null) {
 
@@ -564,9 +570,10 @@ public class EventRepositoryImpl {
 		return LocalDateTimeStartActivities;
 	}
 
-	public List<LocalDateTime> findAllLocalDateTimeEndByIdActivities(List<Integer> idActivities) {
+	public List<LocalDateTime> findAllLocalDateTimeEndByIdActivities(int idPerson) {
 
 		List<LocalDateTime> LocalDateTimeEndActivities = new ArrayList<LocalDateTime>();
+		List<Integer> idActivities = findIdActivityByIdPerson(idPerson);
 
 		if (idActivities != null) {
 
@@ -600,11 +607,90 @@ public class EventRepositoryImpl {
 		return LocalDateTimeEndActivities;
 	}
 
-	public boolean LocalDateTimeComparison() {
+	public LocalDateTime findLocalDateTimeStartNewActivity(int idActivity) {
+
+		LocalDateTime newLocalDateTimeStartActivity = null;
+
+		if (idActivity > 0) {
+			
+			String sql = "select \"startActivity\" From \"Activities\" Where id_activity = ?";
+			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
+
+				query.setInt(1, idActivity);
+
+				try (java.sql.ResultSet rs = query.executeQuery();) {
+				
+				newLocalDateTimeStartActivity  = rs.getTimestamp("startActivity").toLocalDateTime();
+				}
+			} catch (java.sql.SQLException sqle) {
+				throw new RuntimeException(sqle);
+			}
+
+		}
+
+		return newLocalDateTimeStartActivity;
+	}
+	
+	public LocalDateTime findLocalDateTimeEndNewActivity(int idActivity) {
+
+		LocalDateTime newLocalDateTimeEndActivity = null;
+
+		if (idActivity > 0) {
+			
+			String sql = "select \"endActivity\" From \"Activities\" Where id_activity = ?";
+			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
+
+				query.setInt(1, idActivity);
+
+				try (java.sql.ResultSet rs = query.executeQuery();) {
+					
+					newLocalDateTimeEndActivity  = rs.getTimestamp("endActivity").toLocalDateTime();
+				}
+			} catch (java.sql.SQLException sqle) {
+				throw new RuntimeException(sqle);
+			}
+		}
+
+		return newLocalDateTimeEndActivity;
+	}
+	
+	public boolean LocalDateTimeComparison(int idPerson, LocalDateTime newLocalDateTimeStartActivity, LocalDateTime newLocalDateTimeEndActivity) {
+		
 		boolean freeTime = false;
 		
+		List<LocalDateTime> localDateTimeStartActivities = new ArrayList<LocalDateTime>();
+		List<LocalDateTime> localDateTimeEndActivities = new ArrayList<LocalDateTime>();
+		int compareValueStartToStart;
+		int compareValueStartToEnd;
+		int compareValueEndToStart;
+		int compareValueEndToEnd;
 		
+		
+		localDateTimeStartActivities = findAllLocalDateTimeStartByIdActivities(idPerson);
+		localDateTimeEndActivities = findAllLocalDateTimeEndByIdActivities(idPerson);
+		
+		if (localDateTimeStartActivities != null && localDateTimeEndActivities != null) {
+			
+			for (int i = 0; i < localDateTimeStartActivities.size(); i++) {
+				
+				LocalDateTime localDateTimeStartActivity = localDateTimeStartActivities.get(i);
+				LocalDateTime localDateTimeEndActivity = localDateTimeStartActivities.get(i);
+				
+				compareValueStartToStart = newLocalDateTimeStartActivity.compareTo(localDateTimeStartActivity);
+				compareValueStartToEnd = newLocalDateTimeStartActivity.compareTo(localDateTimeEndActivity);
+				compareValueEndToStart = newLocalDateTimeEndActivity.compareTo(localDateTimeStartActivity);
+				compareValueEndToEnd = newLocalDateTimeEndActivity.compareTo(localDateTimeEndActivity);
+				
+				if((compareValueStartToStart >= 0 && compareValueStartToEnd <= 0) || (compareValueEndToStart <= 0 && compareValueEndToEnd >= 0)) {
+					freeTime = false;
+						
+				}else {
+					freeTime = true;
+				}	
+			}	
+		}
 		return freeTime;
 	}
-
 }
