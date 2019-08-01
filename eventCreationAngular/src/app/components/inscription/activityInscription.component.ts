@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ActivityService } from '../../services/activity.service';
 import { Activity } from '../../models/activity.modele';
+import { InscriptionService } from '../../services/inscription.service';
 
 @Component({
   selector: 'app-activityInscription',
@@ -10,31 +11,44 @@ import { Activity } from '../../models/activity.modele';
 })
 export class ActivityInscriptionComponent implements OnInit {
 
+  public activityId: number;
   public activityName: string;
   public activityStart: Date;
   public activityEnd: Date;
   public activityError: boolean;
   public activity: Activity;
   public descreption: string;
-
-  constructor(private route: ActivatedRoute, private activityService: ActivityService) { }
+  public connectionError: boolean;
+  // public activities: Activity[];
+  constructor(private route: ActivatedRoute, private inscriptionService: InscriptionService, private activityService: ActivityService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       const id: string = params.id;
 
-      this.activityService.getActivity().subscribe(
+      this.activityService.postActivityByInscriptionID(id).subscribe(
         activity => {
-          console.log(id);
-          // this.activityName = activity.name;
-          // this.activityStart = activity.startActivity;
-          // this.descreption = activity.description;
-          // this.activityEnd = activity.endActivity;
+          // this.activity = activity;
+
+          this.activityId = activity.id;
+          this.activityName = activity.name;
+          this.descreption = activity.description;
+          this.activityStart = activity.startActivity;
+          this.activityEnd = activity.endActivity;
+
+
         }
-        );
+      );
+    });
+
+
+    }
+    public inscription(activityId: number) {
+      this.inscriptionService.getInscription(activityId).subscribe(inscription => {
+        this.connectionError = true;
+      }, () => {
+      this.connectionError = false;
       });
 
     }
-
-    }
-
+  }

@@ -4,6 +4,7 @@ import { EventService } from '../../services/event.service';
 import { Activity } from '../../models/activity.modele';
 import { ActivityService } from '../../services/activity.service';
 import { InscriptionActivity } from '../../models/inscriptionActivity.modele';
+import { InscriptionService } from '../../services/inscription.service';
 
 @Component({
   selector: 'app-event',
@@ -23,7 +24,10 @@ export class EventComponent implements OnInit {
   public activity: Activity;
   public connectionError: boolean;
 
-  constructor(private route: ActivatedRoute, private activityService: ActivityService, private eventService: EventService) { }
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private inscriptionService: InscriptionService,
+              private eventService: EventService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -45,10 +49,11 @@ export class EventComponent implements OnInit {
 
   }
   public inscription(activityId: number) {
-    this.activityService.getInscription(activityId).subscribe(inscription => {
+    this.inscriptionService.getInscription(activityId).subscribe(inscription => {
       this.connectionError = true;
+      this.router.navigate(['/activityInscription']);
     }, () => {
-    this.connectionError = false;
+      this.connectionError = false;
     });
 
 
