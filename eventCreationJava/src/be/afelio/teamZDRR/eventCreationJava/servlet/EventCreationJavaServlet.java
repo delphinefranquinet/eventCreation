@@ -132,8 +132,6 @@ public class EventCreationJavaServlet extends HttpServlet {
 		}
 	}
 
-	
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException { // tu envoies des donn�es // tu vas cr�er
 		HttpSession session = request.getSession(true);// endroit de memorisation qui dure plusieurs requetes et qui est
