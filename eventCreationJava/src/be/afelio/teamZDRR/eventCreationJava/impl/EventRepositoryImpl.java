@@ -335,16 +335,12 @@ public class EventRepositoryImpl {
 				
 				System.out.println("EventRepositoryImpl.deleteEventByIdEvent()");
 
-				String sqlDeleteActivities = "delete from \"Activities\" Where id_event = ?";
 				String sqlDeleteEvent = "delete from \"Events\" Where id_event = ?";
 				
 				try (java.sql.Connection connection2 = java.sql.DriverManager.getConnection(url, user, password);
-						PreparedStatement deleteActivitiesStatement = connection2.prepareStatement(sqlDeleteActivities);
 						PreparedStatement deleteEventStatement = connection2.prepareStatement(sqlDeleteEvent)) {
 					connection2.setAutoCommit(false);
 
-					deleteActivitiesStatement.setInt(1, idEvent);
-					deleteActivitiesStatement.executeUpdate();
 					deleteEventStatement.setInt(1, idEvent);
 					deleteEventStatement.executeUpdate();
 					connection2.commit();
