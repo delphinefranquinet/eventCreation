@@ -11,41 +11,41 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ClientSpaceComponent implements OnInit {
 
+  private connectedUserID: number;
   public events: EventManage[];
+  public errorMessage = '';
 
   constructor(private eventService: EventService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      const id: string = params.id;
+    this.route.params.subscribe((params) => {
+      this.connectedUserID = Number(params.id);
       console.log('\"typeof params\": ', typeof params);
       console.log('\"JSON.stringify(params)\": ', JSON.stringify(params));
       console.log('\"params.id\": ' + params.id);
-      console.log('id of connected user is: ' + id);
-      this.eventService.getEventsByIdResponsable(id).subscribe(
-        event => this.events = event);
+      console.log('id of connected user is: ' + this.connectedUserID);
     });
-
-
-    /*this.eventService.removeEvent().subscribe*/
-
+    this.updateAll();
   }
+
+  private updateAll(): void {
+    this.eventService.getEventsByIdResponsable(this.connectedUserID).subscribe((events) => {
+      this.events = events;
+    });
+    this.errorMessage = '';
+  }
+
   public deleteEvent(eventToDelete: number) { // penser a avoir un bouton de confirmation
     console.log('deleteEvent\(' + eventToDelete + '\) triggered!');
-    this.eventService.removeEvent(eventToDelete).subscribe(response => {
+    this.eventService.removeEvent(eventToDelete).subscribe((response: boolean) => {
       if (response) {
-        console.log('response is \"true\"');
-        // signaler a l utilisateur que delete is done ==> faire un refresh
-      } else if (!response) {
-        console.log('response is \"false\"');
-        // signaler textuellement a l utilisateur que delete pas OK
+        this.updateAll();
+        console.log('\"response\": \"true\"');
       } else {
-        console.log('Error with response format');
-        // signaler textuellement a l utilisateur que il y a un probleme a presenter aux developpeurs
+        this.errorMessage = 'Unexpected error! Please, contact developers.';
+        console.log('UNEXPECTED: \"response\" is not \"true\"!');
       }
     });
   }
 
 }
-
-

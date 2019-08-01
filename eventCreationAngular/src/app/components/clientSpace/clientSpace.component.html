@@ -4,15 +4,13 @@
   <a [routerLink]="['/register']" id="register"> Register </a>
 </div>
 
-
-<!-- <div *ngFor="let eventItem of events" class="romansUglyClass"> -->
 <div *ngFor="let eventItem of events" class="center">
   <div>{{eventItem.name}}</div>
   <div>{{eventItem.description}}</div>
   <div>{{eventItem.place}}</div>
   <div>{{eventItem.startEvent}}</div>
   <div>{{eventItem.endEvent}}</div>
-  <div><button type="button" (click)="deleteEvent(eventItem.id)">Delete</button></div>
+  <div><button type="button" (click)="deleteEvent(eventItem.id)">Delete</button><span id="errorMessage">{{errorMessage}}</span></div>
 </div>
 <br>
 <div class="center"><button type="button"><a [routerLink]="['/createEvent']">Create an Event</a></button></div>

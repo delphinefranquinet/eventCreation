@@ -4,6 +4,8 @@ Login
 
 Method POST
 
+connexion
+
 URL http://localhost:8080/eventCreationJava/login
 
 body {"password" : "1234", "email" : "delphine@nomail.be" }
