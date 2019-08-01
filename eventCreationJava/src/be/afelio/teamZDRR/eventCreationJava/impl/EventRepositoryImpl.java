@@ -132,34 +132,51 @@ public class EventRepositoryImpl {
 
 	public Activity createNewActivity(Activity newActivity) {
 
+		boolean timeIsCorrect = false;
+
 		String sql = "INSERT INTO \"Activities\" Values (default, ?, ?, ?, ?, ?)";
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
-			// connection.setAutoCommit(true);
-
-			connection.setAutoCommit(false);
-			query.setString(1, newActivity.getName());
-			query.setString(2, newActivity.getDescription());
-			query.setTimestamp(3, Timestamp.valueOf(newActivity.getStartActivity()));
-			query.setTimestamp(4, Timestamp.valueOf(newActivity.getEndActivity()));
-			query.setInt(5, newActivity.getIdEvent());
-			query.executeUpdate(); // insert/update/delete
-
-			try (ResultSet resultSet = query.getGeneratedKeys() // pour r�cup�rer l'id qui est en autoincrement, ne
-																// pas
-																// oublier Statement.RETURN_GENERATED_KEYS)
-			) {
-				if (resultSet.next()) {
-					int id = resultSet.getInt(1);
-					// System.out.println("bonjour" + id);
-					newActivity.setId(id);
+			
+			/*try (ResultSet rs = query.executeQuery()) {
+				while (rs.next()) {
+			LocalDateTime startActivity = query.setTimestamp(3, Timestamp.valueOf(newActivity.getStartActivity()));
+			LocalDateTime endActivity = query.setTimestamp(4, Timestamp.valueOf(newActivity.getEndActivity()));
+			int idEvent = query.setInt(5, newActivity.getIdEvent());
+					
+					timeIsCorrect = LocalDateTimeComparisonForCreateNewActivity(idEvent, startActivity, endActivity);
 				}
 			}
-			connection.commit();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+			*/
+			if (timeIsCorrect) {
+				connection.setAutoCommit(false);
+				query.setString(1, newActivity.getName());
+				query.setString(2, newActivity.getDescription());
+				query.setTimestamp(3, Timestamp.valueOf(newActivity.getStartActivity()));
+				query.setTimestamp(4, Timestamp.valueOf(newActivity.getEndActivity()));
+				query.setInt(5, newActivity.getIdEvent());
+				query.executeUpdate(); // insert/update/delete
 
+				try (ResultSet resultSet = query.getGeneratedKeys() // pour recuperer l'id qui est en autoincrement, ne
+																	// pas
+																	// oublier Statement.RETURN_GENERATED_KEYS)
+				) {
+					if (resultSet.next()) {
+						int id = resultSet.getInt(1);
+						// System.out.println("bonjour" + id);
+						newActivity.setId(id);
+					}
+				}
+				connection.commit();
+			}
 		} catch (java.sql.SQLException sqle) {
 			throw new RuntimeException(sqle);
+
 		}
+		System.out.println(timeIsCorrect);
 		return newActivity;
 	}
 
@@ -281,8 +298,7 @@ public class EventRepositoryImpl {
 		boolean add = false;
 		boolean freeTime = false;
 		
-		freeTime = LocalDateTimeComparison(idPerson, idActivity);
-		
+		freeTime = LocalDateTimeComparisonForInscription(idPerson, idActivity);
 		
 		if (idPerson != null && idActivity != null && freeTime) {
 			String sql = "INSERT INTO \"Inscription_activity\" Values (DEFAULT, ?, ?)";
@@ -659,7 +675,7 @@ public class EventRepositoryImpl {
 		return newLocalDateTimeEndActivity;
 	}
 	
-	public boolean LocalDateTimeComparison(int idPerson, int idActivity) {
+	public boolean LocalDateTimeComparisonForInscription(int idPerson, int idActivity) {
 
 		boolean freeTime = true;
 
@@ -702,5 +718,96 @@ public class EventRepositoryImpl {
 		}
 		System.out.println(freeTime);
 		return freeTime;
+	}
+
+	public LocalDateTime findLocalDateTimeStartEvent(int idEvent) {
+
+		LocalDateTime localDateTimeStartEvent = null;
+
+		if (idEvent > 0) {
+
+			String sql = "select \"dateDebut\" From \"Events\" Where id_event = ?";
+			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
+
+				query.setInt(1, idEvent);
+
+				try (java.sql.ResultSet rs = query.executeQuery();) {
+					while (rs.next()) {
+
+						localDateTimeStartEvent = rs.getTimestamp("dateDebut").toLocalDateTime();
+					}
+				}
+			} catch (java.sql.SQLException sqle) {
+				throw new RuntimeException(sqle);
+			}
+
+		}
+
+		return localDateTimeStartEvent;
+	}
+	
+	public LocalDateTime findLocalDateTimeEndEvent(int idEvent) {
+
+		LocalDateTime localDateTimeEndEvent = null;
+
+		if (idEvent > 0) {
+
+			String sql = "select \"dateFin\" From \"Events\" Where id_event = ?";
+			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
+
+				query.setInt(1, idEvent);
+
+				try (java.sql.ResultSet rs = query.executeQuery();) {
+					while (rs.next()) {
+
+						localDateTimeEndEvent = rs.getTimestamp("dateFin").toLocalDateTime();
+					}
+				}
+			} catch (java.sql.SQLException sqle) {
+				throw new RuntimeException(sqle);
+			}
+
+		}
+
+		return localDateTimeEndEvent;
+	}
+
+	public boolean LocalDateTimeComparisonForCreateNewActivity(int idEvent, LocalDateTime localDateTimeStartNewActivity,
+			LocalDateTime localDateTimeEndNewActivity) {
+
+		LocalDateTime localDateTimeStartEvent = null;
+		LocalDateTime localDateTimeEndEvent = null;
+		boolean timeIsCorrect = true;
+
+		localDateTimeStartEvent = findLocalDateTimeStartEvent(idEvent);
+		localDateTimeEndEvent = findLocalDateTimeEndEvent(idEvent);
+
+		int compareValueStartToStart;
+		int compareValueStartToEnd;
+		int compareValueEndToStart;
+		int compareValueEndToEnd;
+
+		if (localDateTimeStartNewActivity != null && localDateTimeEndNewActivity != null) {
+
+			compareValueStartToStart = localDateTimeStartNewActivity.compareTo(localDateTimeStartEvent);
+			compareValueStartToEnd = localDateTimeStartNewActivity.compareTo(localDateTimeEndEvent);
+			compareValueEndToStart = localDateTimeEndNewActivity.compareTo(localDateTimeStartEvent);
+			compareValueEndToEnd = localDateTimeEndNewActivity.compareTo(localDateTimeEndEvent);
+
+			if ((compareValueStartToStart >= 0 && compareValueStartToEnd <= 0)
+					|| (compareValueEndToStart <= 0 && compareValueEndToEnd >= 0)) {
+				timeIsCorrect = false;
+
+			} else {
+				timeIsCorrect = true;
+			}
+
+		} else {
+			timeIsCorrect = true;
+		}
+		System.out.println(timeIsCorrect);
+		return timeIsCorrect;
 	}
 }

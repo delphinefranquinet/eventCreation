@@ -39,3 +39,5 @@ Delete event
 Method DELETE 
 
 URL http://localhost:8080/eventCreationJava/deleteEvent/24
+
+inscriptionActivity
