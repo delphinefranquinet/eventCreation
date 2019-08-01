@@ -4,6 +4,14 @@ INSERT INTO "Activities" Values (default, 'Test2', 'ForTesting', '2019-07-19 10:
 
 Select id_activity From "Activities" Where id_event = 25
 
+delete  from "Inscription_activity" Where id_activity = 10
+
+INSERT INTO "Inscription_activity" Values (DEFAULT,2, 16)
+
+INSERT INTO "Activities" Values (default, 'Test2', 'ForTesting', '2019-07-19 10:30:00+02', '2019-07-19 12:30:00+02', 26)
+
+insert into "Events" values (default, 'romaintest', 'test', '2019-07-19 10:30:00+02', '2019-07-19 10:30:00+02', 2, 'liege' )
+insert into "Events" values (default, 'romaintest', 'test', '2019-07-19 10:30:00+02', '2019-07-19 10:30:00+02', 2, 'liege' )
 
 Vérifier la contrainte conflits horaires
 
