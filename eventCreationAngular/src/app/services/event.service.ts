@@ -29,7 +29,7 @@ export class EventService {
       .pipe(catchError((error: any) => throwError(error.error)));
   }
 
-  public getEventsByIdResponsable(id: string): Observable<EventManage[]> {
+  public getEventsByIdResponsable(id: number): Observable<EventManage[]> {
     return this.http
       .get<EventManage[]>(`${environment.baseUrl}/clientSpace/${id}`)
       .pipe(catchError((error: any) => throwError(error.error)));

@@ -13,36 +13,37 @@ export class ClientSpaceComponent implements OnInit {
 
   public events: EventManage[];
   public event: EventManage;
+  private connectedUserID: number;
 
   constructor(private eventService: EventService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      const id: string = params.id;
+    this.route.params.subscribe((params) => {
+      this.connectedUserID = Number(params.id);
       console.log('\"typeof params\": ', typeof params);
       console.log('\"JSON.stringify(params)\": ', JSON.stringify(params));
       console.log('\"params.id\": ' + params.id);
-      console.log('id of connected user is: ' + id);
-      this.eventService.getEventsByIdResponsable(id).subscribe(
-        event => this.events = event);
+      console.log('id of connected user is: ' + this.connectedUserID);
     });
-
-
-    /*this.eventService.removeEvent().subscribe*/
-
+    this.updateEvents();
   }
+
+  private updateEvents(): void {
+    this.eventService.getEventsByIdResponsable(this.connectedUserID).subscribe((events) => {
+      this.events = events;
+    });
+  }
+
   public deleteEvent(eventToDelete: number) { // penser a avoir un bouton de confirmation
     console.log('deleteEvent\(' + eventToDelete + '\) triggered!');
     this.eventService.removeEvent(eventToDelete).subscribe(response => {
       if (response) {
+        this.updateEvents();
         console.log('response is \"true\"');
-        // signaler a l utilisateur que delete is done ==> faire un refresh
-      } else if (!response) {
+      } else if (!response) { // signaler textuellement a l utilisateur que delete pas OK
         console.log('response is \"false\"');
-        // signaler textuellement a l utilisateur que delete pas OK
-      } else {
+      } else { // signaler textuellement a l utilisateur que il y a un probleme a presenter aux developpeurs
         console.log('Error with response format');
-        // signaler textuellement a l utilisateur que il y a un probleme a presenter aux developpeurs
       }
     });
   }
