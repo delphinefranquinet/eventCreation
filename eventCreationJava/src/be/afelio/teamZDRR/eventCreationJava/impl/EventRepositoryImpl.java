@@ -505,16 +505,16 @@ public class EventRepositoryImpl {
 		if (idPerson > 0) {
 
 			String sql = "Select id_activity From \"Inscription_activity\" Where id_person = ?";
-			
+
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 
 				query.setInt(1, idPerson);
 
 				try (java.sql.ResultSet rs = query.executeQuery();) {
-					
+
 					while (rs.next()) {
-						
+
 						int idActivity = rs.getInt(1);
 
 						idActivities.add(idActivity);
@@ -527,7 +527,34 @@ public class EventRepositoryImpl {
 
 		return idActivities;
 	}
-	  
 	
+	/*public List<LocalDateTime> findAllLocalDateTimeStartByIdActivities(List<Integer> idActivities) {
+
+		List<LocalDateTime> LocalDateTimeStartActivities = new ArrayList<LocalDateTime>();
+
+		if (idActivities != null) {
+			String sql = "Select id_activity From \"Inscription_activity\" Where id_person = ?";
+
+			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
+
+				query.setInt(1, idActivities);
+
+				try (java.sql.ResultSet rs = query.executeQuery();) {
+
+					while (rs.next()) {
+
+						int idActivity = rs.getInt(1);
+
+						idActivities.add(idActivity);
+					}
+				}
+			} catch (java.sql.SQLException sqle) {
+				throw new RuntimeException(sqle);
+			}
+		}
+
+		return LocalDateTimeStartActivities;
+	}*/
 
 }
