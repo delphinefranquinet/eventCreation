@@ -1,7 +1,5 @@
 package be.afelio.teamZDRR.eventCreationJava.impl;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,8 +13,9 @@ import java.util.List;
 import be.afelio.teamZDRR.eventCreationJava.beans.Activity;
 import be.afelio.teamZDRR.eventCreationJava.beans.Event;
 import be.afelio.teamZDRR.eventCreationJava.beans.Person;
+import be.afelio.teamZDRR.eventCreationJava.model.EventRepository;
 
-public class EventRepositoryImpl {
+public class EventRepositoryImpl implements EventRepository {
 
 	protected String user;
 	protected String password;
@@ -52,8 +51,8 @@ public class EventRepositoryImpl {
 		return person;
 	}
 
-	protected Person createPerson(ResultSet rs) throws SQLException {
-
+	public Person createPerson(ResultSet rs) throws SQLException {
+		//changer de protected a public 
 		Person person = new Person();
 		person.setId(rs.getInt("id_person"));
 		person.setName(rs.getString("namePerson"));
