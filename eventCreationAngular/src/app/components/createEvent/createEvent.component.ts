@@ -85,6 +85,7 @@ export class CreateEventComponent implements OnInit {
       (event => {
         this.eventForm.reset();
         this.eventError = true;
+        this.router.navigate(['/activity']);
       },
         () => { this.eventError = false; });
   }
