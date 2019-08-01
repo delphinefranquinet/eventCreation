@@ -533,28 +533,78 @@ public class EventRepositoryImpl {
 		List<LocalDateTime> LocalDateTimeStartActivities = new ArrayList<LocalDateTime>();
 
 		if (idActivities != null) {
-			String sql = "Select id_activity From \"Inscription_activity\" Where id_person = ?";
 
-			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
-					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
+			for (int i = 0; i < idActivities.size(); i++) {
 
-				query.setInt(1, idActivities);
+				int idActivity = idActivities.get(i);
 
-				try (java.sql.ResultSet rs = query.executeQuery();) {
+				String sql = "Select \"startActivity\" From \"Activities\" Where id_activity = ?";
 
-					while (rs.next()) {
+				try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+						java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 
-						int idActivity = rs.getInt(1);
+					query.setInt(1, idActivity);
 
-						idActivities.add(idActivity);
+					try (java.sql.ResultSet rs = query.executeQuery();) {
+
+						while (rs.next()) {
+
+							LocalDateTime timeStartActivity = rs.getTimestamp("startActivity").toLocalDateTime();
+
+							LocalDateTimeStartActivities.add(timeStartActivity);
+						}
 					}
+				} catch (java.sql.SQLException sqle) {
+					throw new RuntimeException(sqle);
 				}
-			} catch (java.sql.SQLException sqle) {
-				throw new RuntimeException(sqle);
 			}
+		}else {
+			idActivities = Collections.emptyList();
 		}
-
 		return LocalDateTimeStartActivities;
+	}
+
+	public List<LocalDateTime> findAllLocalDateTimeEndByIdActivities(List<Integer> idActivities) {
+
+		List<LocalDateTime> LocalDateTimeEndActivities = new ArrayList<LocalDateTime>();
+
+		if (idActivities != null) {
+
+			for (int i = 0; i < idActivities.size(); i++) {
+
+				int idActivity = idActivities.get(i);
+
+				String sql = "Select \"endActivity\" From \"Activities\" Where id_activity = ?";
+
+				try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+						java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
+
+					query.setInt(1, idActivity);
+
+					try (java.sql.ResultSet rs = query.executeQuery();) {
+
+						while (rs.next()) {
+
+							LocalDateTime timeEndActivity = rs.getTimestamp("endActivity").toLocalDateTime();
+
+							LocalDateTimeEndActivities.add(timeEndActivity);
+						}
+					}
+				} catch (java.sql.SQLException sqle) {
+					throw new RuntimeException(sqle);
+				}
+			}
+		}else {
+			idActivities = Collections.emptyList();
+		}
+		return LocalDateTimeEndActivities;
+	}
+
+	public boolean LocalDateTimeComparison() {
+		boolean freeTime = false;
+		
+		
+		return freeTime;
 	}
 
 }
