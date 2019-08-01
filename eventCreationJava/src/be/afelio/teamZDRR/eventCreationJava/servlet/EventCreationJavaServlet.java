@@ -307,6 +307,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 
 			if (path.startsWith("/deleteEvent")) {
 				setHeaders(response);
+				System.out.println("marche");
 				
 				String[] parts = path.split("/");
 				String idResponsable = parts[2];

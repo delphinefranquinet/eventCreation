@@ -19,11 +19,8 @@ export class ClientSpaceComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       const id: string = params.id;
-      console.log('\"typeof params\": ', typeof params);
-      console.log('\"JSON.stringify(params)\": ', JSON.stringify(params));
-      console.log('\"params.id\": ' + params.id);
-      console.log('id of connected user is: ' + id);
-      this.eventService.getEventsByIdResponsable(id).subscribe(
+      // this.eventService.getEventsByIdResponsable(id).subscribe( // To un comment when done...
+      this.eventService.getEvent().subscribe( // To delete when done...
         event => this.events = event
       );
     });
@@ -32,18 +29,17 @@ export class ClientSpaceComponent implements OnInit {
     /*this.eventService.removeEvent().subscribe*/
 
   }
-  public deleteEvent(eventToDelete: number) { // penser a avoir un bouton de confirmation
+  public deleteEvent(eventToDelete: number) {
     console.log('deleteEvent\(' + eventToDelete + '\) triggered!');
     this.eventService.removeEvent(eventToDelete).subscribe(response => {
-      if (response) {
-        console.log('response is \"true\"');
-        // signaler a l utilisateur que delete is done ==> faire un refresh
-      } else if (!response) {
-        console.log('response is \"false\"');
-        // signaler textuellement a l utilisateur que delete pas OK
+      console.log('Response, typeof response, response.toString(), JSON.stringify(response): ',
+        response, typeof response, response.toString(), JSON.stringify(response));
+      if (JSON.stringify(response) === '{\"deleted\": true}') {
+        // dire que delete is done
+      } else if (JSON.stringify(response) === '{\"deleted\": false}') {
+        // dire que delete pas OK
       } else {
         console.log('Error with response format');
-        // signaler textuellement a l utilisateur que il y a un probleme a presenter aux developpeurs
       }
     });
   }
