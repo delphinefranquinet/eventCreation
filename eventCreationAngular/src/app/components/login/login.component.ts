@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {  Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Login } from '../../models/login.modele';
 import { LoginService } from '../../../app/services/login.service';
 import { Person } from '../../models/person.modele';
@@ -32,9 +32,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  next() {
-    this.router.navigate(['/clientSpace']);
+  next(personId: number) {
+    this.router.navigate(['/clientSpace/' + personId]);
   }
 
   public submitForm() {
@@ -45,12 +44,12 @@ export class LoginComponent implements OnInit {
     this.logins = newLogin;
 
     this.loginService
-    .postLogin(this.logins).subscribe
-    //postlogin envoie un observale
-    // observable =  la prochaine fois qu'un evenement aura lieu, exécute ca ...(person => console.log(person));
-     (person =>  this.connection(person));
+      .postLogin(this.logins).subscribe
+      //postlogin envoie un observale
+      // observable =  la prochaine fois qu'un evenement aura lieu, exécute ca ...(person => console.log(person));
+      (person => this.connection(person));
 
-    }
+  }
 
   public hasLoginError() {
     const control = this.loginForm.get('email');
@@ -65,11 +64,10 @@ export class LoginComponent implements OnInit {
 
   public connection(person: Person) {
     if (person === null) {
-     this.connectionError = true;
+      this.connectionError = true;
     } else {
       this.connectionError = false;
-      this.next();
-
+      this.next(person.id);
     }
-      }
+  }
 }

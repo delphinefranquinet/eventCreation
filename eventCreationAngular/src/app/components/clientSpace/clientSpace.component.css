@@ -35,6 +35,9 @@
   background-color: #f4433681;
 }
 
+.romansUglyClass {
+  float: right
+}
 
 .input-container {
   display: -ms-flexbox; /* IE10 */
