@@ -11,9 +11,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ClientSpaceComponent implements OnInit {
 
-  public events: EventManage[];
-  public event: EventManage;
   private connectedUserID: number;
+  public events: EventManage[];
+  public errorMessage = '';
 
   constructor(private eventService: EventService, private route: ActivatedRoute) { }
 
@@ -25,29 +25,27 @@ export class ClientSpaceComponent implements OnInit {
       console.log('\"params.id\": ' + params.id);
       console.log('id of connected user is: ' + this.connectedUserID);
     });
-    this.updateEvents();
+    this.updateAll();
   }
 
-  private updateEvents(): void {
+  private updateAll(): void {
     this.eventService.getEventsByIdResponsable(this.connectedUserID).subscribe((events) => {
       this.events = events;
     });
+    this.errorMessage = '';
   }
 
   public deleteEvent(eventToDelete: number) { // penser a avoir un bouton de confirmation
     console.log('deleteEvent\(' + eventToDelete + '\) triggered!');
-    this.eventService.removeEvent(eventToDelete).subscribe(response => {
+    this.eventService.removeEvent(eventToDelete).subscribe((response: boolean) => {
       if (response) {
-        this.updateEvents();
-        console.log('response is \"true\"');
-      } else if (!response) { // signaler textuellement a l utilisateur que delete pas OK
-        console.log('response is \"false\"');
-      } else { // signaler textuellement a l utilisateur que il y a un probleme a presenter aux developpeurs
-        console.log('Error with response format');
+        this.updateAll();
+        console.log('\"response\": \"true\"');
+      } else {
+        this.errorMessage = 'Unexpected error! Please, contact developers.';
+        console.log('UNEXPECTED: \"response\" is not \"true\"!');
       }
     });
   }
 
 }
-
-
