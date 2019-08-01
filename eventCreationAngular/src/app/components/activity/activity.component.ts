@@ -19,25 +19,20 @@ export class ActivityComponent implements OnInit {
   public now = new Date();
   public activityError = false;
 
-// tslint:disable-next-line: max-line-length
+  // tslint:disable-next-line: max-line-length
   constructor(private router: Router, private fb: FormBuilder, private activityService: ActivityService) {
-  this.activity = new Activity();
+    this.activity = new Activity();
 
-  this.activityForm = this.fb.group({
+    this.activityForm = this.fb.group({
 
-    name: this.fb.control(this.activity.name, [Validators.required]),
-    description: this.fb.control(this.activity.description, [Validators.required]),
-    startActivity: this.fb.control(this.activity.startActivity, [Validators.required]),
-    endActivity: this.fb.control(this.activity.endActivity, [Validators.required]),
-  });
- }
-
-
-  ngOnInit() {
+      name: this.fb.control(this.activity.name, [Validators.required]),
+      description: this.fb.control(this.activity.description, [Validators.required]),
+      startActivity: this.fb.control(this.activity.startActivity, [Validators.required]),
+      endActivity: this.fb.control(this.activity.endActivity, [Validators.required]),
+    });
   }
 
-  next() {
-    this.router.navigate(['/clientSpace']);
+  ngOnInit() {
   }
 
 
@@ -61,7 +56,7 @@ export class ActivityComponent implements OnInit {
     return control.errors && control.errors.required;
   }
 
-  public submitForm(){
+  public submitForm() {
     const newValues = this.activityForm.value;
 
     const newActivity = new Activity();
@@ -73,20 +68,14 @@ export class ActivityComponent implements OnInit {
     this.activity = newActivity;
 
     this.activityService
-// tslint:disable-next-line: max-line-length
-    .postActivity(this.activity).subscribe// postlogin envoie un observale / observable =  la prochaine fois qu'un evenement aura lieu, exécute ca ...(person => console.log(person));
-    (activity =>  this.connection(activity));
+
+      .postActivity(this.activity).subscribe
+      (activity => {/*200*/
+        this.activityForm.reset();
+        this.activityError = true;
+      }, () => { this.activityError = false; });
   }
 
 
-  public connection(event: Activity) {
-     if (event === null) {
-       this.activityError = true;
-     } else {
-       this.activityError = false;
-       this.next();
-
-    }
-  }
 }
 
