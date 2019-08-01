@@ -12,7 +12,6 @@ import { ActivatedRoute } from '@angular/router';
 export class ClientSpaceComponent implements OnInit {
 
   public events: EventManage[];
-  public event: EventManage;
 
   constructor(private eventService: EventService, private route: ActivatedRoute) { }
 

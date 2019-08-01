@@ -15,6 +15,7 @@ export class ActivityService {
   public getActivity(): Observable<Activity[]> {
     return this.http
       .get<Activity[]>(`${environment.baseUrl}/activity`)
+      // tslint:disable-next-line: deprecation
       .pipe(catchError((error: any) => Observable.throw(error.error())));
   }
 
@@ -22,12 +23,14 @@ export class ActivityService {
 
     return this.http
       .post<Activity>(`${environment.baseUrl}/activity`, activity, { withCredentials: true })
+      // tslint:disable-next-line: deprecation
       .pipe(catchError((error: any) => Observable.throw(error.error())));
   }
 
-  public getInscription(id: string): Observable<string> {
+  public getInscription(id: number): Observable<boolean> {
     return this.http
-      .get<string>(`${environment.baseUrl}/activityInscription/${id}`)
+      .get<boolean>(`${environment.baseUrl}/activityInscription/${id}`)
+      // tslint:disable-next-line: deprecation
       .pipe(catchError((error: any) => Observable.throw(error.error())));
   }
   /*

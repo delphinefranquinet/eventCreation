@@ -19,7 +19,7 @@ export class ActivityComponent implements OnInit {
   public now = new Date();
   public activityError = false;
 
-  // tslint:disable-next-line: max-line-length
+
   constructor(private router: Router, private fb: FormBuilder, private activityService: ActivityService) {
     this.activity = new Activity();
 
@@ -74,8 +74,7 @@ export class ActivityComponent implements OnInit {
         this.activityForm.reset();
         this.activityError = true;
       }, () => { this.activityError = false; });
+
   }
 
-
 }
-

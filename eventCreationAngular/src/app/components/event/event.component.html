@@ -1,34 +1,46 @@
-
 <div id="mySidenav">
-    <a [routerLink]="['/home']" id="home"> Home </a>
-    <a [routerLink]="['/login']" id="login"> Login </a>
-    <a [routerLink]="['/register']" id="register"> Register </a>
+  <a [routerLink]="['/home']" id="home"> Home </a>
+  <a [routerLink]="['/login']" id="login"> Login </a>
+  <a [routerLink]="['/register']" id="register"> Register </a>
 </div>
 
 
-
-  <div class="coupon">
-      <div class="container">
-        <h3>{{ eventName }}</h3>
-        <div>{{ descreption }}</div>
-        <div>{{ eventStart}}</div>
-        <div>{{ eventEnd}}</div>
-
-      </div>
-      <div class="contain" style="background-color:white">
-
-            <div *ngIf="!activityError">
-                <div  *ngFor="let activity of activities">
-                      <div><h4>{{activity.name}}</h4></div>
-                      <div>{{activity.description}}</div>
-                      <div>{{activity.startActivity}}</div>
-                      <div>{{activity.endActivity}}</div>
-                   <button (click)="inscription(event.id)" class="btn">inscription</button>
-                </div>
-            </div>
-      </div>
-     <!-- <div class="contain">
-        <p>Use Promo Code: <span class="promo">BOH232</span></p>
-        <p class="expire">Expires: Jan 03, 2021</p>
-      </div>-->
+<div class="card">
+  <h3>{{ eventName }}</h3>
+  <img src="\assets\img\images.jpg" alt="Denim Jeans" style="width:100%">
+  <div *ngIf="!activityError">
+    <div *ngFor="let activity of activities">
+      <h1>{{activity.name}}</h1>
+      <div class="price">{{activity.description}}</div>
+      <div>{{activity.startActivity}}</div>
+      <div>{{activity.endActivity}}</div>
+     <div><button type="button" (click)="inscription(activity.id)">Inscription</button></div>
     </div>
+  </div>
+</div>
+
+<!--
+<div class="coupon">
+  <div class="container">
+    <h3>{{ eventName }}</h3>
+    <div>{{ descreption }}</div>
+    <div>{{ eventStart}}</div>
+    <div>{{ eventEnd}}</div>
+
+  </div>
+  <div class="contain" style="background-color:white">
+
+    <div *ngIf="!activityError">
+      <div *ngFor="let activity of activities">
+        <div>
+          <h4>{{activity.name}}</h4>
+        </div>
+        <div>{{activity.description}}</div>
+        <div>{{activity.startActivity}}</div>
+        <div>{{activity.endActivity}}</div>
+        <button (click)="inscription(event.id)" class="btn">inscription</button>
+      </div>
+    </div>
+  </div>
+
+</div> -->
