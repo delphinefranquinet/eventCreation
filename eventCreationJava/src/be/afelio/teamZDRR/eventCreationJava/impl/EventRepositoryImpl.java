@@ -910,7 +910,36 @@ public class EventRepositoryImpl implements EventRepository {
 
 	}
 	
-	
+	public List<Event> findAllEventByPlace (String place){
+		
+		List<Event> events = new ArrayList<Event>();
+		
+		String sql = "Select id_event, \"eventName\", description, \"dateDebut\", \"dateFin\", id_person From \"Events\" Where lower (place) LIKE lower ('%" + place + "%')";
+
+		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+				java.sql.PreparedStatement query = connection.prepareStatement(sql)) {
+
+			try (ResultSet rs = query.executeQuery()) {
+
+				while (rs.next()) {
+					
+					Event event = new Event();
+					event.setId(rs.getInt(1));
+					event.setName(rs.getString(2));
+					event.setDescription(rs.getString(3));
+					event.setStartEvent(rs.getTimestamp(4).toLocalDateTime());
+					event.setEndEvent(rs.getTimestamp(5).toLocalDateTime());
+					event.setIdResponsable(rs.getInt(6));
+					events.add(event);
+				}
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+		return events;
+		
+	}
 	
 	
 	
