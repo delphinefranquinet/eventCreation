@@ -63,3 +63,22 @@ URL http://localhost:8080/eventCreationJava/activity
 }
 
 
+updateEventAndActivitiesByIdEvent
+
+Method PUT
+
+http://localhost:8080/eventCreationJava/updateEvent/28
+
+{
+ "name": "testUpdate123",
+ "description": "testForUpdate",
+ "startEvent": "2019-07-19T10:30:00",
+ "endEvent": "2019-07-19T12:45:00",
+ "place": "Spa",
+"activities":[{
+"name": "testUpdate",
+"description": "testForUpdate",
+ "startActivity": "2019-07-19T10:30:00",
+ "endActivity": "2019-07-19T12:45:00"}
+]}
+
