@@ -51,7 +51,7 @@ public class EventRepositoryImpl implements EventRepository {
 		return person;
 	}
 
-	public Person createPerson(ResultSet rs) throws SQLException {
+	protected Person createPerson(ResultSet rs) throws SQLException {
 		// changer de protected a public
 		Person person = new Person();
 		person.setId(rs.getInt("id_person"));
