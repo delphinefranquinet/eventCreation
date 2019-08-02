@@ -11,12 +11,6 @@ import { InscriptionService } from '../../services/inscription.service';
   styleUrls: ['./event.component.css']
 })
 export class EventComponent implements OnInit {
-  public get route(): ActivatedRoute {
-    return this._route;
-  }
-  public set route(value: ActivatedRoute) {
-    this._route = value;
-  }
 
   @Input()
   public editMode = false; // true if and only if parent component tells so
@@ -69,6 +63,16 @@ export class EventComponent implements OnInit {
         });
     });
   }
+
+/****************************************************************************************************
+// From Zahraa's commit on Aug 2nd, 16:14 - but I commented it as I don't know what it is used for //
+****************************************************************************************************/
+  // public get route(): ActivatedRoute {
+  //   return this._route;
+  // }
+  // public set route(value: ActivatedRoute) {
+  //   this._route = value;
+  // }
 
   public inscription(activityId: number) {
     this.inscriptionService.getInscription(activityId).subscribe((inscription) => {
