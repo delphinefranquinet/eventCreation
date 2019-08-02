@@ -17,16 +17,22 @@ export class EventComponent implements OnInit {
   public eventName: string;
   public eventStart: Date;
   public eventEnd: Date;
-  public descreption: string;
+  public eventDescreption: string;
   public eventPlace: string;
   public activities: Activity[];
   public activityError: boolean;
   public activity: Activity;
   public connectionError: boolean;
+  public activityDescreption: string;
+  public activityId: number;
+  public activityName: string;
+  public activityStart: Date;
+  public activityEnd: Date;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
               private inscriptionService: InscriptionService,
+              private activityService: ActivityService,
               private eventService: EventService) { }
 
   ngOnInit() {
@@ -37,11 +43,28 @@ export class EventComponent implements OnInit {
         event => {
           this.eventId = event.id;
           this.eventName = event.name;
-          this.descreption = event.description;
+          this.eventDescreption = event.description;
           this.eventPlace = event.place;
           this.eventStart = event.startEvent;
           this.eventEnd = event.endEvent;
           this.activities = event.activities;
+
+        }
+      );
+    });
+    this.route.params.subscribe(params => {
+      const id: string = params.id;
+
+      this.activityService.postActivityByInscriptionID(id).subscribe(
+        activity => {
+          // this.activity = activity;
+
+          this.activityId = activity.id;
+          this.activityName = activity.name;
+          this.activityDescreption = activity.description;
+          this.activityStart = activity.startActivity;
+          this.activityEnd = activity.endActivity;
+
 
         }
       );
