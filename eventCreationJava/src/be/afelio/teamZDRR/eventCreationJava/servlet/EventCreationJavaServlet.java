@@ -146,7 +146,6 @@ public class EventCreationJavaServlet extends HttpServlet {
 				CreateLoginParameters parameters = mapper.readValue(request.getInputStream(),
 						CreateLoginParameters.class);
 
-				// request.getInputStream() = flu de donn�es sur lequel je peux lire
 				Person person = repository.connexion(parameters.email, parameters.password);
 
 				if (person != null) {
@@ -192,10 +191,10 @@ public class EventCreationJavaServlet extends HttpServlet {
 				}
 			} else if (path.startsWith("/activity")) {
 
-				Integer idEvent = (Integer) session.getAttribute("idEvent");
+				Integer idResponsable = (Integer) session.getAttribute("idPerson");
 				setHeaders(response);
 
-				if (idEvent != null) {
+				if (idResponsable != null) {
 					CreateActivityParameters parameters = mapper.readValue(request.getInputStream(),
 							CreateActivityParameters.class);
 
@@ -204,7 +203,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 					activity.setDescription(parameters.description);
 					activity.setStartActivity(parameters.startActivity);
 					activity.setEndActivity(parameters.endActivity);
-					activity.setIdEvent(idEvent);
+					activity.setIdEvent(parameters.idEvent);
 					activity = repository.createNewActivity(activity);
 
 					String json = mapper.writeValueAsString(activity); // convertir en format json
