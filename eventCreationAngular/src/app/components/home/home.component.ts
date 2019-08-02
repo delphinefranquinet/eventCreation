@@ -19,5 +19,6 @@ export class HomeComponent implements OnInit {
     this.eventService.getEvent().subscribe(events => this.events = events);
     this.clientSpaceService.getPerson().subscribe(persons => this.persons = persons);
   }
+  // autre evolution
 
 }
