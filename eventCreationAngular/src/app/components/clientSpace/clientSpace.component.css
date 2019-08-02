@@ -93,6 +93,8 @@
   border-radius: 5px 5px 5px 5px;
 
 }
-.center {
+#managedEvents {
   text-align: center;
+  border-style: dashed;
+  border-color: purple;
 }

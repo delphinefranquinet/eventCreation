@@ -4,7 +4,6 @@
   <a [routerLink]="['/register']" id="register"> Register </a>
 </div>
 
-
 <div class="card">
   <h3>{{ eventName }}</h3>
   <img src="\assets\img\images.jpg" alt="Denim Jeans" style="width:100%">
@@ -14,23 +13,23 @@
       <div class="price">{{activity.description}}</div>
       <div>{{activity.startActivity}}</div>
       <div>{{activity.endActivity}}</div>
-     <div><button type="button"> <a [routerLink]="['/activityInscription', activity.id]" > Inscription </a></button></div>
+      <div><button type="button"> <a [routerLink]="['/activityInscription', activity.id]"> Inscription </a></button>
+      </div>
 
     </div>
   </div>
 </div>
 
-<!--
+
 <div class="coupon">
   <div class="container">
     <h3>{{ eventName }}</h3>
     <div>{{ descreption }}</div>
     <div>{{ eventStart}}</div>
     <div>{{ eventEnd}}</div>
-
   </div>
-  <div class="contain" style="background-color:white">
 
+  <div class="contain" style="background-color:white">
     <div *ngIf="!activityError">
       <div *ngFor="let activity of activities">
         <div>
@@ -44,4 +43,4 @@
     </div>
   </div>
 
-</div> -->
+</div>
