@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../../services/event.service';
 import { Activity } from '../../models/activity.modele';
@@ -11,6 +11,9 @@ import { InscriptionService } from '../../services/inscription.service';
   styleUrls: ['./event.component.css']
 })
 export class EventComponent implements OnInit {
+
+  @Input()
+  public editMode = false; // true if and only if parent component tells so
 
   public eventId: number;
   public eventName: string;
@@ -71,8 +74,9 @@ export class EventComponent implements OnInit {
   }
 
   /****************************************************************************************************
-      Info for Zahraa (by Roman):
-      On this commit, I changed the display of the 2 methods below,but didn't actually changed any content, don't worry ;-)
+  // Info for Zahraa (by Roman):                                                                     //
+  // On this commit, I changed the display of the 2 methods below, but didn't actually changed any   //
+  // content, so don't worry ;-)                                                                     //
   ****************************************************************************************************/
 
   // public inscription(id: string) {

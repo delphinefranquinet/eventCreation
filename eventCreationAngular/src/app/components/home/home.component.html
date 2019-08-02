@@ -2,12 +2,8 @@
   <img width=100% alt="Event Logo" src="\assets\img\evenement-decoration-salle-mulhouse-alsace.jpg">
 
   <div id="mySidenav">
-    <div *ngFor="let clientSpace of persons">
       <a [routerLink]="['/login']" id="login"> Login </a>
       <a [routerLink]="['/register']" id="register"> Register </a>
-      <a [routerLink]="['/clientSpace',clientSpace.id]" id="clientSpace"> Client Space </a>
-    </div>
-
   </div>
 
   <div *ngFor="let event of events" class="grid-container">

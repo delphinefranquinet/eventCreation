@@ -1,4 +1,4 @@
-<div id="mySidenav">
+<div *ngIf="!editMode" id="mySidenav">
   <a [routerLink]="['/home']" id="home"> Home </a>
   <a [routerLink]="['/login']" id="login"> Login </a>
   <a [routerLink]="['/register']" id="register"> Register </a>

@@ -7,17 +7,16 @@ import { EventManage } from '../models/eventManage.modele';
 
 @Injectable()
 export class EventService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
 
   public postEvent(event: EventManage): Observable<EventManage> {
+    return this.http
+      .post<EventManage>(`${environment.baseUrl}/createEvent`, event, { withCredentials: true })
+      .pipe(catchError((error: any) => throwError(error.error)));
+  }
 
-     return this.http
-       .post<EventManage>(`${environment.baseUrl}/createEvent`, event, { withCredentials: true })
-       .pipe(catchError((error: any) => throwError(error.error)));
-   }
-
-  public getEvent(): Observable<EventManage[]> {
+  public getAllEvents(): Observable<EventManage[]> {
     return this.http
       .get<EventManage[]>(`${environment.baseUrl}/home`)
       .pipe(catchError((error: any) => throwError(error.error)));
@@ -41,12 +40,12 @@ export class EventService {
       .pipe(catchError((error: any) => throwError(error.error)));
   }
 
-/*
-  public updateEvent(eventToUpdate: Event): Observable<Event> {
-    return this.http
-      .put<Event>(`${environment.baseUrl}/contacts/${eventToUpdate}`, eventToUpdate)
-      .pipe(catchError((error: any) => throwError(error.error)));
-  }
+  /*
+    public updateEvent(eventToUpdate: Event): Observable<Event> {
+      return this.http
+        .put<Event>(`${environment.baseUrl}/contacts/${eventToUpdate}`, eventToUpdate)
+        .pipe(catchError((error: any) => throwError(error.error)));
+    }
 
- */
+   */
 }
