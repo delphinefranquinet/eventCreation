@@ -73,11 +73,11 @@ public class EventCreationJavaServlet extends HttpServlet {
 			eventsAndPersons.setEvents(events);
 			eventsAndPersons.setPersons(persons);
 			System.out.println(eventsAndPersons);
-			String json = mapper.writeValueAsString(eventsAndPersons); // convertir en format json
+			String json = mapper.writeValueAsString(eventsAndPersons); 
 			setHeaders(response);
-			response.setContentType("application/json"); // le type du contenu est du json
-			response.setCharacterEncoding("UTF-8");// ce sera �crit en utf8
-			response.getWriter().write(json); // on �crit le json dans la r�ponse
+			response.setContentType("application/json"); 
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(json); 
 
 		} else if (path.startsWith("/event")) {
 
@@ -85,11 +85,11 @@ public class EventCreationJavaServlet extends HttpServlet {
 			String idEvent = parts[2];
 			int id = Integer.parseInt(idEvent);
 			Event event = repository.findEventAndAllActivityByIdEvent(id);
-			String json = mapper.writeValueAsString(event); // convertir en format json
+			String json = mapper.writeValueAsString(event);
 			setHeaders(response);
-			response.setContentType("application/json"); // le type du contenu est du json
-			response.setCharacterEncoding("UTF-8");// ce sera �crit en utf8
-			response.getWriter().write(json); // on �crit le json dans la r�ponse
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(json); 
 
 		} else if (path.startsWith("/activityInscription")) {
 			Integer idPerson = (Integer) session.getAttribute("idPerson");
@@ -133,7 +133,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 			response.getWriter().write(json);
 		
 		} else if (path.startsWith("/search")){
-			
+			// TODO 
 
 		} else {
 			response.setStatus(401);
@@ -189,13 +189,13 @@ public class EventCreationJavaServlet extends HttpServlet {
 
 					session.setAttribute("idEvent", event.getId());
 
-					String json = mapper.writeValueAsString(event); // convertir en format json
+					String json = mapper.writeValueAsString(event); 
 					System.out.println(json);
-					response.setContentType("application/json"); // le type du contenu est du json
-					response.setCharacterEncoding("UTF-8");// ce sera �crit en utf8
-					response.getWriter().write(json); // on �crit le json dans la r�ponse
+					response.setContentType("application/json");
+					response.setCharacterEncoding("UTF-8");
+					response.getWriter().write(json); 
 				} else {
-					response.setStatus(401); // si connexion NOK, code erreur (google)
+					response.setStatus(401); 
 				}
 			} else if (path.startsWith("/activity")) {
 
@@ -214,13 +214,13 @@ public class EventCreationJavaServlet extends HttpServlet {
 					activity.setIdEvent(parameters.idEvent);
 					activity = repository.createNewActivity(activity);
 
-					String json = mapper.writeValueAsString(activity); // convertir en format json
+					String json = mapper.writeValueAsString(activity); 
 					System.out.println(json);
-					response.setContentType("application/json"); // le type du contenu est du json
-					response.setCharacterEncoding("UTF-8");// ce sera �crit en utf8
-					response.getWriter().write(json); // on �crit le json dans la r�ponse
+					response.setContentType("application/json");
+					response.setCharacterEncoding("UTF-8");
+					response.getWriter().write(json); 
 				} else {
-					response.setStatus(401); // si connexion NOK, code erreur (google)
+					response.setStatus(401);
 				}
 			} else if (path.startsWith("/register")) {
 
@@ -240,11 +240,11 @@ public class EventCreationJavaServlet extends HttpServlet {
 				session.setAttribute("idPerson", newPerson.getId());
 				
 
-				String json = mapper.writeValueAsString(newPerson); // convertir en format json
+				String json = mapper.writeValueAsString(newPerson);
 				System.out.println(json);
-				response.setContentType("application/json"); // le type du contenu est du json
-				response.setCharacterEncoding("UTF-8");// ce sera �crit en utf8
-				response.getWriter().write(json); // on �crit le json dans la r�ponse
+				response.setContentType("application/json"); 
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write(json); 
 				
 			} 
 				
