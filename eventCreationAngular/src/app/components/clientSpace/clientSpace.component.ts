@@ -35,8 +35,7 @@ export class ClientSpaceComponent implements OnInit {
     this.errorMessage = '';
   }
 
-  public toggleConfirmButtonDisplay(eventItemID: number) {
-  }
+  public toggleConfirmButtonDisplay(eventItemID: number) { }
 
   public deleteEvent(eventToDelete: number) { // penser a avoir un bouton de confirmation
     console.log('deleteEvent\(' + eventToDelete + '\) triggered!');
