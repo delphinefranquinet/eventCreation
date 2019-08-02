@@ -132,25 +132,20 @@ public class EventRepositoryImpl implements EventRepository {
 	public Activity createNewActivity(Activity newActivity) {
 
 		boolean timeIsCorrect = false;
+		LocalDateTime startActivity = newActivity.getStartActivity();
+		LocalDateTime endActivity = newActivity.getEndActivity();
+		int idEvent = newActivity.getIdEvent();
 
-		String sql = "INSERT INTO \"Activities\" Values (default, ?, ?, ?, ?, ?)";
-		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
-				java.sql.PreparedStatement query = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
-			
-			/*try (ResultSet rs = query.executeQuery()) {
-				while (rs.next()) {
-			LocalDateTime startActivity = query.setTimestamp(3, Timestamp.valueOf(newActivity.getStartActivity()));
-			LocalDateTime endActivity = query.setTimestamp(4, Timestamp.valueOf(newActivity.getEndActivity()));
-			int idEvent = query.setInt(5, newActivity.getIdEvent());
-					
-					timeIsCorrect = LocalDateTimeComparisonForCreateNewActivity(idEvent, startActivity, endActivity);
-				}
-			}
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-			*/
-			if (timeIsCorrect) {
+		timeIsCorrect = LocalDateTimeComparisonForCreateNewActivity(idEvent, startActivity, endActivity);
+
+		if (timeIsCorrect) {
+
+			String sql = "INSERT INTO \"Activities\" Values (default, ?, ?, ?, ?, ?)";
+
+			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+					java.sql.PreparedStatement query = connection.prepareStatement(sql,
+							Statement.RETURN_GENERATED_KEYS);) {
+
 				connection.setAutoCommit(false);
 				query.setString(1, newActivity.getName());
 				query.setString(2, newActivity.getDescription());
@@ -170,10 +165,10 @@ public class EventRepositoryImpl implements EventRepository {
 					}
 				}
 				connection.commit();
-			}
-		} catch (java.sql.SQLException sqle) {
-			throw new RuntimeException(sqle);
 
+			} catch (java.sql.SQLException sqle) {
+				throw new RuntimeException(sqle);
+			}
 		}
 		System.out.println(timeIsCorrect);
 		return newActivity;
