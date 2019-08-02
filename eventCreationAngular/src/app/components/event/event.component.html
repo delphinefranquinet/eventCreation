@@ -14,7 +14,7 @@
       <div class="price">{{activity.description}}</div>
       <div>{{activity.startActivity}}</div>
       <div>{{activity.endActivity}}</div>
-     <div><button type="button"> <a [routerLink]="['/activityInscription', activity.id]" > Inscription </a></button></div>
+     <div><button type="button" (click)="inscription(activity.id)"> <a [routerLink]="['/activityInscription', activity.id]"> Inscription </a></button></div>
 
     </div>
   </div>
