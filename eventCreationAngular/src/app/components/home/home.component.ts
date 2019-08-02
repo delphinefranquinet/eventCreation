@@ -36,5 +36,5 @@ export class HomeComponent implements OnInit {
     //   console.log(this.eventAndPerson.persons[0].id);
     // });
 
-  }
+  } // petit dernier test
 }
