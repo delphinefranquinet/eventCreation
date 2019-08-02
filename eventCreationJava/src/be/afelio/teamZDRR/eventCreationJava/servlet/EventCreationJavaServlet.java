@@ -282,7 +282,8 @@ public class EventCreationJavaServlet extends HttpServlet {
 				event.setIdResponsable(idResponsable);
 				event.setPlace(parameters.place);
 				event.setId(idEvent);
-				Event UpdateEvent = repository.updateEventByIdEvent(idResponsable, event);
+				event.setActivities(parameters.activities);
+				Event UpdateEvent = repository.updateEventAndActivitiesByIdEvent(idResponsable, event);
 
 				String json = mapper.writeValueAsString(UpdateEvent); 
 				System.out.println(json);
