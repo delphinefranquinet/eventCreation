@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
       this.events = events;
       console.log(JSON.stringify(events));
     });
-    // test
+    // test-test
   }
 
 }
