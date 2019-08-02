@@ -59,9 +59,11 @@ public interface EventRepository {
 	
 	boolean deleteOneActivityByIdActivity (int idActivity);
 	
-	public List<Integer> findAllIdActivityByIdEvent (int idEvent);
+	List<Integer> findAllIdActivityByIdEvent (int idEvent);
 	
-	public List<Activity> updateActivities (List<Activity> activities);
+	List<Activity> updateActivities (List<Activity> activities);
+	
+	List<Event> findAllEventByPlace (String place);
 	
 	
 }
