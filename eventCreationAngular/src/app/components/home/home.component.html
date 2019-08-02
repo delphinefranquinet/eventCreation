@@ -1,12 +1,10 @@
 <div class="container">
-  <img  width=100% alt="Event Logo" src="\assets\img\evenement-decoration-salle-mulhouse-alsace.jpg">
+  <img width=100% alt="Event Logo" src="\assets\img\evenement-decoration-salle-mulhouse-alsace.jpg">
 
-<div id="mySidenav">
+  <div id="mySidenav">
     <a [routerLink]="['/login']" id="login"> Login </a>
     <a [routerLink]="['/register']" id="register"> Register </a>
-  <!--  <div *ngFor="let person of events"></div>
-    <a [routerLink]="['/clientSpace', person.id]" id="clientSpace"> Client Space </a>-->
-        <!-- impossible a utiliser tant que l'id associé au clientSpace ne fait pas partie de l'URL -->
+    <a [routerLink]="['/login']" id="clientSpace"> Client Space </a>
   </div>
 
 </div>
@@ -14,6 +12,3 @@
 <div *ngFor="let event of events" class="grid-container">
   <div class="grid-item"><a [routerLink]="['/event', event.id]">{{event.name}}</a></div>
 </div>
-
-
-

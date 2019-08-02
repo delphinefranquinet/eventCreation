@@ -21,8 +21,8 @@ export class CreateEventComponent implements OnInit {
   @Input() eventz: EventManage;
 
   constructor(private router: Router,
-    private fb: FormBuilder,
-    private eventService: EventService) {
+              private fb: FormBuilder,
+              private eventService: EventService) {
     this.event = new EventManage();
 
     this.eventForm = this.fb.group({
