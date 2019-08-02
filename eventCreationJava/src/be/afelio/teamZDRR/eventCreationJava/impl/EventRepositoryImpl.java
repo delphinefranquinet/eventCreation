@@ -170,7 +170,7 @@ public class EventRepositoryImpl implements EventRepository {
 				throw new RuntimeException(sqle);
 			}
 		}
-		System.out.println(timeIsCorrect);
+		//System.out.println(timeIsCorrect);
 		return newActivity;
 	}
 
@@ -316,8 +316,12 @@ public class EventRepositoryImpl implements EventRepository {
 
 	}
 
-	public Event updateEventByIdEvent(int idResponsable, int idEvent, Event newEvent) {
+	public Event updateEventAndActivitiesByIdEvent(int idResponsable, Event newEvent) {
 
+		List <Activity> activities = new ArrayList<Activity>();
+		activities = newEvent.getActivities();
+		int idEvent = newEvent.getId();
+		
 		String sql = "update \"Events\" set \"eventName\" = ? , description = ?, \"dateDebut\" = ?, \"dateFin\" = ?, id_person = "
 				+ idResponsable + ", place = ? Where id_event = " + idEvent;
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
@@ -328,12 +332,14 @@ public class EventRepositoryImpl implements EventRepository {
 			query.setString(2, newEvent.getDescription());
 			query.setTimestamp(3, Timestamp.valueOf(newEvent.getStartEvent()));
 			query.setTimestamp(4, Timestamp.valueOf(newEvent.getEndEvent()));
-			// query.setInt(5, idResponsable);
 			query.setString(5, newEvent.getPlace());
-			// query.setInt(7, idEvent);
 			query.executeUpdate();
-
 			connection.commit();
+			
+			if(activities != null) {
+				
+				activities = updateActivities(activities);
+			}
 
 		} catch (java.sql.SQLException sqle) {
 			throw new RuntimeException(sqle);
@@ -699,12 +705,8 @@ public class EventRepositoryImpl implements EventRepository {
 						|| (compareValueEndToStart <= 0 && compareValueEndToEnd >= 0)) {
 					freeTime = false;
 
-				} else {
-					freeTime = true;
 				}
 			}
-		} else {
-			freeTime = true;
 		}
 		System.out.println(freeTime);
 		return freeTime;
@@ -769,38 +771,29 @@ public class EventRepositoryImpl implements EventRepository {
 
 		LocalDateTime localDateTimeStartEvent = null;
 		LocalDateTime localDateTimeEndEvent = null;
-		boolean timeIsCorrect = true;
+		boolean timeIsCorrect = false;
 
 		localDateTimeStartEvent = findLocalDateTimeStartEvent(idEvent);
 		localDateTimeEndEvent = findLocalDateTimeEndEvent(idEvent);
 
-		int compareValueStartToStart;
-		int compareValueStartToEnd;
-		int compareValueEndToStart;
-		int compareValueEndToEnd;
+		int compareValueStart;
+		int compareValueEnd;
+
 
 		if (localDateTimeStartNewActivity != null && localDateTimeEndNewActivity != null) {
 
-			compareValueStartToStart = localDateTimeStartNewActivity.compareTo(localDateTimeStartEvent);
-			compareValueStartToEnd = localDateTimeStartNewActivity.compareTo(localDateTimeEndEvent);
-			compareValueEndToStart = localDateTimeEndNewActivity.compareTo(localDateTimeStartEvent);
-			compareValueEndToEnd = localDateTimeEndNewActivity.compareTo(localDateTimeEndEvent);
+			compareValueStart = localDateTimeStartNewActivity.compareTo(localDateTimeStartEvent);
+			compareValueEnd = localDateTimeEndNewActivity.compareTo(localDateTimeEndEvent);
 
-			if ((compareValueStartToStart > 0 && compareValueStartToEnd < 0)
-					|| (compareValueEndToStart < 0 && compareValueEndToEnd > 0)) {
-				timeIsCorrect = false;
-
-			} else {
+			if (compareValueStart >= 0 && compareValueEnd <= 0) {
+				
 				timeIsCorrect = true;
 			}
 
-		} else {
-			timeIsCorrect = true;
+			System.out.println(timeIsCorrect);
 		}
-		System.out.println(timeIsCorrect);
 		return timeIsCorrect;
 	}
-
 
 	public List<Person> findAllPerson (){
 		
@@ -831,31 +824,128 @@ public class EventRepositoryImpl implements EventRepository {
 		return persons;
 	}
 
+	public boolean deleteOneActivityByIdActivity (int idActivity) {
+		boolean deleted = false;
+		
+		if (idActivity > 0) {
 
+			String sql = "delete from \"Activities\" Where id_activity = ?";
+
+			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+					PreparedStatement deleteActivityStatement = connection.prepareStatement(sql)) {
+				connection.setAutoCommit(false);
+
+				deleteActivityStatement.setInt(1, idActivity);
+				deleteActivityStatement.executeUpdate();
+				connection.commit();
+				deleted = deleteActivityStatement.getUpdateCount() > 0;
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+		
+		return deleted;
+	}
+	
+	public List<Integer> findAllIdActivityByIdEvent (int idEvent){
+		
+		List<Integer> idActivities = new ArrayList<Integer>();
+
+		if (idEvent > 0) {
+
+			String sql = "Select id_activity From \"Activities\" Where id_event = ?";
+
+			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
+
+				query.setInt(1, idEvent);
+
+				try (java.sql.ResultSet rs = query.executeQuery();) {
+
+					while (rs.next()) {
+
+						int idActivity = rs.getInt(1);
+
+						idActivities.add(idActivity);
+					}
+				}
+			} catch (java.sql.SQLException sqle) {
+				throw new RuntimeException(sqle);
+			}
+		}
+
+		return idActivities;
+	}
+	
+	public List<Activity> updateActivities(List<Activity> activities) {
+		/*
+		List<Integer> idActivities = findAllIdActivityByIdEvent(idEvent);
+		List<Activity> activities = new ArrayList<Activity>();
+		*/
+		for (int i = 0; i < activities.size(); i++) {
+
+			Activity activity = activities.get(i);
+
+			String sql = "update \"Activities\" set \"nameActivity\" = ? , \"descriptionActivity\" = ?, \"startActivity\" = ?, \"endActivity\" = ? Where id_activity = "
+					+ activity.getId();
+
+			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
+
+				connection.setAutoCommit(false);
+
+				//Activity activity = new Activity();
+				query.setString(1, activity.getName());
+				query.setString(2, activity.getDescription());
+				query.setTimestamp(3, Timestamp.valueOf(activity.getStartActivity()));
+				query.setTimestamp(4, Timestamp.valueOf(activity.getEndActivity()));
+				query.executeUpdate();
+				connection.commit();
+
+			} catch (java.sql.SQLException sqle) {
+				throw new RuntimeException(sqle);
+			}
+		}
+		return activities;
+
+	}
+	
+	public List<Event> findAllEventByPlace (String place){
+		
+		List<Event> events = new ArrayList<Event>();
+		
+		String sql = "Select id_event, \"eventName\", description, \"dateDebut\", \"dateFin\", id_person From \"Events\" Where lower (place) LIKE lower ('%" + place + "%')";
+
+		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+				java.sql.PreparedStatement query = connection.prepareStatement(sql)) {
+
+			try (ResultSet rs = query.executeQuery()) {
+
+				while (rs.next()) {
+					
+					Event event = new Event();
+					event.setId(rs.getInt(1));
+					event.setName(rs.getString(2));
+					event.setDescription(rs.getString(3));
+					event.setStartEvent(rs.getTimestamp(4).toLocalDateTime());
+					event.setEndEvent(rs.getTimestamp(5).toLocalDateTime());
+					event.setIdResponsable(rs.getInt(6));
+					events.add(event);
+				}
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+		return events;
+		
+	}
 	
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 }

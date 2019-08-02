@@ -6,18 +6,17 @@ Method POST
 
 connexion
 
-URL http://localhost:8080/eventCreationJava/login
+http://localhost:8080/eventCreationJava/login
 
-body {"password" : "1234", "email" : "delphine@nomail.be" }
+ {"password" : "1234", "email" : "delphine@nomail.be" }
 
 
 Update event
 
 Method PUT
 
-URL http://localhost:8080/eventCreationJava//updateEvent/25
+http://localhost:8080/eventCreationJava//updateEvent/25
 
-body
 
 {
  "name": "test",
@@ -32,7 +31,7 @@ findEventAndAllActivityByEventName
 
 Method GET
 
-URL http://localhost:8080/eventCreationJava/search/détente
+http://localhost:8080/eventCreationJava/search/détente
 
 
 Delete event
@@ -46,13 +45,13 @@ inscriptionActivity
 
 Method GET
 
-URL http://localhost:8080/eventCreationJava//activityInscription/18
+http://localhost:8080/eventCreationJava//activityInscription/18
 
 Creation activité
 
 Method POST
 
-URL http://localhost:8080/eventCreationJava/activity
+http://localhost:8080/eventCreationJava/activity
 
 {
 "name" : "Coucou2", 
@@ -62,4 +61,23 @@ URL http://localhost:8080/eventCreationJava/activity
 "idEvent" : "26"
 }
 
+
+updateEventAndActivitiesByIdEvent
+
+Method PUT
+
+http://localhost:8080/eventCreationJava/updateEvent/28
+
+{
+ "name": "testUpdate123",
+ "description": "testForUpdate",
+ "startEvent": "2019-07-19T10:30:00",
+ "endEvent": "2019-07-19T12:45:00",
+ "place": "Spa",
+"activities":[{
+"name": "testUpdate",
+"description": "testForUpdate",
+ "startActivity": "2019-07-19T10:30:00",
+ "endActivity": "2019-07-19T12:45:00"}
+]}
 
