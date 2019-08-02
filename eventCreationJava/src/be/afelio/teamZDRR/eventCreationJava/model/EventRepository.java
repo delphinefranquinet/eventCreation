@@ -21,7 +21,7 @@ public interface EventRepository {
 	
 	Activity createNewActivity(Activity newActivity);
 	
-	List<Event> FindAllEvents();
+	List<Event> findAllEvents();
 	
 	Event findEventAndAllActivityByIdEvent(int id);
 	
@@ -53,9 +53,9 @@ public interface EventRepository {
 	
 	LocalDateTime findLocalDateTimeEndEvent(int idEvent);
 	
-	public boolean LocalDateTimeComparisonForCreateNewActivity(int idEvent, LocalDateTime localDateTimeStartNewActivity,
+	public boolean localDateTimeComparisonForCreateNewActivity(int idEvent, LocalDateTime localDateTimeStartNewActivity,
 			LocalDateTime localDateTimeEndNewActivity);
-	
+	List<Person> findAllPerson ();
 	
 	
 }
