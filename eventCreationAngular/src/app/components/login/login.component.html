@@ -1,27 +1,23 @@
-
 <div id="mySidenav">
-     <a [routerLink]="['/home']" id="home"> Home </a>
+  <a [routerLink]="['/home']" id="home"> Home </a>
 </div>
 
 
 <form [formGroup]="loginForm" (ngSubmit)="submitForm()" style="max-width:500px;margin:auto">
 
   <div for="email" class="input-container">
-   <input class="input-field" placeholder="Username" type="text" id="email" name="email" formControlName="email"/>
-   <span *ngIf="hasLoginError()">*</span>
+    <input class="input-field" placeholder="Username" type="text" id="email" name="email" formControlName="email" />
+    <span *ngIf="hasLoginError()">*</span>
   </div>
 
 
-    <div for="password" class="input-container">
-    <input class="input-field" placeholder="Password" type="password" id="pwd" name="password" formControlName="password"/>
+  <div for="password" class="input-container">
+    <input class="input-field" placeholder="Password" type="password" id="pwd" name="password"
+      formControlName="password" />
     <span *ngIf="hasPasswordError()">*</span>
   </div>
 
-<br>
-<input  type="submit" class="btn"  [disabled]="!loginForm.valid" value="Send" >
-<div *ngIf="connectionError">Login or Password incorrect</div>
+  <br>
+  <input type="submit" class="btn" [disabled]="!loginForm.valid" value="Send">
+  <div *ngIf="connectionError">Login or Password incorrect</div>
 </form>
-
-
-
-

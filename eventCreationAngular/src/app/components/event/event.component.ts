@@ -12,6 +12,12 @@ import { InscriptionService } from '../../services/inscription.service';
   styleUrls: ['./event.component.css']
 })
 export class EventComponent implements OnInit {
+  public get route(): ActivatedRoute {
+    return this._route;
+  }
+  public set route(value: ActivatedRoute) {
+    this._route = value;
+  }
 
   public eventId: number;
   public eventName: string;
@@ -30,7 +36,7 @@ export class EventComponent implements OnInit {
   public activityEnd: Date;
 
   constructor(private router: Router,
-              private route: ActivatedRoute,
+              private _route: ActivatedRoute,
               private inscriptionService: InscriptionService,
               private activityService: ActivityService,
               private eventService: EventService) { }

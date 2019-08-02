@@ -4,6 +4,7 @@ import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { EventManage } from '../models/eventManage.modele';
+import { EventsAndPersons } from '../models/EventsAndPersons';
 
 @Injectable()
 export class EventService {
@@ -16,6 +17,12 @@ export class EventService {
        .post<EventManage>(`${environment.baseUrl}/createEvent`, event, { withCredentials: true })
        .pipe(catchError((error: any) => throwError(error.error)));
    }
+   public getEventsAndPersons (): Observable<EventsAndPersons []> {
+    return this.http
+      .get<EventsAndPersons []>(`${environment.baseUrl}/home`)
+      .pipe(catchError((error: any) => throwError(error.error)));
+  }
+
 
   public getEvent(): Observable<EventManage[]> {
     return this.http
