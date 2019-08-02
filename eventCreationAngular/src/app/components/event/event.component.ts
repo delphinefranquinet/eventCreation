@@ -11,6 +11,12 @@ import { InscriptionService } from '../../services/inscription.service';
   styleUrls: ['./event.component.css']
 })
 export class EventComponent implements OnInit {
+  public get route(): ActivatedRoute {
+    return this._route;
+  }
+  public set route(value: ActivatedRoute) {
+    this._route = value;
+  }
 
   @Input()
   public editMode = false; // true if and only if parent component tells so

@@ -4,6 +4,7 @@ import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { EventManage } from '../models/eventManage.modele';
+import { EventsAndPersons } from '../models/EventsAndPersons';
 
 @Injectable()
 export class EventService {

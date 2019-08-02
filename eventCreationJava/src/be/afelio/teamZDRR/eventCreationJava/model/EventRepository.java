@@ -1,6 +1,5 @@
 package be.afelio.teamZDRR.eventCreationJava.model;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,8 +11,6 @@ import be.afelio.teamZDRR.eventCreationJava.beans.Person;
 public interface EventRepository {
 
 	Person connexion(String email, String mot_de_passe);
-	
-	Person createPerson(ResultSet rs) throws SQLException;
 	
 	Person createNewPerson(Person newPerson);
 	
