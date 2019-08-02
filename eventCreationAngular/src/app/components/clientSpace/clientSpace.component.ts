@@ -29,10 +29,13 @@ export class ClientSpaceComponent implements OnInit {
   }
 
   private updateAll(): void {
-    this.eventService.getEventsByIdResponsable(this.connectedUserID).subscribe((events) => {
-      this.events = events;
+    this.eventService.getEventsByIdResponsable(this.connectedUserID).subscribe((updatedEvents) => {
+      this.events = updatedEvents;
     });
     this.errorMessage = '';
+  }
+
+  public toggleConfirmButtonDisplay(eventItemID: number) {
   }
 
   public deleteEvent(eventToDelete: number) { // penser a avoir un bouton de confirmation
