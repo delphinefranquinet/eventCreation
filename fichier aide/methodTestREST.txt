@@ -34,10 +34,32 @@ Method GET
 
 URL http://localhost:8080/eventCreationJava/search/détente
 
+
 Delete event
 
 Method DELETE 
 
 URL http://localhost:8080/eventCreationJava/deleteEvent/24
 
+
 inscriptionActivity
+
+Method GET
+
+URL http://localhost:8080/eventCreationJava//activityInscription/18
+
+Creation activité
+
+Method POST
+
+URL http://localhost:8080/eventCreationJava/activity
+
+{
+"name" : "Coucou2", 
+"description" : "Bonjour", 
+"startActivity" : "2018-12-12T12:31:00", 
+"endActivity" : "2018-12-12T13:29:00", 
+"idEvent" : "26"
+}
+
+

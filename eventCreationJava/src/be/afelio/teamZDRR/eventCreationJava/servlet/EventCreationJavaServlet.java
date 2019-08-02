@@ -22,6 +22,7 @@ import be.afelio.teamZDRR.eventCreationJava.beans.CreateEventParameters;
 import be.afelio.teamZDRR.eventCreationJava.beans.CreateLoginParameters;
 import be.afelio.teamZDRR.eventCreationJava.beans.CreatePersonParameters;
 import be.afelio.teamZDRR.eventCreationJava.beans.Event;
+import be.afelio.teamZDRR.eventCreationJava.beans.EventsAndPersons;
 import be.afelio.teamZDRR.eventCreationJava.beans.Person;
 import be.afelio.teamZDRR.eventCreationJava.impl.EventRepositoryImpl;
 
@@ -66,9 +67,13 @@ public class EventCreationJavaServlet extends HttpServlet {
 
 		if (path.startsWith("/home")) {
 
-			List<Event> events = repository.FindAllEvents();
-			System.out.println(events);
-			String json = mapper.writeValueAsString(events); // convertir en format json
+			List<Event> events = repository.findAllEvents();
+			List <Person> persons = repository.findAllPerson(); 
+			EventsAndPersons eventsAndPersons = new EventsAndPersons();
+			eventsAndPersons.setEvents(events);
+			eventsAndPersons.setPersons(persons);
+			System.out.println(eventsAndPersons);
+			String json = mapper.writeValueAsString(eventsAndPersons); // convertir en format json
 			setHeaders(response);
 			response.setContentType("application/json"); // le type du contenu est du json
 			response.setCharacterEncoding("UTF-8");// ce sera ï¿½crit en utf8
@@ -126,6 +131,9 @@ public class EventCreationJavaServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
+		
+		} else if (path.startsWith("/search")){
+			
 
 		} else {
 			response.setStatus(401);
@@ -149,7 +157,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 				Person person = repository.connexion(parameters.email, parameters.password);
 
 				if (person != null) {
-					session.setAttribute("idPerson", person.getId()); // pour rï¿½cupï¿½rer l'id du responsable
+					session.setAttribute("idPerson", person.getId()); // pour récupérer l'id du responsable
 					System.out.println("idPerson " + session.getAttribute("idPerson"));
 					
 				}
