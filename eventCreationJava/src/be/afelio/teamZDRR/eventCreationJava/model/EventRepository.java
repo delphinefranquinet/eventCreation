@@ -61,7 +61,7 @@ public interface EventRepository {
 	
 	public List<Integer> findAllIdActivityByIdEvent (int idEvent);
 	
-	public List<Activity> updateActivities (int idEvent);
+	public List<Activity> updateActivities (List<Activity> activities);
 	
 	
 }

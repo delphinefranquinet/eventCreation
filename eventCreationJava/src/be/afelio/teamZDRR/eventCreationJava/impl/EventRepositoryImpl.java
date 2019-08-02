@@ -338,7 +338,7 @@ public class EventRepositoryImpl implements EventRepository {
 			
 			if(activities != null) {
 				
-				activities = updateActivities(idEvent);
+				activities = updateActivities(activities);
 			}
 
 		} catch (java.sql.SQLException sqle) {
@@ -877,32 +877,29 @@ public class EventRepositoryImpl implements EventRepository {
 		return idActivities;
 	}
 	
-	public List<Activity> updateActivities(int idEvent) {
-
+	public List<Activity> updateActivities(List<Activity> activities) {
+		/*
 		List<Integer> idActivities = findAllIdActivityByIdEvent(idEvent);
 		List<Activity> activities = new ArrayList<Activity>();
+		*/
+		for (int i = 0; i < activities.size(); i++) {
 
-		for (int i = 0; i < idActivities.size(); i++) {
-
-			int idActivity = idActivities.get(i);
+			Activity activity = activities.get(i);
 
 			String sql = "update \"Activities\" set \"nameActivity\" = ? , \"descriptionActivity\" = ?, \"startActivity\" = ?, \"endActivity\" = ? Where id_activity = "
-					+ idActivity;
+					+ activity.getId();
 
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 
 				connection.setAutoCommit(false);
 
-				query.executeUpdate();
-				Activity activity = new Activity();
+				//Activity activity = new Activity();
 				query.setString(1, activity.getName());
 				query.setString(2, activity.getDescription());
 				query.setTimestamp(3, Timestamp.valueOf(activity.getStartActivity()));
 				query.setTimestamp(4, Timestamp.valueOf(activity.getEndActivity()));
-				query.setInt(5, activity.getIdEvent());
-				
-				activities.add(activity);
+				query.executeUpdate();
 				connection.commit();
 
 			} catch (java.sql.SQLException sqle) {
