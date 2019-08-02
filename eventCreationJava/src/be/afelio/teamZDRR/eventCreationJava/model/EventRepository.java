@@ -27,7 +27,7 @@ public interface EventRepository {
 	
 	boolean createNewInscriptionActivity(Integer idPerson, Integer idActivity) throws SQLException;
 	
-	Event updateEventByIdEvent(int idResponsable, int idEvent, Event newEvent);
+	Event updateEventByIdEvent(int idResponsable, Event newEvent);
 	
 	boolean deleteEventByIdEvent(int idEvent);
 	
@@ -53,9 +53,11 @@ public interface EventRepository {
 	
 	LocalDateTime findLocalDateTimeEndEvent(int idEvent);
 	
-	public boolean localDateTimeComparisonForCreateNewActivity(int idEvent, LocalDateTime localDateTimeStartNewActivity,
+	boolean localDateTimeComparisonForCreateNewActivity(int idEvent, LocalDateTime localDateTimeStartNewActivity,
 			LocalDateTime localDateTimeEndNewActivity);
 	List<Person> findAllPerson ();
+	
+	boolean deleteOneActivityByIdActivity (int idActivity);
 	
 	
 }

@@ -282,9 +282,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 				event.setIdResponsable(idResponsable);
 				event.setPlace(parameters.place);
 				event.setId(idEvent);
-				Event UpdateEvent = repository.updateEventByIdEvent(idResponsable, idEvent, event);
-
-				//session.setAttribute("idEvent", event.getId());
+				Event UpdateEvent = repository.updateEventByIdEvent(idResponsable, event);
 
 				String json = mapper.writeValueAsString(UpdateEvent); 
 				System.out.println(json);
@@ -314,8 +312,8 @@ public class EventCreationJavaServlet extends HttpServlet {
 				setHeaders(response);
 				
 				String[] parts = path.split("/");
-				String idResponsable = parts[2];
-				int id = Integer.parseInt(idResponsable);
+				String idEvent = parts[2];
+				int id = Integer.parseInt(idEvent);
 				
 				//int idEvent = request.getPathInfo().lastIndexOf("/");
 				System.out.println(id);
@@ -325,6 +323,21 @@ public class EventCreationJavaServlet extends HttpServlet {
 				response.setContentType("application/json"); // le type du contenu est du json
 				response.setCharacterEncoding("UTF-8");// ce sera �crit en utf8
 				//String.format("{\"deleted\": %s}", deleted);
+				String json = mapper.writeValueAsString(deleted); 
+				response.getWriter().write(json);
+				
+			}else if (path.startsWith("/deleteActivity")){
+				
+				setHeaders(response);
+				
+				String[] parts = path.split("/");
+				String idActivity = parts[2];
+				int id = Integer.parseInt(idActivity);
+				System.out.println(id);
+				boolean deleted = repository.deleteOneActivityByIdActivity(id);
+				
+				response.setContentType("application/json"); 
+				response.setCharacterEncoding("UTF-8");
 				String json = mapper.writeValueAsString(deleted); 
 				response.getWriter().write(json);
 			}

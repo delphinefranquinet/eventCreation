@@ -170,7 +170,7 @@ public class EventRepositoryImpl implements EventRepository {
 				throw new RuntimeException(sqle);
 			}
 		}
-		System.out.println(timeIsCorrect);
+		//System.out.println(timeIsCorrect);
 		return newActivity;
 	}
 
@@ -316,8 +316,10 @@ public class EventRepositoryImpl implements EventRepository {
 
 	}
 
-	public Event updateEventByIdEvent(int idResponsable, int idEvent, Event newEvent) {
+	public Event updateEventByIdEvent(int idResponsable, Event newEvent) {
 
+		int idEvent = newEvent.getId();
+		
 		String sql = "update \"Events\" set \"eventName\" = ? , description = ?, \"dateDebut\" = ?, \"dateFin\" = ?, id_person = "
 				+ idResponsable + ", place = ? Where id_event = " + idEvent;
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
@@ -699,12 +701,8 @@ public class EventRepositoryImpl implements EventRepository {
 						|| (compareValueEndToStart <= 0 && compareValueEndToEnd >= 0)) {
 					freeTime = false;
 
-				} else {
-					freeTime = true;
 				}
 			}
-		} else {
-			freeTime = true;
 		}
 		System.out.println(freeTime);
 		return freeTime;
@@ -769,38 +767,29 @@ public class EventRepositoryImpl implements EventRepository {
 
 		LocalDateTime localDateTimeStartEvent = null;
 		LocalDateTime localDateTimeEndEvent = null;
-		boolean timeIsCorrect = true;
+		boolean timeIsCorrect = false;
 
 		localDateTimeStartEvent = findLocalDateTimeStartEvent(idEvent);
 		localDateTimeEndEvent = findLocalDateTimeEndEvent(idEvent);
 
-		int compareValueStartToStart;
-		int compareValueStartToEnd;
-		int compareValueEndToStart;
-		int compareValueEndToEnd;
+		int compareValueStart;
+		int compareValueEnd;
+
 
 		if (localDateTimeStartNewActivity != null && localDateTimeEndNewActivity != null) {
 
-			compareValueStartToStart = localDateTimeStartNewActivity.compareTo(localDateTimeStartEvent);
-			compareValueStartToEnd = localDateTimeStartNewActivity.compareTo(localDateTimeEndEvent);
-			compareValueEndToStart = localDateTimeEndNewActivity.compareTo(localDateTimeStartEvent);
-			compareValueEndToEnd = localDateTimeEndNewActivity.compareTo(localDateTimeEndEvent);
+			compareValueStart = localDateTimeStartNewActivity.compareTo(localDateTimeStartEvent);
+			compareValueEnd = localDateTimeEndNewActivity.compareTo(localDateTimeEndEvent);
 
-			if ((compareValueStartToStart > 0 && compareValueStartToEnd < 0)
-					|| (compareValueEndToStart < 0 && compareValueEndToEnd > 0)) {
-				timeIsCorrect = false;
-
-			} else {
+			if (compareValueStart >= 0 && compareValueEnd <= 0) {
+				
 				timeIsCorrect = true;
 			}
 
-		} else {
-			timeIsCorrect = true;
+			System.out.println(timeIsCorrect);
 		}
-		System.out.println(timeIsCorrect);
 		return timeIsCorrect;
 	}
-
 
 	public List<Person> findAllPerson (){
 		
@@ -831,7 +820,28 @@ public class EventRepositoryImpl implements EventRepository {
 		return persons;
 	}
 
+	public boolean deleteOneActivityByIdActivity (int idActivity) {
+		boolean deleted = false;
+		
+		if (idActivity > 0) {
 
+			String sql = "delete from \"Activities\" Where id_activity = ?";
+
+			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+					PreparedStatement deleteActivityStatement = connection.prepareStatement(sql)) {
+				connection.setAutoCommit(false);
+
+				deleteActivityStatement.setInt(1, idActivity);
+				deleteActivityStatement.executeUpdate();
+				connection.commit();
+				deleted = deleteActivityStatement.getUpdateCount() > 0;
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+		
+		return deleted;
+	}
 	
 	
 	
