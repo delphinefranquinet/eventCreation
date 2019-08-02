@@ -6,6 +6,10 @@
 
 <div class="card">
   <h3>{{ eventName }}</h3>
+  <h5>{{eventPlace}}</h5>
+  <h5>{{eventStart}}</h5>
+  <h5>{{eventEnd}}</h5>
+
   <img src="\assets\img\images.jpg" alt="Denim Jeans" style="width:100%">
   <div *ngIf="!activityError">
     <div *ngFor="let activity of activities">
@@ -13,18 +17,18 @@
       <div class="price">{{activity.description}}</div>
       <div>{{activity.startActivity}}</div>
       <div>{{activity.endActivity}}</div>
-      <div><button type="button"> <a [routerLink]="['/activityInscription', activity.id]"> Inscription </a></button>
+      <div><button type="button" (click)="inscription(activity.id)">inscription </button>
       </div>
 
     </div>
   </div>
 </div>
 
-
+<!--
 <div class="coupon">
   <div class="container">
     <h3>{{ eventName }}</h3>
-    <div>{{ descreption }}</div>
+    <div>{{ eventDescreption }}</div>
     <div>{{ eventStart}}</div>
     <div>{{ eventEnd}}</div>
   </div>
@@ -43,4 +47,4 @@
     </div>
   </div>
 
-</div>
+</div> -->
