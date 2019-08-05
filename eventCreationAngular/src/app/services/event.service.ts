@@ -17,7 +17,7 @@ export class EventService {
       .pipe(catchError((error: any) => throwError(error.error)));
   }
 
-  public getAllEvents(): Observable<EventManage[]> {
+  public getAllEvents(): Observable<any> {
     return this.http
       .get<EventManage[]>(`${environment.baseUrl}/home`)
       .pipe(catchError((error: any) => throwError(error.error)));

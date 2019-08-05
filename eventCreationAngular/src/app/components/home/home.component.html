@@ -11,7 +11,7 @@
   </div>
 </div>
 
-<div *ngFor="let event of eventAndPerson.events" class="flip-card" id="container">
+<div *ngFor="let event of events" class="flip-card" id="container">
   <div class="flip-card-inner">
 
     <a [routerLink]="['/event', event.id]">
@@ -26,6 +26,4 @@
       <p>{{event.endEvent}}</p>
     </div>
   </div>
-
-
 </div>
