@@ -208,10 +208,13 @@ public class EventCreationJavaServlet extends HttpServlet {
 				} else {
 					response.setStatus(401); 
 				}
-			} else if (path.startsWith("/activity")) {
+			} else if (path.startsWith("/activity/")) {
 
 				Integer idResponsable = (Integer) session.getAttribute("idPerson");
-				//Integer idEvent = (Integer) session.getAttribute("idEvent");
+				String[] parts = path.split("/");
+				String id = parts[2];
+				int idEvent = Integer.parseInt(id);
+				System.out.println(idEvent);
 				setHeaders(response);
 
 				if (idResponsable != null) {
@@ -223,7 +226,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 					activity.setDescription(parameters.description);
 					activity.setStartActivity(parameters.startActivity);
 					activity.setEndActivity(parameters.endActivity);
-					activity.setIdEvent(parameters.idEvent);
+					activity.setIdEvent(idEvent);
 					activity = repository.createNewActivity(activity);
 
 					String json = mapper.writeValueAsString(activity); 
