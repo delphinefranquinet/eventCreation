@@ -19,7 +19,7 @@
 
     <div id="eventButtons">
       <div>
-        <button type="button" class="button"><a [routerLink]="['/activity']">+ Add a new activity</a></button>
+        <button type="button" class="button"><a [routerLink]="['/activity', eventItem.id]">+ Add a new activity</a></button>
       </div>
       <div>
         <button type="button" class="button" (click)="deleteEvent(eventItem.id)">x Delete</button>

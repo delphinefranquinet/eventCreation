@@ -34,7 +34,9 @@ export class ActivityComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  /*next(eventId: number) {
+    this.router.navigate(['/activity/' + eventId]);
+  }*/
 
   public hasNameError() {
     const control = this.activityForm.get('name');
@@ -76,5 +78,7 @@ export class ActivityComponent implements OnInit {
       }, () => { this.activityError = false; });
 
   }
+
+
 
 }
