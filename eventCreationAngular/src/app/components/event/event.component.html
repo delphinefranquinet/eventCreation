@@ -4,23 +4,41 @@
   <a [routerLink]="['/register']" id="register"> Register </a>
 </div>
 
-<div class="card">
-  <h3>{{ eventName }}</h3>
-  <h5>{{eventPlace}}</h5>
-  <h5>{{eventStart}}</h5>
-  <h5>{{eventEnd}}</h5>
+<div *ngIf="eventItem" class="card">
 
-  <img src="\assets\img\images.jpg" alt="Denim Jeans" style="width:100%">
-  <div *ngIf="!activityError">
-    <div *ngFor="let activity of activities">
-      <h1>{{activity.name}}</h1>
-      <div class="price">{{activity.description}}</div>
-      <div>{{activity.startActivity}}</div>
-      <div>{{activity.endActivity}}</div>
-     <div><button type="button" (click)="inscription(activity.id)"> <a [routerLink]="['/activityInscription', activity.id]"> Inscription </a></button></div>
+  <div id="eventInfo">
+    <h1>{{eventItem.name}}</h1>
+    <h5>{{eventItem.place}}</h5>
+    <h5>{{eventItem.startEvent}}</h5>
+    <h5>{{eventItem.endEvent}}</h5>
+  </div>
 
+  <div *ngIf="editMode" id="eventButtons">
+    <div id="newActivityButton">
+      <button type="button" class="button"><a [routerLink]="['/activity']">+ Add a new activity</a></button>
+    </div>
+    <div id="deleteEventButton">
+      <button type="button" class="button" (click)="toggleConfirmButtonDisplay()">x Delete</button>
+      <button *ngIf="displayConfirmButton" type="button" (click)="deleteEvent(eventItem.id)">Confirm</button>
+      <span id="errorMessage">{{errorMessage}}</span>
     </div>
   </div>
+
+  <img src="\assets\img\images.jpg" alt="Denim Jeans" style="width:100%">
+
+  <!-- <div *ngIf="!activityError"> Zahraa: what for?-->
+  <div *ngFor="let activity of eventItem.activities">
+    <h3>{{activity.name}}</h3>
+    <div class="price">{{activity.description}}</div>
+    <div>{{activity.startActivity}}</div>
+    <div>{{activity.endActivity}}</div>
+    <div *ngIf="!editMode">
+      <button type="button" (click)="inscription(activity.id)">
+        <a [routerLink]="['/activityInscription', activity.id]"> Inscription </a>
+      </button>
+    </div>
+  </div>
+  <!-- </div> -->
 </div>
 
 <!--

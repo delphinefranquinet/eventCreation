@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
@@ -14,7 +14,7 @@ export class InscriptionService {
 
 public getInscription(id: number): Observable<boolean> {
   return this.http.get<boolean>(`${environment.baseUrl}/activityInscription/${id}`)
-    .pipe(catchError((error: any) => Observable.throw(error.error())));
+    .pipe(catchError((error: any) => throwError(error.error)));
 }
 
 }

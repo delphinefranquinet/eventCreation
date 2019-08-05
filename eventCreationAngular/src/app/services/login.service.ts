@@ -5,6 +5,7 @@ import { Login } from '../models/login.modele';
 import { environment } from '../../environments/environment';
 import { catchError } from 'rxjs/operators';
 import { Person } from '../models/person.modele';
+import { throwError } from 'rxjs';
 
 @Injectable()
 export class LoginService {
@@ -13,7 +14,8 @@ export class LoginService {
 
   public postLogin(email: Login): Observable<Person> {
     return this.http
-      .post<Person>(`${environment.baseUrl}/login`, email, { withCredentials: true });
+      .post<Person>(`${environment.baseUrl}/login`, email, { withCredentials: true })
+      .pipe(catchError((error: any) => throwError(error.error)));
   }
 
 }

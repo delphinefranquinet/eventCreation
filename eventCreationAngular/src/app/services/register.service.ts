@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Register } from '../models/register.modele';
 
@@ -15,7 +15,7 @@ export class RegisterService {
 
        return this.http
          .post<Register>(`${environment.baseUrl}/register`, event, { withCredentials: true })
-         .pipe(catchError((error: any) => Observable.throw(error.json())));
+         .pipe(catchError((error: any) => throwError(error.error)));
      }
 
 }
