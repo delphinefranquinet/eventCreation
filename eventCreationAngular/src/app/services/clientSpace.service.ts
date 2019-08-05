@@ -10,11 +10,12 @@ import { catchError } from 'rxjs/operators';
 })
 export class ClientSpaceService {
 
-constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-public getPerson(): Observable<Person[]> {
-  return this.http
-    .get<Person[]>(`${environment.baseUrl}/home`)
-    .pipe(catchError((error: any) => throwError(error.error)));
-}
+  public getPerson(): Observable<Person[]> { // What for? And why at "/home" request? Still useful?
+    return this.http
+      .get<Person[]>(`${environment.baseUrl}/home`)
+      .pipe(catchError((error: any) => throwError(error.error)));
+  }
+
 }

@@ -8,23 +8,23 @@ import { EventsAndPersons } from '../models/EventsAndPersons';
 
 @Injectable()
 export class EventService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
 
   public postEvent(event: EventManage): Observable<EventManage> {
-
-     return this.http
-       .post<EventManage>(`${environment.baseUrl}/createEvent`, event, { withCredentials: true })
-       .pipe(catchError((error: any) => throwError(error.error)));
-   }
-   public getEventsAndPersons (): Observable<EventsAndPersons []> {
     return this.http
-      .get<EventsAndPersons []>(`${environment.baseUrl}/home`)
+      .post<EventManage>(`${environment.baseUrl}/createEvent`, event, { withCredentials: true })
+      .pipe(catchError((error: any) => throwError(error.error)));
+  }
+
+  public getEventsAndPersons(): Observable<EventsAndPersons[]> {
+    return this.http
+      .get<EventsAndPersons[]>(`${environment.baseUrl}/home`)
       .pipe(catchError((error: any) => throwError(error.error)));
   }
 
 
-  public getEvent(): Observable<EventManage[]> {
+  public getAllEvents(): Observable<any> { // Back-end returns an EventsAndPersons object instead of an EventManage
     return this.http
       .get<EventManage[]>(`${environment.baseUrl}/home`)
       .pipe(catchError((error: any) => throwError(error.error)));
@@ -48,12 +48,10 @@ export class EventService {
       .pipe(catchError((error: any) => throwError(error.error)));
   }
 
-/*
-  public updateEvent(eventToUpdate: Event): Observable<Event> {
-    return this.http
-      .put<Event>(`${environment.baseUrl}/contacts/${eventToUpdate}`, eventToUpdate)
-      .pipe(catchError((error: any) => throwError(error.error)));
-  }
+  // public updateEvent(eventToUpdate: Event): Observable<Event> {
+  //   return this.http
+  //     .put<Event>(`${environment.baseUrl}/contacts/${eventToUpdate}`, eventToUpdate)
+  //     .pipe(catchError((error: any) => throwError(error.error)));
+  // }
 
- */
 }

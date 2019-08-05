@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../../../app/services/event.service';
-import { EventManage } from '../../models/eventManage.modele';
-import { ClientSpaceService } from '../../services/clientSpace.service';
-import { Person } from '../../models/person.modele';
-import { EventsAndPersons } from '../../models/EventsAndPersons';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Login } from '../../models/login.modele';
+import { EventManage } from 'src/app/models/eventManage.modele';
 
 @Component({
   selector: 'app-home',
@@ -14,27 +10,23 @@ import { Login } from '../../models/login.modele';
 })
 export class HomeComponent implements OnInit {
 
-  public eventAndPerson: EventsAndPersons = new EventsAndPersons();
+  public events: EventManage[];
   public connectionError: boolean;
   public logins: Login;
 
-  constructor(private router: Router,
-    // tslint:disable-next-line: align
-    private eventService: EventService, private clientSpaceService: ClientSpaceService, private route: ActivatedRoute) { }
+  constructor(private eventService: EventService) { }
 
   ngOnInit() {
-
-    this.eventService.getEventsAndPersons().subscribe((eventAndPerson: any) => {
-      this.eventAndPerson.events = eventAndPerson.events;
-      this.eventAndPerson.persons = eventAndPerson.persons;
+    this.eventService.getAllEvents().subscribe((eventsAndPersons: any) => {
+      this.events = eventsAndPersons.events;
+      console.log(JSON.stringify(eventsAndPersons));
     });
 
-
+    /* Zahraa, is the following still useful? */
     // this.clientSpaceService.getPerson().subscribe(persons => {
     //   this.eventAndPerson.persons = persons.persons;
     //   console.log(JSON.stringify(persons.persons));
     //   console.log(this.eventAndPerson.persons[0].id);
     // });
-
   }
 }
