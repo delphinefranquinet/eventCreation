@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
-import { Login } from '../models/login.modele';
+import { Login } from '../models/login.model';
 import { environment } from '../../environments/environment';
 import { catchError } from 'rxjs/operators';
-import { Person } from '../models/person.modele';
+import { Person } from '../models/person.model';
 import { throwError } from 'rxjs';
 
 @Injectable()

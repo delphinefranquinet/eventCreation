@@ -1,5 +1,4 @@
-
-import { Activity } from './activity.modele';
+import { Activity } from './activity.model';
 
 export class EventManage {
   public id: number;

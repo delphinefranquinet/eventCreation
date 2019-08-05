@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Observable, throwError } from 'rxjs';
-import { Login } from '../models/login.modele';
+import { Login } from '../models/login.model';
 
 @Injectable()
 export class PersonService {

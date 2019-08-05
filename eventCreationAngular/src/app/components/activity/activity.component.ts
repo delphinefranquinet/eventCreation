@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Activity } from '../../models/activity.modele';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { Router, ActivatedRoute } from '@angular/router';
+import { NewActivity } from '../../models/newActivity.model';
+import { Activity } from '../../models/activity.model';
 import { ActivityService } from '../../services/activity.service';
+
 
 @Component({
   selector: 'app-activity',
@@ -14,22 +14,19 @@ import { ActivityService } from '../../services/activity.service';
 })
 export class ActivityComponent implements OnInit {
 
-  public activity: Activity;
+  public activityToCreate = new NewActivity();
   public activityForm: FormGroup;
-  public now = new Date();
-  public activityError = false;
+  public creationSucceded = false;
+  public creationFailed = false;
+  public serverError = false;
   public eventId: number;
 
-
   constructor(private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private activityService: ActivityService) {
-    this.activity = new Activity();
-
     this.activityForm = this.fb.group({
-
-      name: this.fb.control(this.activity.name, [Validators.required]),
-      description: this.fb.control(this.activity.description, [Validators.required]),
-      startActivity: this.fb.control(this.activity.startActivity, [Validators.required]),
-      endActivity: this.fb.control(this.activity.endActivity, [Validators.required]),
+      name: this.fb.control('', [Validators.required]),
+      description: this.fb.control('', [Validators.required]),
+      startActivity: this.fb.control('', [Validators.required]),
+      endActivity: this.fb.control('', [Validators.required]),
     });
   }
 
@@ -38,9 +35,10 @@ export class ActivityComponent implements OnInit {
       this.eventId = Number(params.id);
     });
   }
-  /*next(eventId: number) {
-    this.router.navigate(['/activity/' + eventId]);
-  }*/
+
+  // next(eventId: number) {
+  //   this.router.navigate(['/activity/' + eventId]);
+  // }
 
   public hasNameError() {
     const control = this.activityForm.get('name');
@@ -63,23 +61,26 @@ export class ActivityComponent implements OnInit {
   }
 
   public submitForm() {
-    const newValues = this.activityForm.value;
-
-    const newActivity = new Activity();
-
-    newActivity.name = newValues.name;
-    newActivity.description = newValues.description;
-    newActivity.startActivity = newValues.startActivity;
-    newActivity.endActivity = newValues.endActivity;
-    this.activity = newActivity;
-
-    this.activityService
-
-      .postActivity(this.activity, this.eventId).subscribe
-      (activity => {/*200*/
+    this.activityToCreate.name = this.activityForm.value.name;
+    this.activityToCreate.description = this.activityForm.value.description;
+    this.activityToCreate.startActivity = this.activityForm.value.startActivity;
+    this.activityToCreate.endActivity = this.activityForm.value.endActivity;
+    this.activityService.createActivity(this.activityToCreate, this.eventId).subscribe((activity: Activity) => {
+      /*200*/
+      if (activity.id) {
         this.activityForm.reset();
-        this.activityError = true;
-      }, () => { this.activityError = false; });
-
+        this.creationSucceded = true;
+        this.creationFailed = false;
+        this.serverError = false;
+      } else {
+        this.creationSucceded = false;
+        this.creationFailed = true;
+        this.serverError = false;
+      }
+    }, () => {
+      this.creationSucceded = false;
+      this.creationFailed = false;
+      this.serverError = true;
+    });
   }
 }

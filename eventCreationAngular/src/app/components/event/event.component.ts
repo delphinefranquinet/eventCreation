@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../../services/event.service';
 import { InscriptionService } from '../../services/inscription.service';
-import { EventManage } from 'src/app/models/eventManage.modele';
+import { EventManage } from 'src/app/models/eventManage.model';
 
 @Component({
   selector: 'app-event',
@@ -34,7 +34,7 @@ export class EventComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if(this.eventId === -1) {
+    if (this.eventId === -1) {
       this.route.params.subscribe(params => {
         this.eventId = params.id;
         this.subscribeEvent();

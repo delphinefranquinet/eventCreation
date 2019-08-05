@@ -1,5 +1,5 @@
-import { EventManage } from './eventManage.modele';
-import { Person } from './person.modele';
+import { EventManage } from './eventManage.model';
+import { Person } from './person.model';
 
 export class EventsAndPersons {
   public events: EventManage[];

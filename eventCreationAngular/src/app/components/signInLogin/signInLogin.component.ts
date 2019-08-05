@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivityService } from '../../services/activity.service';
-import { Activity } from '../../models/activity.modele';
+import { Activity } from '../../models/activity.model';
 
 @Component({
   selector: 'app-signInLogin',

@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Observable, throwError } from 'rxjs';
-import { EventManage } from '../models/eventManage.modele';
-import { EventsAndPersons } from '../models/EventsAndPersons';
+import { EventManage } from '../models/eventManage.model';
+import { EventsAndPersons } from '../models/EventsAndPersons.model';
 
 @Injectable()
 export class EventService {
