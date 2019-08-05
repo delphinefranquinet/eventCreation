@@ -15,7 +15,7 @@
 
   <div *ngIf="editMode" id="eventButtons">
     <div id="newActivityButton">
-      <button type="button" class="button"><a [routerLink]="['/activity']">+ Add a new activity</a></button>
+      <button type="button" class="button"><a [routerLink]="['/activity', eventItem.id]">+ Add a new activity</a></button>
     </div>
     <div id="deleteEventButton">
       <button type="button" class="button" (click)="toggleConfirmButtonDisplay()">x Delete</button>

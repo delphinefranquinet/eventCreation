@@ -151,12 +151,10 @@ public class EventRepositoryImpl implements EventRepository {
 				query.setString(2, newActivity.getDescription());
 				query.setTimestamp(3, Timestamp.valueOf(newActivity.getStartActivity()));
 				query.setTimestamp(4, Timestamp.valueOf(newActivity.getEndActivity()));
-				query.setInt(5, newActivity.getIdEvent());
+				query.setInt(5, idEvent);
 				query.executeUpdate(); // insert/update/delete
 
-				try (ResultSet resultSet = query.getGeneratedKeys() // pour recuperer l'id qui est en autoincrement, ne
-																	// pas
-																	// oublier Statement.RETURN_GENERATED_KEYS)
+				try (ResultSet resultSet = query.getGeneratedKeys() 
 				) {
 					if (resultSet.next()) {
 						int id = resultSet.getInt(1);
@@ -170,7 +168,7 @@ public class EventRepositoryImpl implements EventRepository {
 				throw new RuntimeException(sqle);
 			}
 		}
-		//System.out.println(timeIsCorrect);
+		// System.out.println(timeIsCorrect);
 		return newActivity;
 	}
 
@@ -208,21 +206,20 @@ public class EventRepositoryImpl implements EventRepository {
 		return events;
 	}
 
-	public Event findEventAndAllActivityByIdEvent(int id) {
+	public Event findEventAndAllActivityByIdEvent(int idEvent) {
 
-		Event event = null;
-		List<Activity> activities = new ArrayList<Activity>();
+		Event event = new Event();
 
-		if (id > 0) {
-			String sql = "Select eventName, description, startdate, enddate, eventplace From Events e left join Activities a on e.id_event = a.id_event Where e.id_event = ?";
+		if (idEvent > 0) {
+
+			String sql = "Select eventName, description, startdate, enddate, eventplace From Events Where id_event = ?";
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 
-				query.setInt(1, id);
+				query.setInt(1, idEvent);
 
 				try (java.sql.ResultSet rs = query.executeQuery();) {
-
-					if (rs.next()) {
+					while (rs.next()) {
 
 						String name = rs.getString(1);
 						String description = rs.getString(2);
@@ -230,53 +227,15 @@ public class EventRepositoryImpl implements EventRepository {
 						LocalDateTime endEvent = rs.getTimestamp(4).toLocalDateTime();
 						String place = rs.getString(5);
 
-						if (activities != null) {
+						List<Activity> activities = findAllActivitiesByIdEvent(idEvent);
 
-							sql = "SELECT id_activity, nameActivity, descriptionActivity, startActivity, endActivity FROM Activities a join Events e on a.id_event = e.id_event WHERE a.id_event = ?";
-
-							try (java.sql.Connection connection2 = java.sql.DriverManager.getConnection(url, user,
-									password); java.sql.PreparedStatement query2 = connection.prepareStatement(sql);) {
-								query2.setInt(1, id);
-								try (java.sql.ResultSet resultSet2 = query2.executeQuery();) {
-
-									if (resultSet2.next()) {
-
-										Activity activity = new Activity();
-										activity.setId(resultSet2.getInt("id_activity"));
-										activity.setName(resultSet2.getString("nameActivity"));
-										activity.setDescription(resultSet2.getString("descriptionActivity"));
-										activity.setStartActivity(
-												resultSet2.getTimestamp("startActivity").toLocalDateTime());
-										activity.setEndActivity(
-												resultSet2.getTimestamp("endActivity").toLocalDateTime());
-										activities.add(activity);
-
-										while (resultSet2.next()) {
-
-											activity.setName(resultSet2.getString("nameActivity"));
-											activity.setDescription(resultSet2.getString("descriptionActivity"));
-											activity.setStartActivity(
-													resultSet2.getTimestamp("startActivity").toLocalDateTime());
-											activity.setEndActivity(
-													resultSet2.getTimestamp("endActivity").toLocalDateTime());
-											activities.add(activity);
-										}
-									} else {
-										activities = Collections.emptyList();
-									}
-								}
-							}
-
-							event = new Event();
-							event.setId(id);
-							event.setName(name);
-							event.setDescription(description);
-							event.setStartEvent(startEvent);
-							event.setEndEvent(endEvent);
-							event.setPlace(place);
-							event.setActivities(activities);
-
-						}
+						event.setId(idEvent);
+						event.setName(name);
+						event.setDescription(description);
+						event.setStartEvent(startEvent);
+						event.setEndEvent(endEvent);
+						event.setPlace(place);
+						event.setActivities(activities);
 
 					}
 				}
@@ -284,7 +243,7 @@ public class EventRepositoryImpl implements EventRepository {
 				throw new RuntimeException(sqle);
 			}
 		}
-
+		System.out.println(event);
 		return event;
 	}
 
@@ -318,10 +277,10 @@ public class EventRepositoryImpl implements EventRepository {
 
 	public Event updateEventAndActivitiesByIdEvent(int idResponsable, Event newEvent) {
 
-		List <Activity> activities = new ArrayList<Activity>();
+		List<Activity> activities = new ArrayList<Activity>();
 		activities = newEvent.getActivities();
 		int idEvent = newEvent.getId();
-		
+
 		String sql = "update Events set eventName = ? , description = ?, startdate= ?, enddate = ?, id_person = "
 				+ idResponsable + ", eventplace = ? Where id_event = " + idEvent;
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
@@ -335,9 +294,9 @@ public class EventRepositoryImpl implements EventRepository {
 			query.setString(5, newEvent.getPlace());
 			query.executeUpdate();
 			connection.commit();
-			
-			if(activities != null) {
-				
+
+			if (activities != null) {
+
 				activities = updateActivities(activities);
 			}
 
@@ -378,7 +337,7 @@ public class EventRepositoryImpl implements EventRepository {
 		List<Activity> activities = new ArrayList<Activity>();
 
 		if (idEvent > 0) {
-			String sql = "SELECT id_activity, nameActivity, descriptionActivity, startActivity, endActivity FROM Activities a join Events e on a.id_event = e.id_event WHERE a.id_event = ?";
+			String sql = "SELECT id_activity, nameActivity, descriptionActivity, startActivity, endActivity FROM Activities WHERE id_event = ?";
 
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
@@ -388,16 +347,10 @@ public class EventRepositoryImpl implements EventRepository {
 				try (java.sql.ResultSet rs = query.executeQuery();) {
 					if (rs.next()) {
 
-						Activity activity = new Activity();
-						activity.setId(rs.getInt("id_activity"));
-						activity.setName(rs.getString("nameActivity"));
-						activity.setDescription(rs.getString("descriptionActivity"));
-						activity.setStartActivity(rs.getTimestamp("startActivity").toLocalDateTime());
-						activity.setEndActivity(rs.getTimestamp("endActivity").toLocalDateTime());
-						activities.add(activity);
-
 						while (rs.next()) {
 
+							Activity activity = new Activity();
+							activity.setId(rs.getInt("id_activity"));
 							activity.setName(rs.getString("nameActivity"));
 							activity.setDescription(rs.getString("descriptionActivity"));
 							activity.setStartActivity(rs.getTimestamp("startActivity").toLocalDateTime());
@@ -406,7 +359,6 @@ public class EventRepositoryImpl implements EventRepository {
 						}
 					} else {
 						activities = Collections.emptyList();
-
 					}
 				}
 
@@ -779,14 +731,13 @@ public class EventRepositoryImpl implements EventRepository {
 		int compareValueStart;
 		int compareValueEnd;
 
-
 		if (localDateTimeStartNewActivity != null && localDateTimeEndNewActivity != null) {
 
 			compareValueStart = localDateTimeStartNewActivity.compareTo(localDateTimeStartEvent);
 			compareValueEnd = localDateTimeEndNewActivity.compareTo(localDateTimeEndEvent);
 
 			if (compareValueStart >= 0 && compareValueEnd <= 0) {
-				
+
 				timeIsCorrect = true;
 			}
 
@@ -795,12 +746,12 @@ public class EventRepositoryImpl implements EventRepository {
 		return timeIsCorrect;
 	}
 
-	public List<Person> findAllPerson (){
-		
+	public List<Person> findAllPerson() {
+
 		List<Person> persons = new ArrayList<Person>();
-		
+
 		String sql = "Select * From persons";
-		
+
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql)) {
 
@@ -813,20 +764,20 @@ public class EventRepositoryImpl implements EventRepository {
 					person.setFirstname(rs.getString(3));
 					person.setEmail(rs.getString(4));
 					person.setPassword(rs.getString(5));
-					
+
 					persons.add(person);
 				}
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		
+
 		return persons;
 	}
 
-	public boolean deleteOneActivityByIdActivity (int idActivity) {
+	public boolean deleteOneActivityByIdActivity(int idActivity) {
 		boolean deleted = false;
-		
+
 		if (idActivity > 0) {
 
 			String sql = "delete from activities Where id_activity = ?";
@@ -843,12 +794,12 @@ public class EventRepositoryImpl implements EventRepository {
 				throw new RuntimeException(e);
 			}
 		}
-		
+
 		return deleted;
 	}
-	
-	public List<Integer> findAllIdActivityByIdEvent (int idEvent){
-		
+
+	public List<Integer> findAllIdActivityByIdEvent(int idEvent) {
+
 		List<Integer> idActivities = new ArrayList<Integer>();
 
 		if (idEvent > 0) {
@@ -876,12 +827,12 @@ public class EventRepositoryImpl implements EventRepository {
 
 		return idActivities;
 	}
-	
+
 	public List<Activity> updateActivities(List<Activity> activities) {
 		/*
-		List<Integer> idActivities = findAllIdActivityByIdEvent(idEvent);
-		List<Activity> activities = new ArrayList<Activity>();
-		*/
+		 * List<Integer> idActivities = findAllIdActivityByIdEvent(idEvent);
+		 * List<Activity> activities = new ArrayList<Activity>();
+		 */
 		for (int i = 0; i < activities.size(); i++) {
 
 			Activity activity = activities.get(i);
@@ -894,7 +845,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 				connection.setAutoCommit(false);
 
-				//Activity activity = new Activity();
+				// Activity activity = new Activity();
 				query.setString(1, activity.getName());
 				query.setString(2, activity.getDescription());
 				query.setTimestamp(3, Timestamp.valueOf(activity.getStartActivity()));
@@ -909,12 +860,13 @@ public class EventRepositoryImpl implements EventRepository {
 		return activities;
 
 	}
-	
-	public List<Event> findAllEventByPlace (String place){
-		
+
+	public List<Event> findAllEventByPlace(String place) {
+
 		List<Event> events = new ArrayList<Event>();
-		
-		String sql = "Select id_event, eventName, description, startdate, enddate, id_person From events Where lower (eventplace) LIKE lower ('%" + place + "%')";
+
+		String sql = "Select id_event, eventName, description, startdate, enddate, id_person From events Where lower (eventplace) LIKE lower ('%"
+				+ place + "%')";
 
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql)) {
@@ -922,7 +874,7 @@ public class EventRepositoryImpl implements EventRepository {
 			try (ResultSet rs = query.executeQuery()) {
 
 				while (rs.next()) {
-					
+
 					Event event = new Event();
 					event.setId(rs.getInt(1));
 					event.setName(rs.getString(2));
@@ -938,11 +890,11 @@ public class EventRepositoryImpl implements EventRepository {
 		}
 
 		return events;
-		
+
 	}
-	
+
 	public Activity updateOneActivityByIdEvent(int idActivity, Activity activity) {
-	
+
 		String sql = "update activities set nameActivity = ? , descriptionActivity = ?, startActivity = ?, endActivity = ? Where id_activity = "
 				+ idActivity;
 
@@ -965,13 +917,13 @@ public class EventRepositoryImpl implements EventRepository {
 		return activity;
 	}
 
-	public List<Activity> findAllActivityByInscription (int idPerson){
-		
+	public List<Activity> findAllActivityByInscription(int idPerson) {
+
 		List<Activity> activityList = new ArrayList<Activity>();
 		List<Integer> idActivities = new ArrayList<Integer>();
-		
+
 		if (idPerson > 0) {
-			
+
 			idActivities = findIdActivityByIdPerson(idPerson);
 
 			for (int i = 0; i < idActivities.size(); i++) {
@@ -1021,8 +973,8 @@ public class EventRepositoryImpl implements EventRepository {
 		return activityList;
 	}
 
-	public List<Event> findEventByIdEvent (int idEvent) {
-		
+	public List<Event> findEventByIdEvent(int idEvent) {
+
 		List<Event> events = new ArrayList<Event>();
 		Event event = null;
 
@@ -1049,7 +1001,7 @@ public class EventRepositoryImpl implements EventRepository {
 						event.setStartEvent(startEvent);
 						event.setEndEvent(endEvent);
 						event.setPlace(place);
-						
+
 						events.add(event);
 
 					}
@@ -1059,7 +1011,7 @@ public class EventRepositoryImpl implements EventRepository {
 			}
 		}
 		System.out.println(events);
-		
+
 		return events;
 	}
 }

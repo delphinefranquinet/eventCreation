@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Activity } from '../../models/activity.modele';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ActivityService } from '../../services/activity.service';
 
 @Component({
@@ -18,9 +18,10 @@ export class ActivityComponent implements OnInit {
   public activityForm: FormGroup;
   public now = new Date();
   public activityError = false;
+  public eventId: number;
 
 
-  constructor(private router: Router, private fb: FormBuilder, private activityService: ActivityService) {
+  constructor(private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private activityService: ActivityService) {
     this.activity = new Activity();
 
     this.activityForm = this.fb.group({
@@ -33,8 +34,13 @@ export class ActivityComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.params.subscribe((params) => {
+      this.eventId = Number(params.id);
+    });
   }
-
+  /*next(eventId: number) {
+    this.router.navigate(['/activity/' + eventId]);
+  }*/
 
   public hasNameError() {
     const control = this.activityForm.get('name');
@@ -69,12 +75,11 @@ export class ActivityComponent implements OnInit {
 
     this.activityService
 
-      .postActivity(this.activity).subscribe
+      .postActivity(this.activity, this.eventId).subscribe
       (activity => {/*200*/
         this.activityForm.reset();
         this.activityError = true;
       }, () => { this.activityError = false; });
 
   }
-
 }
