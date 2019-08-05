@@ -1,3 +1,50 @@
+DROP TABLE persons;
+
+DROP TABLE Inscription_activity;
+
+DROP TABLE Events;
+
+DROP TABLE Activities;
+
+CREATE TABLE Activities (
+    id_activity SERIAL PRIMARY KEY,
+    nameActivity varchar(50) NOT NULL,
+    descriptionActivity varchar(300) NOT NULL,
+    startActivity timestamp with time zone NOT NULL,
+    endActivity timestamp with time zone NOT NULL,
+    id_event int NOT NULL,
+    CONSTRAINT checktimerelation CHECK (((endActivity - startActivity) >= '00:00:00'::interval)),
+    CONSTRAINT UK_nameActivity_startActivity UNIQUE (nameActivity, startActivity)
+
+);
+
+CREATE TABLE Events (
+    id_event serial PRIMARY KEY ,
+    eventName varchar(50) NOT NULL,
+    description varchar(300) NOT NULL,
+    startDate timestamp with time zone NOT NULL,
+    endDate timestamp with time zone NOT NULL,
+    id_person int NOT NULL,
+    eventPlace varchar(200) NOT NULL,
+    CONSTRAINT checktimerelation CHECK (((endDate - startDate) >= '00:00:00'::interval)),
+    CONSTRAINT UK_eventName_startDate_eventPlace UNIQUE (eventName, startDate, eventPlace)
+);
+
+CREATE TABLE Inscription_activity (
+    id_inscription serial PRIMARY KEY ,
+    id_person int NOT NULL,
+    id_activity int NOT NULL
+);
+
+CREATE TABLE persons (
+    id_person serial PRIMARY KEY ,
+    namePerson varchar(50) NOT NULL,
+    firstnamePerson varchar(50) NOT NULL,
+    email varchar(50) NOT NULL UNIQUE,
+    password varchar(50) NOT NULL
+);
+
+
 TRUNCATE TABLE persons RESTART IDENTITY cascade;
 
 insert into persons values (default, 'Franquinet', 'Delphine', 'delphine@nomail.be', '1234' );
@@ -5,7 +52,7 @@ insert into persons values (default, 'Al-Sudani', 'Zahraa', 'zahraa@nomail.be', 
 insert into persons values (default, 'Gilhousse', 'Michele', 'michele@nomail.be', '1234' );
 insert into persons values (default, 'Celen', 'Romain', 'romain@nomail.be', '1234' );
 insert into persons values (default, 'Del Favero', 'Roman', 'roman@nomail.be', '1234' );
-insert into persons values (default, 'Schyns', 'MÃ©lissa', 'melissa@nomail.be', '1234' );
+insert into persons values (default, 'Schyns', 'Mélissa', 'melissa@nomail.be', '1234' );
 insert into persons values (default, 'Leclercq', 'Jean', 'jean@nomail.be', '1234' );
 insert into persons values (default, 'Hella', 'Louis', 'louis@nomail.be', '1234' );
 insert into persons values (default, 'Vancom', 'Philippe', 'philippe@nomail.be', '1234' );
@@ -15,17 +62,17 @@ insert into persons values (default, 'Bouffioux', 'Damien', 'damien@nomail.be', 
 insert into persons values (default, 'Molle', 'Thibault', 'thibault@nomail.be', '1234' );
 
 
-insert into Events values (default, 'Festival rock Werchter', 'Best Rock Festival in Europe (5 activitÃ©s)', '2019-06-27 12:30:00+02', '2019-06-30 01:30:00+02', 1 , 'Werchter');
+insert into Events values (default, 'Festival rock Werchter', 'Best Rock Festival in Europe (5 activités)', '2019-06-27 12:30:00+02', '2019-06-30 01:30:00+02', 1 , 'Werchter');
 
-insert into Events values (default, 'Stage judo', 'Le club de judo de liÃ¨ge vous invite Ã  son stage annuel 6-12 ans(2 activitÃ©s)', '2019-07-01 08:30:00+02', '2019-07-05 20:00:00+02', 2 , 'LiÃ¨ge');
+insert into Events values (default, 'Stage judo', 'Le club de judo de liège vous invite à son stage annuel 6-12 ans(2 activités)', '2019-07-01 08:30:00+02', '2019-07-05 20:00:00+02', 2 , 'Liège');
 
-insert into Events values (default, 'DÃ©monstration H2O', 'DÃ©monstration chez Virginie (1 activitÃ©)', '2019-06-27 12:30:00+02', '2019-06-27 13:30:00+02', 3 , 'Rue du port 26, 5000 Namur');
+insert into Events values (default, 'Démonstration H2O', 'Démonstration chez Virginie (1 activité)', '2019-06-27 12:30:00+02', '2019-06-27 13:30:00+02', 3 , 'Rue du port 26, 5000 Namur');
 
-insert into Events values (default, 'DÃ©tente et Bien-Ãªtre', 'Initiation au Yoga et Tai Chi (1 activitÃ©)', '2019-07-19 10:30:00+02', '2019-07-19 12:45:00+02', 1 , 'Spa');
+insert into Events values (default, 'Détente et Bien-être', 'Initiation au Yoga et Tai Chi (1 activité)', '2019-07-19 10:30:00+02', '2019-07-19 12:45:00+02', 1 , 'Spa');
 
-insert into Events values (default, 'Nouvel-an chez LÃ©on', 'Pas d''activitÃ©s', '2019-12-31 19:00:00+02', '2020-01-01 02:30:00+02', 1 , 'Restaurant chez LÃ©on, Boulevard de la SauveniÃ¨re 42, 4000 LiÃ¨ge');
+insert into Events values (default, 'Nouvel-an chez Léon', 'Pas d''activités', '2019-12-31 19:00:00+02', '2020-01-01 02:30:00+02', 1 , 'Restaurant chez Léon, Boulevard de la Sauvenière 42, 4000 Liège');
 
-insert into Events values (default, 'Barbecue Afelio', 'On a rÃ©ussi le projet donc on est content (1 activitÃ© / pas d''inscrit)', '2019-08-09 18:00:00+02', '2019-08-09 22:00:00+02', 4 , 'Afelio');
+insert into Events values (default, 'Barbecue Afelio', 'On a réussi le projet donc on est content (1 activité / pas d''inscrit)', '2019-08-09 18:00:00+02', '2019-08-09 22:00:00+02', 4 , 'Afelio');
 
 
 
@@ -43,11 +90,11 @@ insert into Activities values (default, 'Stage 6-8 ans', 'Avec Manu (5 inscrits)
 
 insert into Activities values (default, 'Stage 9-12 ans', 'Avec Olivier (pas d''inscrit)', '2019-07-01 08:30:00+02', '2019-07-05 20:00:00+02', 2 );
 
-insert into Activities values (default, 'DÃ©monstration H2O chez Virginie', 'LimitÃ© Ã  20 personnes (3 inscrits)', '2019-07-19 10:30:00+02', '2019-07-19 12:45:00+02', 3 );
+insert into Activities values (default, 'Démonstration H2O chez Virginie', 'Limité à 20 personnes (3 inscrits)', '2019-07-19 10:30:00+02', '2019-07-19 12:45:00+02', 3 );
 
-insert into Activities values (default, 'Stage yoga dÃ©butant', 'Ouvert Ã  tous', '2019-07-01 08:30:00+02', '2019-07-05 20:00:00+02', 4 );
+insert into Activities values (default, 'Stage yoga débutant', 'Ouvert à tous', '2019-07-01 08:30:00+02', '2019-07-05 20:00:00+02', 4 );
 
-insert into Activities values (default, 'Barbecue Afelio', 'RÃ©ussite du projet Event Iscription (pas d''inscrit)','2019-08-09 18:00:00+02', '2019-08-09 22:00:00+02', 6 );
+insert into Activities values (default, 'Barbecue Afelio', 'Réussite du projet Event Iscription (pas d''inscrit)','2019-08-09 18:00:00+02', '2019-08-09 22:00:00+02', 6 );
 
 
 
@@ -87,9 +134,6 @@ insert into Inscription_activity values (default, '5', '8');
 insert into Inscription_activity values (default, '10', '8');
 
 insert into Inscription_activity values (default, '1', '9');
-
-
-
 
 
 
