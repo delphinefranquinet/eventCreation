@@ -21,7 +21,8 @@ export class EventComponent implements OnInit {
   public eventItem: EventManage;
   public connectionError: boolean;
   public displayConfirmButton = false;
-  public UnableToDeleteMessage = '';
+  public deleteButton = 'Delete';
+  public unableToDeleteMessage = '';
 
   // public activityError: boolean; // to Zahraa: What for?
   // (I deleted others, check previous commit)
@@ -62,6 +63,11 @@ export class EventComponent implements OnInit {
 
   public toggleConfirmButtonDisplay(eventItemID: number) {
     this.displayConfirmButton = !this.displayConfirmButton;
+    if (this.deleteButton === 'Delete') {
+      this.deleteButton = 'Cancel';
+    } else {
+      this.deleteButton = 'Delete';
+    }
   }
 
   public deleteEvent(eventToDelete: number) {
@@ -71,7 +77,7 @@ export class EventComponent implements OnInit {
         this.deleted.emit(true);
         console.log('\"response\": \"true\"');
       } else {
-        this.UnableToDeleteMessage = 'Unexpected error! Please, contact developers.';
+        this.unableToDeleteMessage = 'Unexpected error! Please, contact developers.';
         console.log('UNEXPECTED: \"response\" is not \"true\"!');
       }
     });

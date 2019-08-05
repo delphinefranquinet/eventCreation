@@ -15,12 +15,12 @@
 
   <div *ngIf="editMode" id="eventButtons">
     <div id="newActivityButton">
-      <button type="button" class="button"><a [routerLink]="['/activity', eventItem.id]">+ Add a new activity</a></button>
+      <button type="button" class="buttonFromZahraa"><a [routerLink]="['/activity', eventItem.id]">+ Add a new activity</a></button>
     </div>
     <div id="deleteEventButton">
-      <button type="button" class="button" (click)="toggleConfirmButtonDisplay()">x Delete</button>
-      <button *ngIf="displayConfirmButton" type="button" (click)="deleteEvent(eventItem.id)">Confirm</button>
-      <span id="errorMessage">{{errorMessage}}</span>
+      <button type="button" class="buttonFromZahraa" (click)="toggleConfirmButtonDisplay()">x {{deleteButton}}</button>
+      <button *ngIf="displayConfirmButton" type="button" class="buttonFromZahraa" (click)="deleteEvent(eventItem.id)">Confirm</button>
+      <p id="errorMessage">{{unableToDeleteMessage}}</p>
     </div>
   </div>
 
@@ -33,7 +33,7 @@
     <div>{{activity.startActivity}}</div>
     <div>{{activity.endActivity}}</div>
     <div *ngIf="!editMode">
-      <button type="button" (click)="inscription(activity.id)">
+      <button type="button" class="button" (click)="inscription(activity.id)">
         <a [routerLink]="['/activityInscription', activity.id]"> Inscription </a>
       </button>
     </div>

@@ -1,26 +1,24 @@
 .container {
-
   position: relative;
   height: 50%;
   width: 100%;
 }
 
 #mySidenav a {
-position: absolute;
-left: -10px;
-transition: 0.3s;
-padding: 15px;
-width: 100px;
-text-decoration: none;
-font-size: 20px;
-color: white;
-border-radius: 0 5px 5px 0;
+  position: absolute;
+  left: -10px;
+  transition: 0.3s;
+  padding: 15px;
+  width: 100px;
+  text-decoration: none;
+  font-size: 20px;
+  color: white;
+  border-radius: 0 5px 5px 0;
 }
 
 #mySidenav a:hover {
-left: 0;
+  left: 0;
 }
-
 
 #home {
   top: 10px;
@@ -28,7 +26,7 @@ left: 0;
 }
 
 #login {
-  top:  80px;
+  top: 80px;
   background-color: #2196F3;
 }
 
@@ -36,6 +34,7 @@ left: 0;
   top: 160px;
   background-color: #f4433681;
 }
+
 .coupon {
   border: 5px dotted #bbb;
   width: 70%;
@@ -62,23 +61,23 @@ left: 0;
 
 /* Bottom right text */
 .text-block {
-position: center;
-bottom: 30px;
-right: 30px;
-color: black;
-
+  position: center;
+  bottom: 30px;
+  right: 30px;
+  color: black;
 }
+
 .events {
-position: center;
-bottom: 30px;
-right: 30px;
+  position: center;
+  bottom: 30px;
+  right: 30px;
+}
 
+.event-title {
+  font: 10px arial, sans-serif;
+  font-size: 100%;
 }
-.event-title
-{
-font: 10px arial, sans-serif;
-font-size: 100%;
-}
+
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   max-width: 300px;
@@ -92,7 +91,7 @@ font-size: 100%;
   font-size: 22px;
 }
 
-.card button {
+.card .button {
   border: none;
   outline: 0;
   padding: 12px;
@@ -107,4 +106,23 @@ font-size: 100%;
 .card button:hover {
   opacity: 0.7;
 }
- 
+
+.card button:active {
+  opacity: 0.5;
+}
+
+.buttonFromZahraa {
+  background-color: #2196F3;
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  border-radius: 16px;
+}
+
+#errorMessage {
+  color: red;
+}
