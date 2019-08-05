@@ -135,6 +135,17 @@ public class EventCreationJavaServlet extends HttpServlet {
 		} else if (path.startsWith("/search")){
 			// TODO 
 
+		} else if (path.startsWith("/allActivityInscription")){
+			
+			Integer idPerson = (Integer) session.getAttribute("idPerson");
+
+			List <Activity> listActivities = repository.findAllActivityByInscription(idPerson);
+			String json = mapper.writeValueAsString(listActivities);
+			setHeaders(response);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(json); 
+			
 		} else {
 			response.setStatus(401);
 		}
@@ -290,8 +301,32 @@ public class EventCreationJavaServlet extends HttpServlet {
 				response.setContentType("application/json"); 
 				response.setCharacterEncoding("UTF-8");
 				response.getWriter().write(json);
+				
+			} else if (path.startsWith("/updateOneActivity")) {
+				setHeaders(response);
+				CreateActivityParameters parameters = mapper.readValue(request.getInputStream(),
+						CreateActivityParameters.class);
+				int idResponsable = (Integer) session.getAttribute("idPerson");
+
+				String[] parts = path.split("/");
+				String id = parts[2];
+				int idActivity = Integer.parseInt(id);
+				
+				Activity activity = new Activity();
+				activity.setName(parameters.name);
+				activity.setDescription(parameters.description);
+				activity.setStartActivity(parameters.startActivity);
+				activity.setEndActivity(parameters.endActivity);
+				Activity UpdateActivity = repository.updateOneActivityByIdEvent(idActivity, activity);
+				
+				String json = mapper.writeValueAsString(UpdateActivity); 
+				System.out.println(json);
+				response.setContentType("application/json"); 
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write(json);
+				
 			}
-			
+
 		} catch (Exception e) {
 			response.setStatus(500);
 			e.printStackTrace(); // affiche une exception sur le canal d'erreur (console)

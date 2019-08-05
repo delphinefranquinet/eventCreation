@@ -941,4 +941,125 @@ public class EventRepositoryImpl implements EventRepository {
 		
 	}
 	
+	public Activity updateOneActivityByIdEvent(int idActivity, Activity activity) {
+	
+		String sql = "update activities set nameActivity = ? , descriptionActivity = ?, startActivity = ?, endActivity = ? Where id_activity = "
+				+ idActivity;
+
+		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+				java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
+
+			connection.setAutoCommit(false);
+
+			query.setString(1, activity.getName());
+			query.setString(2, activity.getDescription());
+			query.setTimestamp(3, Timestamp.valueOf(activity.getStartActivity()));
+			query.setTimestamp(4, Timestamp.valueOf(activity.getEndActivity()));
+			query.executeUpdate();
+			connection.commit();
+
+		} catch (java.sql.SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+
+		return activity;
+	}
+
+	public List<Activity> findAllActivityByInscription (int idPerson){
+		
+		List<Activity> activityList = new ArrayList<Activity>();
+		List<Integer> idActivities = new ArrayList<Integer>();
+		
+		if (idPerson > 0) {
+			
+			idActivities = findIdActivityByIdPerson(idPerson);
+
+			for (int i = 0; i < idActivities.size(); i++) {
+
+				int idActivity = idActivities.get(i);
+
+				String sql = "Select nameactivity, descriptionactivity, startactivity, endactivity, id_event From activities Where id_activity = ?";
+
+				try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+						java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
+
+					query.setInt(1, idActivity);
+
+					try (java.sql.ResultSet rs = query.executeQuery();) {
+						if (rs.next()) {
+
+							Activity activity = new Activity();
+							activity.setName(rs.getString("nameActivity"));
+							activity.setDescription(rs.getString("descriptionActivity"));
+							activity.setStartActivity(rs.getTimestamp("startActivity").toLocalDateTime());
+							activity.setEndActivity(rs.getTimestamp("endActivity").toLocalDateTime());
+							activity.setIdEvent(rs.getInt("id_event"));
+							activityList.add(activity);
+
+							while (rs.next()) {
+
+								activity.setName(rs.getString("nameActivity"));
+								activity.setDescription(rs.getString("descriptionActivity"));
+								activity.setStartActivity(rs.getTimestamp("startActivity").toLocalDateTime());
+								activity.setEndActivity(rs.getTimestamp("endActivity").toLocalDateTime());
+								activity.setIdEvent(rs.getInt("id_event"));
+								activityList.add(activity);
+							}
+						} else {
+							activityList = Collections.emptyList();
+
+						}
+					}
+				} catch (java.sql.SQLException sqle) {
+					throw new RuntimeException(sqle);
+				}
+			}
+		} else {
+			idActivities = Collections.emptyList();
+		}
+
+		return activityList;
+	}
+
+	public List<Event> findEventByIdEvent (int idEvent) {
+		
+		List<Event> events = new ArrayList<Event>();
+		Event event = null;
+
+		if (idEvent > 0) {
+
+			String sql = "Select eventName, description, startdate, enddate, eventplace From Events Where id_event = ?";
+			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
+
+				query.setInt(1, idEvent);
+
+				try (java.sql.ResultSet rs = query.executeQuery();) {
+					while (rs.next()) {
+
+						String name = rs.getString(1);
+						String description = rs.getString(2);
+						LocalDateTime startEvent = rs.getTimestamp(3).toLocalDateTime();
+						LocalDateTime endEvent = rs.getTimestamp(4).toLocalDateTime();
+						String place = rs.getString(5);
+
+						event = new Event();
+						event.setName(name);
+						event.setDescription(description);
+						event.setStartEvent(startEvent);
+						event.setEndEvent(endEvent);
+						event.setPlace(place);
+						
+						events.add(event);
+
+					}
+				}
+			} catch (java.sql.SQLException sqle) {
+				throw new RuntimeException(sqle);
+			}
+		}
+		System.out.println(events);
+		
+		return events;
+	}
 }

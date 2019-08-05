@@ -62,5 +62,11 @@ public interface EventRepository {
 	
 	List<Event> findAllEventByPlace (String place);
 	
+	Activity updateOneActivityByIdEvent(int idActivity, Activity activity);
+	
+	List<Activity> findAllActivityByInscription (int idPerson);
+	
+	List<Event> findEventByIdEvent (int idEvent);
+	
 	
 }
