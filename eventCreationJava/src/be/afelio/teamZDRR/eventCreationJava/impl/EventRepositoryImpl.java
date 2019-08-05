@@ -425,7 +425,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 		if (idResponsable > 0) {
 
-			String sql = "Select eventName, description, startdate, enddate, place, id_event From Events Where id_person = ?";
+			String sql = "Select eventName, description, startdate, enddate, eventplace, id_event From Events Where id_person = ?";
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 
@@ -473,7 +473,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 		if (eventName != null) {
 
-			String sql = "Select id_event, eventName, description, startdate, enddate, place From Events Where lower(eventName) LIKE lower('%"
+			String sql = "Select id_event, eventName, description, startdate, enddate, eventplace From Events Where lower(eventName) LIKE lower('%"
 					+ eventName + "%')";
 
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
