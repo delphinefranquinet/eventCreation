@@ -33,4 +33,5 @@ CREATE TABLE persons (
     namePerson varchar(50) NOT NULL,
     firstnamePerson varchar(50) NOT NULL,
     email varchar(50) NOT NULL UNIQUE,
-    password varchar(50) NOT NUL
+    password varchar(50) NOT NULL
+	);
