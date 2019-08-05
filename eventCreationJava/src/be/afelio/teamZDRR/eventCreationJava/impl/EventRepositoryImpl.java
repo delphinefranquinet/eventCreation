@@ -32,7 +32,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 		Person person = null;
 
-		String sql = "Select id_person, \"namePerson\", \"firstnamePerson\" From persons Where email = ? AND password = ?";
+		String sql = "Select id_person, namePerson, firstnamePerson From persons Where email = ? AND password = ?";
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 			query.setString(1, email);
@@ -96,7 +96,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 		// Timestamp timestamp = Timestamp.valueOf(localDateTime); Convertir
 		// localDateTime en Timestamp
-		String sql = "insert into \"Events\" values (default, ?, ?, ?, ?, ?, ? )";
+		String sql = "insert into events values (default, ?, ?, ?, ?, ?, ? )";
 
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
@@ -140,7 +140,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 		if (timeIsCorrect) {
 
-			String sql = "INSERT INTO \"Activities\" Values (default, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO activities Values (default, ?, ?, ?, ?, ?)";
 
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql,
@@ -177,7 +177,7 @@ public class EventRepositoryImpl implements EventRepository {
 	public List<Event> findAllEvents() {
 
 		List<Event> events = new ArrayList<>();
-		String sql = "Select id_event, \"eventName\", description, \"dateDebut\", \"dateFin\", id_person, place From \"Events\"";
+		String sql = "Select id_event, eventName, description, startdate, enddate, id_person, eventplace From events";
 
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql)) {
@@ -214,7 +214,7 @@ public class EventRepositoryImpl implements EventRepository {
 		List<Activity> activities = new ArrayList<Activity>();
 
 		if (id > 0) {
-			String sql = "Select \"eventName\", description, \"dateDebut\", \"dateFin\", place From \"Events\" e left join \"Activities\" a on e.id_event = a.id_event Where e.id_event = ?";
+			String sql = "Select eventName, description, startdate, enddate, eventplace From Events e left join Activities a on e.id_event = a.id_event Where e.id_event = ?";
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 
@@ -232,7 +232,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 						if (activities != null) {
 
-							sql = "SELECT id_activity, \"nameActivity\", \"descriptionActivity\", \"startActivity\", \"endActivity\" FROM \"Activities\" a join \"Events\" e on a.id_event = e.id_event WHERE a.id_event = ?";
+							sql = "SELECT id_activity, nameActivity, descriptionActivity, startActivity, endActivity FROM Activities a join Events e on a.id_event = e.id_event WHERE a.id_event = ?";
 
 							try (java.sql.Connection connection2 = java.sql.DriverManager.getConnection(url, user,
 									password); java.sql.PreparedStatement query2 = connection.prepareStatement(sql);) {
@@ -295,7 +295,7 @@ public class EventRepositoryImpl implements EventRepository {
 		freeTime = LocalDateTimeComparisonForInscription(idPerson, idActivity);
 
 		if (idPerson != null && idActivity != null && freeTime) {
-			String sql = "INSERT INTO \"Inscription_activity\" Values (DEFAULT, ?, ?)";
+			String sql = "INSERT INTO Inscription_activity Values (DEFAULT, ?, ?)";
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql,
 							Statement.RETURN_GENERATED_KEYS);) {
@@ -322,8 +322,8 @@ public class EventRepositoryImpl implements EventRepository {
 		activities = newEvent.getActivities();
 		int idEvent = newEvent.getId();
 		
-		String sql = "update \"Events\" set \"eventName\" = ? , description = ?, \"dateDebut\" = ?, \"dateFin\" = ?, id_person = "
-				+ idResponsable + ", place = ? Where id_event = " + idEvent;
+		String sql = "update Events set eventName = ? , description = ?, startdate= ?, enddate = ?, id_person = "
+				+ idResponsable + ", eventplace = ? Where id_event = " + idEvent;
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 
@@ -356,7 +356,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 			System.out.println("EventRepositoryImpl.deleteEventByIdEvent()");
 
-			String sqlDeleteEvent = "delete from \"Events\" Where id_event = ?";
+			String sqlDeleteEvent = "delete from Events Where id_event = ?";
 
 			try (java.sql.Connection connection2 = java.sql.DriverManager.getConnection(url, user, password);
 					PreparedStatement deleteEventStatement = connection2.prepareStatement(sqlDeleteEvent)) {
@@ -378,7 +378,7 @@ public class EventRepositoryImpl implements EventRepository {
 		List<Activity> activities = new ArrayList<Activity>();
 
 		if (idEvent > 0) {
-			String sql = "SELECT id_activity, \"nameActivity\", \"descriptionActivity\", \"startActivity\", \"endActivity\" FROM \"Activities\" a join \"Events\" e on a.id_event = e.id_event WHERE a.id_event = ?";
+			String sql = "SELECT id_activity, nameActivity, descriptionActivity, startActivity, endActivity FROM Activities a join Events e on a.id_event = e.id_event WHERE a.id_event = ?";
 
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
@@ -425,7 +425,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 		if (idResponsable > 0) {
 
-			String sql = "Select \"eventName\", description, \"dateDebut\", \"dateFin\", place, id_event From \"Events\" Where id_person = ?";
+			String sql = "Select eventName, description, startdate, enddate, place, id_event From Events Where id_person = ?";
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 
@@ -473,7 +473,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 		if (eventName != null) {
 
-			String sql = "Select id_event, \"eventName\", description, \"dateDebut\", \"dateFin\", place From \"Events\" Where lower(\"eventName\") LIKE lower('%"
+			String sql = "Select id_event, eventName, description, startdate, enddate, place From Events Where lower(eventName) LIKE lower('%"
 					+ eventName + "%')";
 
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
@@ -520,7 +520,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 		if (idPerson > 0) {
 
-			String sql = "Select id_activity From \"Inscription_activity\" Where id_person = ?";
+			String sql = "Select id_activity From Inscription_activity Where id_person = ?";
 
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
@@ -556,7 +556,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 				int idActivity = idActivities.get(i);
 
-				String sql = "Select \"startActivity\" From \"Activities\" Where id_activity = ?";
+				String sql = "Select startActivity From Activities Where id_activity = ?";
 
 				try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 						java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
@@ -593,7 +593,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 				int idActivity = idActivities.get(i);
 
-				String sql = "Select \"endActivity\" From \"Activities\" Where id_activity = ?";
+				String sql = "Select endActivity From Activities Where id_activity = ?";
 
 				try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 						java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
@@ -625,7 +625,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 		if (idActivity > 0) {
 
-			String sql = "select \"startActivity\" From \"Activities\" Where id_activity = ?";
+			String sql = "select startActivity From Activities Where id_activity = ?";
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 
@@ -652,7 +652,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 		if (idActivity > 0) {
 
-			String sql = "select \"endActivity\" From \"Activities\" Where id_activity = ?";
+			String sql = "select endActivity From Activities Where id_activity = ?";
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 
@@ -718,7 +718,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 		if (idEvent > 0) {
 
-			String sql = "select \"dateDebut\" From \"Events\" Where id_event = ?";
+			String sql = "select startdate From events Where id_event = ?";
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 
@@ -727,7 +727,7 @@ public class EventRepositoryImpl implements EventRepository {
 				try (java.sql.ResultSet rs = query.executeQuery();) {
 					while (rs.next()) {
 
-						localDateTimeStartEvent = rs.getTimestamp("dateDebut").toLocalDateTime();
+						localDateTimeStartEvent = rs.getTimestamp("startdate").toLocalDateTime();
 					}
 				}
 			} catch (java.sql.SQLException sqle) {
@@ -745,7 +745,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 		if (idEvent > 0) {
 
-			String sql = "select \"dateFin\" From \"Events\" Where id_event = ?";
+			String sql = "select enddate From events Where id_event = ?";
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 
@@ -754,7 +754,7 @@ public class EventRepositoryImpl implements EventRepository {
 				try (java.sql.ResultSet rs = query.executeQuery();) {
 					while (rs.next()) {
 
-						localDateTimeEndEvent = rs.getTimestamp("dateFin").toLocalDateTime();
+						localDateTimeEndEvent = rs.getTimestamp("enddate").toLocalDateTime();
 					}
 				}
 			} catch (java.sql.SQLException sqle) {
@@ -829,7 +829,7 @@ public class EventRepositoryImpl implements EventRepository {
 		
 		if (idActivity > 0) {
 
-			String sql = "delete from \"Activities\" Where id_activity = ?";
+			String sql = "delete from activities Where id_activity = ?";
 
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					PreparedStatement deleteActivityStatement = connection.prepareStatement(sql)) {
@@ -853,7 +853,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 		if (idEvent > 0) {
 
-			String sql = "Select id_activity From \"Activities\" Where id_event = ?";
+			String sql = "Select id_activity From activities Where id_event = ?";
 
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
@@ -886,7 +886,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 			Activity activity = activities.get(i);
 
-			String sql = "update \"Activities\" set \"nameActivity\" = ? , \"descriptionActivity\" = ?, \"startActivity\" = ?, \"endActivity\" = ? Where id_activity = "
+			String sql = "update activities set nameActivity = ? , descriptionActivity = ?, startActivity = ?, endActivity = ? Where id_activity = "
 					+ activity.getId();
 
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
@@ -914,7 +914,7 @@ public class EventRepositoryImpl implements EventRepository {
 		
 		List<Event> events = new ArrayList<Event>();
 		
-		String sql = "Select id_event, \"eventName\", description, \"dateDebut\", \"dateFin\", id_person From \"Events\" Where lower (place) LIKE lower ('%" + place + "%')";
+		String sql = "Select id_event, eventName, description, startdate, enddate, id_person From events Where lower (eventplace) LIKE lower ('%" + place + "%')";
 
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql)) {
@@ -940,12 +940,5 @@ public class EventRepositoryImpl implements EventRepository {
 		return events;
 		
 	}
-	
-	
-	
-	
-	
-
-	
 	
 }
