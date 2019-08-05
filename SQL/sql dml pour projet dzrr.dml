@@ -41,7 +41,7 @@ insert into Activities values (default, 'Zz Top', 'Zz Top 50 years Tour(1 inscri
 
 insert into Activities values (default, 'Stage 6-8 ans', 'Avec Manu (5 inscrits)', '2019-07-01 08:30:00+02', '2019-07-05 20:00:00+02', 2 );
 
-insert into Activities values (default, 'Stage 9-12 ans', 'Avec Olivier (pas de d''''inscrit)', '2019-07-01 08:30:00+02', '2019-07-05 20:00:00+02', 2 );
+insert into Activities values (default, 'Stage 9-12 ans', 'Avec Olivier (pas d''''inscrit)', '2019-07-01 08:30:00+02', '2019-07-05 20:00:00+02', 2 );
 
 insert into Activities values (default, 'Démonstration H2O chez Virginie', 'Limité à 20 personnes (3 inscrits)', '2019-07-19 10:30:00+02', '2019-07-19 12:45:00+02', 3 );
 
