@@ -211,6 +211,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 			} else if (path.startsWith("/activity")) {
 
 				Integer idResponsable = (Integer) session.getAttribute("idPerson");
+				//Integer idEvent = (Integer) session.getAttribute("idEvent");
 				setHeaders(response);
 
 				if (idResponsable != null) {

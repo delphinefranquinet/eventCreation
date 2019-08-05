@@ -20,7 +20,7 @@ public interface EventRepository {
 	
 	List<Event> findAllEvents();
 	
-	Event findEventAndAllActivityByIdEvent(int id);
+	Event findEventAndAllActivityByIdEvent(int idEvent);
 	
 	boolean createNewInscriptionActivity(Integer idPerson, Integer idActivity) throws SQLException;
 	
