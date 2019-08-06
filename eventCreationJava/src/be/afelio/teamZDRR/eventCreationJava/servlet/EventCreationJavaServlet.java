@@ -250,16 +250,24 @@ public class EventCreationJavaServlet extends HttpServlet {
 					String id = parts[2];
 					Integer idActivity = Integer.parseInt(id);
 					setHeaders(response);
-					try {
+					
+					boolean activityInscription = repository.createNewInscriptionActivity(idPerson, idActivity);
+					
+					response.setContentType("application/json"); 
+					response.setCharacterEncoding("UTF-8");
+					String json = mapper.writeValueAsString(activityInscription); 
+					response.getWriter().write(json);
+					
+					/*try {
 						if (repository.createNewInscriptionActivity(idPerson, idActivity)) {
-							response.getWriter().write("insciption ok");
+							response.getWriter().write("true");
 						} else {
-							response.getWriter().write("insciption NOK");
+							response.getWriter().write("false");
 						}
 
 					} catch (SQLException e) {
 						e.printStackTrace();
-					}
+					}*/
 				}
 			} 
 				

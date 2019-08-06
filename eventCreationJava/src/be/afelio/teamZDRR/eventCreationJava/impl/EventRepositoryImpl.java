@@ -154,8 +154,7 @@ public class EventRepositoryImpl implements EventRepository {
 				query.setInt(5, idEvent);
 				query.executeUpdate(); // insert/update/delete
 
-				try (ResultSet resultSet = query.getGeneratedKeys() 
-				) {
+				try (ResultSet resultSet = query.getGeneratedKeys()) {
 					if (resultSet.next()) {
 						int id = resultSet.getInt(1);
 						// System.out.println("bonjour" + id);
@@ -355,7 +354,7 @@ public class EventRepositoryImpl implements EventRepository {
 							activity.setStartActivity(rs.getTimestamp("startActivity").toLocalDateTime());
 							activity.setEndActivity(rs.getTimestamp("endActivity").toLocalDateTime());
 							activities.add(activity);
-						}while (rs.next());
+						} while (rs.next());
 					} else {
 						activities = Collections.emptyList();
 					}
