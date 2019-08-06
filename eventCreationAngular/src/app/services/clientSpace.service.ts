@@ -14,7 +14,7 @@ export class ClientSpaceService {
 
   public getPerson(): Observable<Person[]> { // What for? And why at "/home" request? Still useful?
     return this.http
-      .get<Person[]>(`${environment.baseUrl}/home`)
+      .get<Person[]>(`${environment.baseUrl}/home`, {withCredentials: true})
       .pipe(catchError((error: any) => throwError(error.error)));
   }
 
