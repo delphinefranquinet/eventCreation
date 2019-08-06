@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { from } from 'rxjs';
 import { Router } from '@angular/router';
 import { EventService } from '../../services/event.service';
-import { EventManage } from '../../models/eventManage.modele';
+import { EventManage } from '../../models/eventManage.model';
 
 @Component({
   selector: 'app-createEvent',

@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Login } from '../../models/login.modele';
+import { Login } from '../../models/login.model';
 import { LoginService } from '../../../app/services/login.service';
-import { Person } from '../../models/person.modele';
+import { Person } from '../../models/person.model';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   public logins: Login;
   public person: Person;
   public loginForm: FormGroup;
-  public connectionError: boolean = false;
+  public connectionError = false;
 
 
   constructor(private router: Router, private fb: FormBuilder, private loginService: LoginService) {
@@ -44,10 +44,9 @@ export class LoginComponent implements OnInit {
     this.logins = newLogin;
 
     this.loginService
-      .postLogin(this.logins).subscribe
-      //postlogin envoie un observale
+      .postLogin(this.logins).subscribe(person => this.connection(person));
+      // postlogin envoie un observale
       // observable =  la prochaine fois qu'un evenement aura lieu, exécute ca ...(person => console.log(person));
-      (person => this.connection(person));
 
   }
 

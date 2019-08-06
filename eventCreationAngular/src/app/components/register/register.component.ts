@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterService } from '../../services/register.service';
-import { Register } from '../../models/register.modele';
+import { Register } from '../../models/register.model';
 
 
 @Component({
@@ -19,18 +19,17 @@ export class RegisterComponent implements OnInit {
   public now = new Date();
   public registerError = false;
 
-// tslint:disable-next-line: max-line-length
-  constructor(private router: Router, private fb: FormBuilder, private activityService: RegisterService) {
-  this.register = new Register();
+  constructor(private router: Router, private fb: FormBuilder, private registerService: RegisterService) {
+    this.register = new Register();
 
-  this.registerForm = this.fb.group({
+    this.registerForm = this.fb.group({
 
-    name: this.fb.control(this.register.name, [Validators.required]),
-    firstname: this.fb.control(this.register.firstname, [Validators.required]),
-    email: this.fb.control(this.register.email, [Validators.required]),
-    password: this.fb.control(this.register.password, [Validators.required]),
-  });
- }
+      name: this.fb.control(this.register.name, [Validators.required]),
+      firstname: this.fb.control(this.register.firstname, [Validators.required]),
+      email: this.fb.control(this.register.email, [Validators.required]),
+      password: this.fb.control(this.register.password, [Validators.required]),
+    });
+  }
 
 
   ngOnInit() {
@@ -62,7 +61,7 @@ export class RegisterComponent implements OnInit {
   }
 
 
-  public submitForm(){
+  public submitForm() {
     const newValues = this.registerForm.value;
 
     const newRegister = new Register();
@@ -73,19 +72,21 @@ export class RegisterComponent implements OnInit {
     newRegister.password = newValues.password;
     this.register = newRegister;
 
-    this.activityService
-// tslint:disable-next-line: max-line-length
-    .postActivity(this.register).subscribe// postlogin envoie un observale / observable =  la prochaine fois qu'un evenement aura lieu, exécute ca ...(person => console.log(person));
-    (register =>  this.connection(register));
+    this.registerService.postActivity(this.register).subscribe((register) => {
+      this.connection(register);
+    });
+    // postlogin envoie un observale
+    // observable =  la prochaine fois qu'un evenement aura lieu, exécute ca ...(person => console.log(person));
+
   }
 
 
   public connection(event: Register) {
-     if (event === null) {
-       this.registerError = true;
-     } else {
-       this.registerError = false;
-       this.next();
+    if (event === null) {
+      this.registerError = true;
+    } else {
+      this.registerError = false;
+      this.next();
 
     }
   }
