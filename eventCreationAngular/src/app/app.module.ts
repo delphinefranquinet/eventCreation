@@ -40,16 +40,8 @@ import { HomeComponent } from './components/home/home.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [
-    HttpClient,
-    LoginService,
-    PersonService,
-    EventService,
-    ActivityService,
-    RegisterService
-  ],
-  bootstrap: [
-    AppComponent
-  ]
+// tslint:disable-next-line: max-line-length
+  providers: [HttpClient, LoginService, PersonService, EventService, ActivityService, RegisterService],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

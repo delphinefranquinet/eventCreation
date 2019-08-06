@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../../services/event.service';
+import { Activity } from '../../models/activity.modele';
+import { ActivityService } from '../../services/activity.service';
 import { InscriptionService } from '../../services/inscription.service';
-import { EventManage } from 'src/app/models/eventManage.model';
 
 @Component({
   selector: 'app-event',
@@ -13,75 +14,65 @@ export class EventComponent implements OnInit {
 
   @Input()
   public editMode = false; // true if and only if parent component tells so
-  @Input()
-  public eventId = -1;
-  @Output()
-  public deleted = new EventEmitter<boolean>();
 
-  public eventItem: EventManage;
+  public eventId: number;
+  public eventName: string;
+  public eventStart: Date;
+  public eventEnd: Date;
+  public eventDescreption: string;
+  public eventPlace: string;
+  public activities: Activity[];
+  public activityError: boolean;
+  public activity: Activity;
   public connectionError: boolean;
-  public displayConfirmButton = false;
-  public deleteButton = 'Delete';
-  public unableToDeleteMessage = '';
-
-  // public activityError: boolean; // to Zahraa: What for?
-  // (I deleted others, check previous commit)
+  public activityDescreption: string;
+  public activityId: number;
+  public activityName: string;
+  public activityStart: Date;
+  public activityEnd: Date;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private inscriptionService: InscriptionService,
-    private eventService: EventService
-  ) { }
+    private activityService: ActivityService,
+    private eventService: EventService) { }
 
   ngOnInit() {
-    if (this.eventId === -1) {
-      this.route.params.subscribe(params => {
-        this.eventId = params.id;
-        this.subscribeEvent();
+    this.route.params.subscribe(params => {
+      const id: string = params.id;
+      this.eventService.getEventByID(id).subscribe((event) => {
+        this.eventId = event.id;
+        this.eventName = event.name;
+        this.eventDescreption = event.description;
+        this.eventPlace = event.place;
+        this.eventStart = event.startEvent;
+        this.eventEnd = event.endEvent;
+        this.activities = event.activities;
       });
-    } else {
-      this.subscribeEvent();
-    }
-  }
-
-  private subscribeEvent() {
-    this.eventService.getEventByID(this.eventId).subscribe((selectedEvent: EventManage) => {
-      this.eventItem = selectedEvent;
+    });
+    this.route.params.subscribe((params) => {
+      const id: string = params.id;
+      this.activityService.postActivityByInscriptionID(id).subscribe((activity) => {
+        // this.activity = activity;
+        this.activityId = activity.id;
+        this.activityName = activity.name;
+        this.activityDescreption = activity.description;
+        this.activityStart = activity.startActivity;
+        this.activityEnd = activity.endActivity;
+      });
     });
   }
 
-  /****************************************************************************************************
-  // From Zahraa's commit on Aug 2nd, 16:14 - but I commented it as I don't know what it is used for //
-  ****************************************************************************************************/
+/****************************************************************************************************
+// From Zahraa's commit on Aug 2nd, 16:14 - but I commented it as I don't know what it is used for //
+****************************************************************************************************/
   // public get route(): ActivatedRoute {
   //   return this._route;
   // }
   // public set route(value: ActivatedRoute) {
   //   this._route = value;
   // }
-
-  public toggleConfirmButtonDisplay(eventItemID: number) {
-    this.displayConfirmButton = !this.displayConfirmButton;
-    if (this.deleteButton === 'Delete') {
-      this.deleteButton = 'Cancel';
-    } else {
-      this.deleteButton = 'Delete';
-    }
-  }
-
-  public deleteEvent(eventToDelete: number) {
-    console.log('deleteEvent\(' + eventToDelete + '\) triggered!');
-    this.eventService.removeEvent(eventToDelete).subscribe((response: boolean) => {
-      if (response) {
-        this.deleted.emit(true);
-        console.log('\"response\": \"true\"');
-      } else {
-        this.unableToDeleteMessage = 'Unexpected error! Please, contact developers.';
-        console.log('UNEXPECTED: \"response\" is not \"true\"!');
-      }
-    });
-  }
 
   public inscription(activityId: number) {
     this.inscriptionService.getInscription(activityId).subscribe((inscription) => {

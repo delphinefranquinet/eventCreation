@@ -36,20 +36,6 @@
 
   <div>
     <input type="submit" class="btn" [disabled]="!activityForm.valid" value="Create New Activity" />
-    <div *ngIf="creationSucceded">
-      Your activity has been created!
-      <br>
-      Do you want to create another activity?
-    </div>
-    <div *ngIf="creationFailed">
-      Your activity could not be created! :-(
-      <br>
-      Make sure the activity interval is within its event period.
-    </div>
-    <div *ngIf="serverError">
-      Your activity could not be created! :-(
-      <br>
-      The server isn't responding as expected. Please, contact dev team.
-    </div>
+    <div *ngIf="activityError">Your activity has been created! <br> Do you want to create another activity ?</div>
   </div>
 </form>

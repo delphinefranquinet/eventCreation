@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../../../app/services/event.service';
-import { Login } from '../../models/login.model';
-import { EventManage } from 'src/app/models/eventManage.model';
+import { Login } from '../../models/login.modele';
+import { EventManage } from 'src/app/models/eventManage.modele';
 
 @Component({
   selector: 'app-home',

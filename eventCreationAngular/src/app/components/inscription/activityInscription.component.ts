@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ActivityService } from '../../services/activity.service';
-import { Activity } from '../../models/activity.model';
+import { Activity } from '../../models/activity.modele';
 import { InscriptionService } from '../../services/inscription.service';
 
 @Component({
