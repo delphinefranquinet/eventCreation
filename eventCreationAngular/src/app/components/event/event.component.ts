@@ -1,8 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { EventService } from '../../services/event.service';
+import { ActivityService } from 'src/app/services/activity.service';
 import { InscriptionService } from '../../services/inscription.service';
-import { EventManage } from 'src/app/models/eventManage.model';
+import { EventManage } from '../../models/eventManage.model';
 
 @Component({
   selector: 'app-event',
@@ -20,8 +22,10 @@ export class EventComponent implements OnInit {
 
   public eventItem: EventManage;
   public connectionError: boolean;
-  public displayConfirmButton = false;
-  public deleteButton = 'Delete';
+  public displayEventConfirmButton = false;
+  public displayActivityConfirmButton = false;
+  public deleteEventButton = 'Delete';
+  public deleteActivityButton = 'Delete';
   public unableToDeleteMessage = '';
 
   // public activityError: boolean; // to Zahraa: What for?
@@ -31,7 +35,8 @@ export class EventComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private inscriptionService: InscriptionService,
-    private eventService: EventService
+    private eventService: EventService,
+    private activityService: ActivityService
   ) { }
 
   ngOnInit() {
@@ -61,18 +66,40 @@ export class EventComponent implements OnInit {
   //   this._route = value;
   // }
 
-  public toggleConfirmButtonDisplay(eventItemID: number) {
-    this.displayConfirmButton = !this.displayConfirmButton;
-    if (this.deleteButton === 'Delete') {
-      this.deleteButton = 'Cancel';
+  public toggleEventConfirmButton(eventItemID: number) {
+    this.displayEventConfirmButton = !this.displayEventConfirmButton;
+    if (this.deleteEventButton === 'Delete') {
+      this.deleteEventButton = 'Cancel';
     } else {
-      this.deleteButton = 'Delete';
+      this.deleteEventButton = 'Delete';
+    }
+  }
+
+  public toggleActivityConfirmButton(eventItemID: number) {
+    this.displayActivityConfirmButton = !this.displayActivityConfirmButton;
+    if (this.deleteActivityButton === 'Delete') {
+      this.deleteActivityButton = 'Cancel';
+    } else {
+      this.deleteActivityButton = 'Delete';
     }
   }
 
   public deleteEvent(eventToDelete: number) {
     console.log('deleteEvent\(' + eventToDelete + '\) triggered!');
     this.eventService.removeEvent(eventToDelete).subscribe((response: boolean) => {
+      if (response) {
+        this.deleted.emit(true);
+        console.log('\"response\": \"true\"');
+      } else {
+        this.unableToDeleteMessage = 'Unexpected error! Please, contact developers.';
+        console.log('UNEXPECTED: \"response\" is not \"true\"!');
+      }
+    });
+  }
+
+  public deleteActivity(activityToDelete: number) {
+    console.log('deleteActivity\(' + activityToDelete + '\) triggered!');
+    this.activityService.removeActivity(activityToDelete).subscribe((response: boolean) => {
       if (response) {
         this.deleted.emit(true);
         console.log('\"response\": \"true\"');

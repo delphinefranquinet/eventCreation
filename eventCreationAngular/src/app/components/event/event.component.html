@@ -15,11 +15,11 @@
 
   <div *ngIf="editMode" id="eventButtons">
     <div id="newActivityButton">
-      <button type="button" class="buttonFromZahraa"><a [routerLink]="['/activity', eventItem.id]">+ Add a new activity</a></button>
+      <button type="button" class="buttonFromZahraa"><a [routerLink]="['/activity', eventItem.id]">Add a new activity</a></button>
     </div>
     <div id="deleteEventButton">
-      <button type="button" class="buttonFromZahraa" (click)="toggleConfirmButtonDisplay()">x {{deleteButton}}</button>
-      <button *ngIf="displayConfirmButton" type="button" class="buttonFromZahraa" (click)="deleteEvent(eventItem.id)">Confirm</button>
+      <button type="button" class="buttonFromZahraa" (click)="toggleEventConfirmButton()">{{deleteEventButton}}</button>
+      <button *ngIf="displayEventConfirmButton" type="button" class="buttonFromZahraa" (click)="deleteEvent(eventItem.id)">Confirm</button>
       <p id="errorMessage">{{unableToDeleteMessage}}</p>
     </div>
   </div>
@@ -32,6 +32,12 @@
     <div class="price">{{activity.description}}</div>
     <div>{{activity.startActivity}}</div>
     <div>{{activity.endActivity}}</div>
+    <br>
+    <div id="deleteActivityButton">
+      <button type="button" class="buttonFromZahraa" (click)="toggleActivityConfirmButton()">{{deleteActivityButton}}</button>
+      <button *ngIf="displayActivityConfirmButton" type="button" class="buttonFromZahraa" (click)="deleteActivity(activity.id)">Confirm</button>
+      <p id="errorMessage">{{unableToDeleteMessage}}</p>
+    </div>
     <div *ngIf="!editMode">
       <button type="button" class="button" (click)="inscription(activity.id)">
         <a [routerLink]="['/activityInscription', activity.id]"> Inscription </a>
