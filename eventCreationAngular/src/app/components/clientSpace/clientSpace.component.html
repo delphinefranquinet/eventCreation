@@ -9,28 +9,13 @@
     <h2>Events YOU manage:</h2>
   </div>
   <div *ngFor="let eventItem of events">
-    <div id="eventInfo">
-      <div>{{eventItem.name}}</div>
-      <div>{{eventItem.description}}</div>
-      <div>{{eventItem.place}}</div>
-      <div>{{eventItem.startEvent}}</div>
-      <div>{{eventItem.endEvent}}</div>
-    </div>
-
-    <div id="eventButtons">
-      <div>
-        <button type="button" class="button"><a [routerLink]="['/activity', eventItem.id]">+ Add a new activity</a></button>
-      </div>
-      <div>
-        <button type="button" class="button" (click)="deleteEvent(eventItem.id)">x Delete</button>
-        <!-- Roman's in construction part ---- DO NOT WORRY / DO NOT TOUCH
-          <button type="button" class="button" (click)="toggleConfirmButtonDisplay(eventItem.id)">x Delete</button>
-          <button *ngIf="displayConfirmButton" type="button" (click)="deleteEvent(eventItem.id)">Confirm</button>
-          <span id="errorMessage">{{errorMessage}}</span>
--->
-      </div>
-    </div>
+    <app-event
+      [editMode]="true"
+      [eventId]="eventItem.id"
+      (deleted)="updateAll($event)">
+    </app-event>
   </div>
-  <div class="center">
+  <div id="createEventButton">
     <button type="button" class="button1"><a [routerLink]="['/createEvent']">+ Create an Event</a></button>
   </div>
+</div>
