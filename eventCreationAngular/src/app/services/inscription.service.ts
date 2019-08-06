@@ -13,7 +13,7 @@ export class InscriptionService {
 
 
 public postInscription(id: number): Observable<boolean> {
-  return this.http.post<boolean>(`${environment.baseUrl}/activityInscription/${id}`, {withCredentials: true})
+  return this.http.post<boolean>(`${environment.baseUrl}/activityInscription/${id}`, id, {withCredentials: true})
     .pipe(catchError((error: any) => throwError(error.error)));
 }
 

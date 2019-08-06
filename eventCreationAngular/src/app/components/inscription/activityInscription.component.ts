@@ -15,8 +15,8 @@ export class ActivityInscriptionComponent implements OnInit {
   // public activityStart: Date;
   // public activityEnd: Date;
   // public description: string;
-  public InscriptionError: boolean;
-  public activityError: boolean;
+  public InscriptionError = true;
+
 
   @Input()
   public activity: Activity;
@@ -35,13 +35,16 @@ export class ActivityInscriptionComponent implements OnInit {
   }
 
   public inscription(activityId: number) {
-    this.inscriptionService.postInscription(activityId).subscribe(inscription => {
-      this.InscriptionError = true;
-      console.log('true');
-    }, () => {
+    this.inscriptionService.postInscription(activityId).subscribe((inscription: boolean) => {
       this.InscriptionError = false;
-      console.log('false');
+      console.log('inscription ok');
+    }, (banana: any) => {
 
+      this.InscriptionError = true;
+      console.log('inscription not ok');
+      console.log(typeof banana);
+      console.log(banana);
+      console.log(JSON.stringify(banana));
     });
 
   }
