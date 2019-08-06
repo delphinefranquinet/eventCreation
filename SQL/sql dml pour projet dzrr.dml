@@ -33,7 +33,7 @@ insert into Activities values (default, 'Muse', 'Muse live tour Europe 2019 (13 
 
 insert into Activities values (default, 'Greta Van Fleet', 'Young American''s band playing Led Zeppelin style music(3 inscrits)', '2019-06-30 20:30:00+02', '2019-06-30 22:00:00+02', 1 );
 
-insert into Activities values (default, 'Metallica', 'Metallica live orchestra(4 inscrits)', '2019-06-29 22:00:00+02', '2019-07-01 00:30:00+02', 1 );
+insert into Activities values (default, 'Metallica', 'Metallica live orchestra(4 inscrits)', '2019-06-29 22:00:00+02', '2019-06-30 00:30:00+02', 1 );
 
 insert into Activities values (default, 'Pink', 'Pop icon 2019 (0 inscrit)', '2019-06-30 22:30:00+02', '2019-07-01 01:00:00+02', 1 );
 
@@ -45,7 +45,7 @@ insert into Activities values (default, 'Stage 9-12 ans', 'Avec Olivier (pas d''
 
 insert into Activities values (default, 'Démonstration H2O chez Virginie', 'Limité à 20 personnes (3 inscrits)', '2019-07-19 10:30:00+02', '2019-07-19 12:45:00+02', 3 );
 
-insert into Activities values (default, 'Stage yoga débutant', 'Ouvert à tous', '2019-07-01 08:30:00+02', '2019-07-05 20:00:00+02', 4 );
+insert into Activities values (default, 'Stage yoga débutant', 'Ouvert à tous', '2019-07-01 10:30:00+02', '2019-07-01 12:30:00+02', 4 );
 
 insert into Activities values (default, 'Barbecue Afelio', 'Réussite du projet Event Iscription (pas d''inscrit)','2019-08-09 18:00:00+02', '2019-08-09 22:00:00+02', 6 );
 
