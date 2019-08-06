@@ -16,7 +16,7 @@ export class ActivityService {
 
   public getActivity(): Observable<Activity[]> {
     return this.http
-      .get<Activity[]>(`${environment.baseUrl}/activity`, {withCredentials: true})
+      .get<Activity[]>(`${environment.baseUrl}/activity`, { withCredentials: true })
       .pipe(catchError((error: any) => throwError(error.error)));
   }
 
@@ -39,11 +39,11 @@ export class ActivityService {
   //     .pipe(catchError((error: any) => throwError(error.error)));
   // }
 
-  // public removeActivity(payload: Activity): Observable<Activity> {
-  //   return this.http
-  //     .delete<any>(`${environment.baseUrl}/event/${payload}`)
-  //     .pipe(catchError((error: any) => throwError(error.error)));
-  // }
+  public removeActivity(id: number): Observable<boolean> {
+    return this.http
+      .delete<any>(`${environment.baseUrl}/deleteActivity/${id}`)
+      .pipe(catchError((error: any) => throwError(error.error)));
+  }
 
   // public updateActivity(payload: Activity): Observable<Activity> {
   //   return this.http
