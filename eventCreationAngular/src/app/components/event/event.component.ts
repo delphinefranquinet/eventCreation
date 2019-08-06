@@ -83,14 +83,6 @@ export class EventComponent implements OnInit {
     });
   }
 
-  public inscription(activityId: number) {
-    this.inscriptionService.getInscription(activityId).subscribe((inscription) => {
-      this.connectionError = true;
-      this.router.navigate(['/activityInscription']);
-    }, () => {
-      this.connectionError = false;
-    });
-  }
 
   /****************************************************************************************************
   // Info for Zahraa (by Roman):                                                                     //

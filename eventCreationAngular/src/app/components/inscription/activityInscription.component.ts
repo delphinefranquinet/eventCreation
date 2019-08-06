@@ -52,3 +52,4 @@ export class ActivityInscriptionComponent implements OnInit {
 
     }
   }
+
