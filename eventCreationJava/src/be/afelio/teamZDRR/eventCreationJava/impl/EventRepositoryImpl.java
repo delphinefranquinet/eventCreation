@@ -464,7 +464,7 @@ public class EventRepositoryImpl implements EventRepository {
 		return events;
 	}
 
-	public List<Integer> findIdActivityByIdPerson(int idPerson) {
+	public List<Integer> findAllActivitiesByIdPerson(int idPerson) {
 
 		List<Integer> idActivities = new ArrayList<Integer>();
 
@@ -498,7 +498,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 		List<LocalDateTime> LocalDateTimeStartActivities = new ArrayList<LocalDateTime>();
 
-		List<Integer> idActivities = findIdActivityByIdPerson(idPerson);
+		List<Integer> idActivities = findAllActivitiesByIdPerson(idPerson);
 
 		if (idActivities != null) {
 
@@ -535,7 +535,7 @@ public class EventRepositoryImpl implements EventRepository {
 	public List<LocalDateTime> findAllLocalDateTimeEndByIdActivities(int idPerson) {
 
 		List<LocalDateTime> LocalDateTimeEndActivities = new ArrayList<LocalDateTime>();
-		List<Integer> idActivities = findIdActivityByIdPerson(idPerson);
+		List<Integer> idActivities = findAllActivitiesByIdPerson(idPerson);
 
 		if (idActivities != null) {
 
@@ -922,7 +922,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 		if (idPerson > 0) {
 
-			idActivities = findIdActivityByIdPerson(idPerson);
+			idActivities = findAllActivitiesByIdPerson(idPerson);
 
 			for (int i = 0; i < idActivities.size(); i++) {
 

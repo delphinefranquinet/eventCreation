@@ -9,13 +9,26 @@
     <h2>Events YOU manage:</h2>
   </div>
   <div *ngFor="let eventItem of events">
-    <app-event
-      [editMode]="true"
-      [eventId]="eventItem.id"
-      (deleted)="updateAll($event)">
+    <app-event [editMode]="true" [eventId]="eventItem.id" (deleted)="updateAll($event)">
     </app-event>
   </div>
   <div id="createEventButton">
     <button type="button" class="button1"><a [routerLink]="['/createEvent']">Create an Event</a></button>
+  </div>
+</div>
+
+
+<div *ngIf="activities" id="inscriptionToActivities">
+  <div>
+    <h2>Where you subscribed:</h2>
+  </div>
+  <div *ngFor="let activity of activities">
+    <h3>{{activity.name}}</h3>
+    <div>{{activity.description}}</div>
+    <div>{{activity.startActivity}}</div>
+    <div>{{activity.endActivity}}</div>
+    <div id="UnsubscribeButton">
+      <button type="button" class="button1" (click)="unsubscribe(activity.id)">Unsubscribe</button>
+    </div>
   </div>
 </div>

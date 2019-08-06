@@ -36,6 +36,13 @@
   border-style: dashed;
 }
 
+#inscriptionToActivities{
+  text-align: center;
+  margin: 1em 15%;
+  border-color: purple;
+  border-style: dashed;
+}
+
 .button1 {
   background-color: rgb(55, 204, 92);
   border: none;

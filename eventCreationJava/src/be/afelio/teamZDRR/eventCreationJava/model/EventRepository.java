@@ -34,7 +34,7 @@ public interface EventRepository {
 	
 	List<Event> findEventAndAllActivityByEventName(String eventName);
 	
-	List<Integer> findIdActivityByIdPerson(int idPerson);
+	List<Integer> findAllActivitiesByIdPerson(int idPerson);
 	
 	List<LocalDateTime> findAllLocalDateTimeStartByIdActivities(int idPerson);
 	
