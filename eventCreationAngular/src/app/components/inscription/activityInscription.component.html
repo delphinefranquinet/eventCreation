@@ -1,5 +1,3 @@
-<div id="mySidenav">
-  <a [routerLink]="['/home']" id="home"> Home </a>
-</div>
+<button type="button" class="button" (click)="inscription(activity.id)"> Inscription </button>
 
-<div class="center">You have participatre to {{activity.name}}</div>
+<div class="center" *ngIf="InscriptionError">You have participatre to {{activity.name}}</div>

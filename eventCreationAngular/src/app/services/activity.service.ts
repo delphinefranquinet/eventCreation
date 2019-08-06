@@ -26,11 +26,11 @@ export class ActivityService {
       .pipe(catchError((error: any) => throwError(error.error)));
   }
 
-  public postActivityByInscriptionID(id: string): Observable<Activity> {
-    return this.http
-      .post<Activity>(`${environment.baseUrl}/activity/${id}`, id, { withCredentials: true })
-      .pipe(catchError((error: any) => throwError(error.error)));
-  }
+  // public postActivityByInscriptionID(id: string): Observable<Activity> {
+  //   return this.http
+  //     .post<Activity>(`${environment.baseUrl}/activity/${id}`, id, { withCredentials: true })
+  //     .pipe(catchError((error: any) => throwError(error.error)));
+  // }
 
   // public getInscription(id: number): Observable<boolean> {
   //   return this.http

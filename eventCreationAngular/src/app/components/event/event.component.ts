@@ -111,7 +111,7 @@ export class EventComponent implements OnInit {
   }
 
   public inscription(activityId: number) {
-    this.inscriptionService.getInscription(activityId).subscribe((inscription) => {
+    this.inscriptionService.postInscription(activityId).subscribe((inscription) => {
       this.connectionError = true;
       this.router.navigate(['/activityInscription']);
     }, () => {

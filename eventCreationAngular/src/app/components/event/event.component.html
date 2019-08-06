@@ -39,9 +39,10 @@
       <p id="errorMessage">{{unableToDeleteMessage}}</p>
     </div>
     <div *ngIf="!editMode">
-      <button type="button" class="button" (click)="inscription(activity.id)">
+      <app-activityInscription [activity]="activity"></app-activityInscription>
+      <!-- <button type="button" class="button" (click)="inscription(activity.id)">
         <a [routerLink]="['/activityInscription', activity.id]"> Inscription </a>
-      </button>
+      </button> -->
     </div>
   </div>
   <!-- </div> -->
