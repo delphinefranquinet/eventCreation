@@ -8,7 +8,9 @@ import { EventsAndPersons } from '../models/EventsAndPersons.model';
 
 @Injectable()
 export class EventService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    //
+   }
 
 
   public postEvent(event: EventManage): Observable<EventManage> {
