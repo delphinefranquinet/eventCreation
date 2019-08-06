@@ -91,24 +91,6 @@ public class EventCreationJavaServlet extends HttpServlet {
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json); 
 
-		} else if (path.startsWith("/activityInscription")) {
-			Integer idPerson = (Integer) session.getAttribute("idPerson");
-			if (idPerson != null) {
-				String[] parts = path.split("/");
-				String id = parts[2];
-				Integer idActivity = Integer.parseInt(id);
-				setHeaders(response);
-				try {
-					if (repository.createNewInscriptionActivity(idPerson, idActivity)) {
-						response.getWriter().write("insciption ok");
-					} else {
-						response.getWriter().write("insciption NOK");
-					}
-
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
 		} else if (path.startsWith("/clientSpace")) {
 
 			String[] parts = path.split("/");
@@ -261,6 +243,24 @@ public class EventCreationJavaServlet extends HttpServlet {
 				response.setCharacterEncoding("UTF-8");
 				response.getWriter().write(json); 
 				
+			} else if (path.startsWith("/activityInscription")) {
+				Integer idPerson = (Integer) session.getAttribute("idPerson");
+				if (idPerson != null) {
+					String[] parts = path.split("/");
+					String id = parts[2];
+					Integer idActivity = Integer.parseInt(id);
+					setHeaders(response);
+					try {
+						if (repository.createNewInscriptionActivity(idPerson, idActivity)) {
+							response.getWriter().write("insciption ok");
+						} else {
+							response.getWriter().write("insciption NOK");
+						}
+
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
 			} 
 				
 		} catch (Exception e) {

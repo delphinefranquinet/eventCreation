@@ -8,7 +8,9 @@ import { EventsAndPersons } from '../models/EventsAndPersons.model';
 
 @Injectable()
 export class EventService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    //
+   }
 
 
   public postEvent(event: EventManage): Observable<EventManage> {
@@ -38,7 +40,7 @@ export class EventService {
 
   public getEventsByIdResponsable(id: number): Observable<EventManage[]> {
     return this.http
-      .get<EventManage[]>(`${environment.baseUrl}/clientSpace/${id}`)
+      .get<EventManage[]>(`${environment.baseUrl}/clientSpace/${id}`, {withCredentials: true})
       .pipe(catchError((error: any) => throwError(error.error)));
   }
 
