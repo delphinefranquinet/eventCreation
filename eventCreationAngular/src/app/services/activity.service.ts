@@ -16,7 +16,7 @@ export class ActivityService {
 
   public getActivity(): Observable<Activity[]> {
     return this.http
-      .get<Activity[]>(`${environment.baseUrl}/activity`)
+      .get<Activity[]>(`${environment.baseUrl}/activity`, {withCredentials: true})
       .pipe(catchError((error: any) => throwError(error.error)));
   }
 

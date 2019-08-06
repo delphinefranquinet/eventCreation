@@ -40,7 +40,7 @@ export class EventService {
 
   public getEventsByIdResponsable(id: number): Observable<EventManage[]> {
     return this.http
-      .get<EventManage[]>(`${environment.baseUrl}/clientSpace/${id}`)
+      .get<EventManage[]>(`${environment.baseUrl}/clientSpace/${id}`, {withCredentials: true})
       .pipe(catchError((error: any) => throwError(error.error)));
   }
 
