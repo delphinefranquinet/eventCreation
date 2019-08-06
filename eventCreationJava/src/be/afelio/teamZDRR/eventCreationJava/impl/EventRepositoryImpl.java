@@ -347,8 +347,7 @@ public class EventRepositoryImpl implements EventRepository {
 				try (java.sql.ResultSet rs = query.executeQuery();) {
 					if (rs.next()) {
 
-						while (rs.next()) {
-
+						do {
 							Activity activity = new Activity();
 							activity.setId(rs.getInt("id_activity"));
 							activity.setName(rs.getString("nameActivity"));
@@ -356,7 +355,7 @@ public class EventRepositoryImpl implements EventRepository {
 							activity.setStartActivity(rs.getTimestamp("startActivity").toLocalDateTime());
 							activity.setEndActivity(rs.getTimestamp("endActivity").toLocalDateTime());
 							activities.add(activity);
-						}
+						}while (rs.next());
 					} else {
 						activities = Collections.emptyList();
 					}

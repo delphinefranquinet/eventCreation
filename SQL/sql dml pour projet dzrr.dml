@@ -31,7 +31,7 @@ insert into Events values (default, 'Barbecue Afelio', 'On a réussi le projet d
 
 insert into Activities values (default, 'Muse', 'Muse live tour Europe 2019 (13 inscrits)', '2019-06-30 22:30:00+02', '2019-07-01 01:00:00+02', 1 );
 
-insert into Activities values (default, 'Greta Van Fleet', 'Young American''s band plyaing Led Zeppelin style music(3 inscrits)', '2019-06-30 20:30:00+02', '2019-06-30 22:00:00+02', 1 );
+insert into Activities values (default, 'Greta Van Fleet', 'Young American''s band playing Led Zeppelin style music(3 inscrits)', '2019-06-30 20:30:00+02', '2019-06-30 22:00:00+02', 1 );
 
 insert into Activities values (default, 'Metallica', 'Metallica live orchestra(4 inscrits)', '2019-06-29 22:00:00+02', '2019-07-01 00:30:00+02', 1 );
 
