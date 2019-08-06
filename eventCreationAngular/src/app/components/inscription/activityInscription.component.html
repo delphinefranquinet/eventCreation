@@ -1,1 +1,3 @@
-<div class="center">You have participatre to {{activity.name}}</div>
+<button type="button" class="button" (click)="inscription(activity.id)"> Inscription </button>
+
+<div class="center" *ngIf="InscriptionError">You have participatre to {{activity.name}}</div>
