@@ -16,20 +16,15 @@
   <div class="flip-card">
     <div class="flip-card-inner">
       <div class="flip-card-front">
-        <a [routerLink]="['/event', event.id]">
-          <h1>{{event.name}}</h1>
-          <img id="left" src="assets\img\Events.jpg" alt="Avatar" style="width:200px;height:200px;">
-        </a>
-        <p>{{event.place}}</p>
-        <p>{{event.startEvent}}</p>
-        <p>{{event.endEvent}}</p>
+        <h1>{{event.name}}</h1>
+        <img id="left" src="assets\img\Events.jpg" alt="Avatar" style="width:200px;height:200px;">
+
       </div>
       <div class="flip-card-back">
-        <div>Romain, TUPUDUCU</div>
-        <span style="background-color: brown;" (click)="debug(event.activities)">DEBUG BUTTON</span>
-        <div *ngFor="let activity of event.activities">
-          {{activity.name}}
-        </div>
+          <p>{{event.place}}</p>
+          <p>{{event.startEvent}}</p>
+          <p>{{event.endEvent}}</p>
+       <h2><a [routerLink]="['/event', event.id]">See the activities and subscribe</a></h2>
       </div>
     </div>
   </div>

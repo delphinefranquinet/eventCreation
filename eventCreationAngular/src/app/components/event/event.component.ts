@@ -24,8 +24,8 @@ export class EventComponent implements OnInit {
   public connectionError: boolean;
   public displayEventConfirmButton = false;
   public displayActivityConfirmButton = false;
-  public deleteEventButton = 'Delete';
-  public deleteActivityButton = 'Delete';
+  public deleteEventButton = 'Delete Event';
+  public deleteActivityButton = 'Delete Activity';
   public unableToDeleteMessage = '';
 
   // public activityError: boolean; // to Zahraa: What for?

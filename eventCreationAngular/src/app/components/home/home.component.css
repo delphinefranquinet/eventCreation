@@ -15,7 +15,6 @@
   left: 0;
 }
 
-
 #login {
   top: 10px;
   background-color: #2196F3;
@@ -37,7 +36,6 @@
     background-color: transparent;
     /* border: 1px solid #f1f1f1; */
     perspective: 1000px; /* Remove this if you don't want the 3D effect */
-
 }
 
 .flip-card-inner {

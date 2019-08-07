@@ -66,3 +66,65 @@
 #createEventButton {
   margin: 1em 0;
 }
+
+
+.container {
+  position: relative;
+  width: 50%;
+  margin: 1em 15%;
+  text-align: center;
+}
+
+.container:hover .image {
+  opacity: 0.3;
+}
+
+.container:hover .middle {
+  opacity: 1;
+}
+.img {
+  opacity: 1;
+  display: block;
+  width: 50%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+.middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.container:hover .image {
+  opacity: 0.3;
+}
+
+.container:hover .middle {
+  opacity: 1;
+}
+
+.text {
+   background-color: #4CAF50;
+  color: white;
+  font-size: 20px;
+  padding: 16px 32px;
+
+
+}
+.centerd {
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+ }
+ .grid {
+   display: grid;
+ }
+
