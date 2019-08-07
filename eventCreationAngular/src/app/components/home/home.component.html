@@ -14,10 +14,10 @@
 
 <div *ngFor="let event of events" class="flip-card" id="container">
   <div class="flip-card-inner">
-      <a [routerLink]="['/event', event.id]">
-        <h1>{{event.name}}</h1>
-        <img id="left" src="assets\img\Events.jpg" alt="Avatar" style="width:200px;height:200px;">
-      </a>
+    <a [routerLink]="['/event', event.id]">
+      <h1>{{event.name}}</h1>
+      <img id="left" src="assets\img\Events.jpg" alt="Avatar" style="width:200px;height:200px;">
+    </a>
     <div class="flip-card-front">
 
       <p>{{event.description}}</p>
@@ -26,11 +26,11 @@
       <p>{{event.endEvent}}</p>
     </div>
     <div class="flip-card-back">
-        <img id="left" src="assets\img\Events.jpg" alt="Avatar" style="width:200px;height:200px;">
-      <p>{{event.description}}</p>
-      <p>{{event.place}}</p>
-      <p>{{event.startEvent}}</p>
-      <p>{{event.endEvent}}</p>
+      <img id="left" src="assets\img\Events.jpg" alt="Avatar" style="width:200px;height:200px;">
+      <p>{{activity.name}}</p>
+      <p>{{activity.description}}</p>
+      <p>{{activity.startActivity}}</p>
+      <p>{{activity.endActivity}}</p>
     </div>
   </div>
 

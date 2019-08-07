@@ -72,6 +72,7 @@
     border: none;
     border-radius: 20px;
     box-shadow: 0 9px #999;
+
   }
 
   .button:hover {background-color: #2f7e71}
@@ -82,5 +83,7 @@
     transform: translateY(4px);
   }
   .center {
+    margin-top: 60px;
     text-align: center;
+
   }

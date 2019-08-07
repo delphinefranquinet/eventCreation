@@ -35,61 +35,15 @@
   background-color: #f4433681;
 }
 
-.coupon {
-  border: 5px dotted #bbb;
-  width: 70%;
-  height: 70%;
-  border-radius: 15px;
-  margin: 0 auto;
-  max-width: 600px;
-  max-height: 600px;
-}
-
-.contain {
-  padding: 2px 16px;
-  background-color: #f1f1f1;
-}
-
-.promo {
-  background: #ccc;
-  padding: 3px;
-}
-
-.expire {
-  color: red;
-}
-
-/* Bottom right text */
-.text-block {
-  position: center;
-  bottom: 30px;
-  right: 30px;
-  color: black;
-}
-
-.events {
-  position: center;
-  bottom: 30px;
-  right: 30px;
-}
-
-.event-title {
-  font: 10px arial, sans-serif;
-  font-size: 100%;
-}
-
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   max-width: 300px;
   margin: auto;
   text-align: center;
   font-family: arial;
+  padding-bottom: 20px;
 }
 
-.price {
-  color: grey;
-  font-size: 22px;
-}
 
 .card .button {
   border: none;
