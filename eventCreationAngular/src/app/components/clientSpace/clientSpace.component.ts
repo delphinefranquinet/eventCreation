@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { EventService } from '../../services/event.service';
 import { EventManage } from '../../models/eventManage.model';
 import { ActivatedRoute } from '@angular/router';
+import { Activity } from 'src/app/models/activity.model';
+import { ActivityService } from 'src/app/services/activity.service';
 
 
 @Component({
@@ -13,8 +15,9 @@ export class ClientSpaceComponent implements OnInit {
 
   private connectedUserID: number;
   public events: EventManage[];
+  public activities: Activity[];
 
-  constructor(private eventService: EventService, private route: ActivatedRoute) { }
+  constructor(private eventService: EventService, private route: ActivatedRoute, private activityService: ActivityService) { }
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
@@ -30,6 +33,10 @@ export class ClientSpaceComponent implements OnInit {
   public updateAll(isDeleted: boolean): void {
     this.eventService.getEventsByIdResponsable(this.connectedUserID).subscribe((updatedEvents) => {
       this.events = updatedEvents;
+    });
+    this.activityService.getInscriptions().subscribe((activities: Activity[]) => {
+      this.activities = activities;
+      console.log(activities);
     });
   }
 

@@ -26,24 +26,25 @@ export class ActivityService {
       .pipe(catchError((error: any) => throwError(error.error)));
   }
 
+  public removeActivity(id: number): Observable<boolean> {
+    return this.http
+      .delete<any>(`${environment.baseUrl}/deleteActivity/${id}`)
+      .pipe(catchError((error: any) => throwError(error.error)));
+  }
+
+  public getInscriptions(): Observable<Activity[]> {
+    return this.http
+      .get<Activity[]>(`${environment.baseUrl}/allActivityInscription`, { withCredentials: true })
+      .pipe(catchError((error: any) => throwError(error.error)));
+  }
+
   // public postActivityByInscriptionID(id: string): Observable<Activity> {
   //   return this.http
   //     .post<Activity>(`${environment.baseUrl}/activity/${id}`, id, { withCredentials: true })
   //     .pipe(catchError((error: any) => throwError(error.error)));
   // }
 
-  // public getInscription(id: number): Observable<boolean> {
-  //   return this.http
-  //     .get<boolean>(`${environment.baseUrl}/activityInscription/${id}`)
-  //     // tslint:disable-next-line: deprecation
-  //     .pipe(catchError((error: any) => throwError(error.error)));
-  // }
 
-  public removeActivity(id: number): Observable<boolean> {
-    return this.http
-      .delete<any>(`${environment.baseUrl}/deleteActivity/${id}`)
-      .pipe(catchError((error: any) => throwError(error.error)));
-  }
 
   // public updateActivity(payload: Activity): Observable<Activity> {
   //   return this.http
