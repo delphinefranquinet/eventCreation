@@ -180,8 +180,6 @@ public class EventCreationJavaServlet extends HttpServlet {
 					event.setPlace(parameters.place);
 					event = repository.createNewEvent(event);
 
-					session.setAttribute("idEvent", event.getId());
-
 					String json = mapper.writeValueAsString(event); 
 					System.out.println(json);
 					response.setContentType("application/json");
