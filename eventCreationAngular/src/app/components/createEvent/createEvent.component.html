@@ -1,6 +1,8 @@
-<div><a id="a" class="next round" [routerLink]="['/activity']">&#8250;</a>
+<div>
+  <a id="a" class="next round" [routerLink]="['/activity']">&#8250;</a>
   <h2 class="center">Create An event</h2>
 </div>
+
 <div class="container">
   <div id="mySidenav">
     <a [routerLink]="['/home']" id="home"> Home </a>
@@ -8,7 +10,6 @@
   </div>
 
   <form [formGroup]="eventForm" (ngSubmit)="submitForm()">
-
     <div for="name" class="input-container">
       <input class="input-field" placeholder="Name of event" type="text" id="name" name="name" formControlName="name" />
       <span *ngIf="hasNameError()">*</span>
@@ -42,6 +43,4 @@
       <div *ngIf="eventError">Please log in !</div>
     </div>
   </form>
-
-
 </div>
