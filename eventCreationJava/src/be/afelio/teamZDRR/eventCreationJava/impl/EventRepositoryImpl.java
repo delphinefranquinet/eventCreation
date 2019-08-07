@@ -266,7 +266,7 @@ public class EventRepositoryImpl implements EventRepository {
 				add = updatedRows > 0;
 
 			} catch (java.sql.SQLException sqle) {
-				// throw new RuntimeException(sqle);
+				 throw new RuntimeException(sqle);
 			}
 		}
 
@@ -274,11 +274,12 @@ public class EventRepositoryImpl implements EventRepository {
 
 	}
 
-	public Event updateEventAndActivitiesByIdEvent(int idResponsable, Event newEvent) {
+	public boolean updateEventAndActivitiesByIdEvent(int idResponsable, Event newEvent) {
 
 		List<Activity> activities = new ArrayList<Activity>();
 		activities = newEvent.getActivities();
 		int idEvent = newEvent.getId();
+		boolean confirmation = false;
 
 		String sql = "update Events set eventName = ? , description = ?, startdate= ?, enddate = ?, id_person = "
 				+ idResponsable + ", eventplace = ? Where id_event = " + idEvent;
@@ -298,12 +299,13 @@ public class EventRepositoryImpl implements EventRepository {
 
 				activities = updateActivities(activities);
 			}
+			confirmation = true;
 
 		} catch (java.sql.SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
 
-		return newEvent;
+		return confirmation;
 	}
 
 	public boolean deleteEventByIdEvent(int idEvent) {

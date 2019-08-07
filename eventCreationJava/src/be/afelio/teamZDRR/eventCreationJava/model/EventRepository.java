@@ -24,7 +24,7 @@ public interface EventRepository {
 	
 	boolean createNewInscriptionActivity(Integer idPerson, Integer idActivity) throws SQLException;
 	
-	Event updateEventAndActivitiesByIdEvent(int idResponsable, Event newEvent);
+	boolean updateEventAndActivitiesByIdEvent(int idResponsable, Event newEvent);
 	
 	boolean deleteEventByIdEvent(int idEvent);
 	
