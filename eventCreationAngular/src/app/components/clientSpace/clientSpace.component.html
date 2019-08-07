@@ -9,7 +9,10 @@
     <h2>Events YOU manage:</h2>
   </div>
   <div *ngFor="let eventItem of events">
-    <app-event [editMode]="true" [eventId]="eventItem.id" (deleted)="updateAll($event)">
+    <app-event
+      [editMode]="true"
+      [eventId]="eventItem.id"
+      (deleted)="updateAll($event)">
     </app-event>
   </div>
   <div id="createEventButton">

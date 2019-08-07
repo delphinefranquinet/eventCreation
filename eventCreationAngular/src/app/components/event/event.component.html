@@ -19,6 +19,11 @@
         <button type="button" class="buttonFromZahraa">Add a new activity</button>
       </a>
     </div>
+    <div id="updateEventButton">
+      <a [routerLink]="['/updateEvent', eventItem.id]">
+        <button type="button" class="buttonFromZahraa">Edit</button>
+      </a>
+    </div>
     <div id="deleteEventButton">
       <button type="button" class="buttonFromZahraa" (click)="toggleEventConfirmButton()">{{deleteEventButton}}</button>
       <button *ngIf="displayEventConfirmButton" type="button" class="buttonFromZahraa"
