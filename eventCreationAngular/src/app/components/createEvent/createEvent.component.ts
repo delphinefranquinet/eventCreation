@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -12,7 +12,7 @@ import { EventManage } from '../../models/eventManage.model';
 })
 export class CreateEventComponent implements OnInit {
 
-  public event: EventManage;
+  public event = new EventManage();
   public eventForm: FormGroup;
   public eventError = false;
 
@@ -23,13 +23,12 @@ export class CreateEventComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.event = new EventManage();
     this.eventForm = this.fb.group({
       name: this.fb.control('', [Validators.required]),
       description: this.fb.control('', [Validators.required]),
       place: this.fb.control('', [Validators.required]),
       startEvent: this.fb.control('', [Validators.required]),
-      endEvent: this.fb.control('', [Validators.required]),
+      endEvent: this.fb.control('', [Validators.required])
     });
   }
 
