@@ -279,7 +279,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 	
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		System.out.println("EventCreationJavaServlet.doPut()");
 		HttpSession session = request.getSession(true);
 
 		try {
@@ -293,10 +293,6 @@ public class EventCreationJavaServlet extends HttpServlet {
 				
 				int idResponsable = (Integer) session.getAttribute("idPerson");
 				
-				String[] parts = path.split("/");
-				String id = parts[2];
-				int idEvent = Integer.parseInt(id);
-				
 				Event event = new Event();
 				event.setName(parameters.name);
 				event.setDescription(parameters.description);
@@ -304,7 +300,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 				event.setEndEvent(parameters.endEvent);
 				event.setIdResponsable(idResponsable);
 				event.setPlace(parameters.place);
-				event.setId(idEvent);
+				event.setId(parameters.id);
 				event.setActivities(parameters.activities);
 				boolean confirmation = repository.updateEventAndActivitiesByIdEvent(idResponsable, event);
 
@@ -407,7 +403,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 
 	private void setHeaders(HttpServletResponse response) {
 		response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
-		response.addHeader("Access-Control-Allow-Methods", "*");
+		response.addHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, DELETE, OPTIONS");
 		response.addHeader("Access-Control-Allow-Credentials", "true");
 		response.addHeader("Access-Control-Allow-Headers", "content-type"); // pour que ca soit accept� par tous les
 																			// browser content-type pour le headers

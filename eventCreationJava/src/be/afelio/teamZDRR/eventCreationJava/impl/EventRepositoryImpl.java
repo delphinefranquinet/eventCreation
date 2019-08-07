@@ -174,7 +174,7 @@ public class EventRepositoryImpl implements EventRepository {
 	public List<Event> findAllEvents() {
 
 		List<Event> events = new ArrayList<>();
-		String sql = "Select id_event, eventName, description, startdate, enddate, id_person, eventplace From events";
+		String sql = "Select id_event, eventName, description, startdate, enddate, id_person, eventplace From events order by id_event";
 
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql)) {
@@ -211,7 +211,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 		if (idEvent > 0) {
 
-			String sql = "Select eventName, description, startdate, enddate, eventplace From Events Where id_event = ?";
+			String sql = "Select eventName, description, startdate, enddate, eventplace From Events Where id_event = ? order by id_event";
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 
@@ -302,9 +302,8 @@ public class EventRepositoryImpl implements EventRepository {
 			confirmation = true;
 
 		} catch (java.sql.SQLException sqle) {
-			throw new RuntimeException(sqle);
+		
 		}
-
 		return confirmation;
 	}
 
@@ -377,7 +376,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 		if (idResponsable > 0) {
 
-			String sql = "Select eventName, description, startdate, enddate, eventplace, id_event From Events Where id_person = ?";
+			String sql = "Select eventName, description, startdate, enddate, eventplace, id_event From Events Where id_person = ? order by id_event";
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 

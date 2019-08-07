@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { EventService } from 'src/app/services/event.service';
 import { EventManage } from 'src/app/models/eventManage.model';
+import { Route } from '@angular/compiler/src/core';
 
 @Component({
   selector: 'app-updateEvent',
@@ -15,9 +16,10 @@ export class UpdateEventComponent implements OnInit {
   public eventId: number;
   public eventItem: EventManage;
   public eventForm: FormGroup;
-  public updateError = false;
+  public updateSucceded = false;
+  public updateFailed = false;
 
-  constructor(private route: ActivatedRoute, private eventService: EventService, private fb: FormBuilder) { }
+  constructor(private route: ActivatedRoute, private router: Router, private eventService: EventService, private fb: FormBuilder) { }
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
@@ -41,10 +43,21 @@ export class UpdateEventComponent implements OnInit {
     this.eventItem.place = this.eventForm.value.place;
     this.eventItem.startEvent = this.eventForm.value.startEvent;
     this.eventItem.endEvent = this.eventForm.value.endEvent;
-    this.eventService.postEvent(this.eventItem).subscribe((event) => {
+    this.eventService.updateEvent(this.eventItem).subscribe((isUpdated: boolean) => {
+      console.log(isUpdated);
+      if (isUpdated) {
         this.eventForm.reset();
-        this.updateError = true;
-      });
+        this.updateSucceded = true;
+        this.updateFailed = false;
+      } else {
+        this.updateSucceded = false;
+        this.updateFailed = true;
+      }
+      this.router.navigate(['/clientSpace']);
+      // TODO:
+      // Va être redirigé vers home, mais devrait être redirigé vers clientSpace/${id}
+      // Sauf que l'id en question, on est sensé le choper via un request en back qui n'est pas encore faite...
+    });
   }
 
   public hasNameError() {

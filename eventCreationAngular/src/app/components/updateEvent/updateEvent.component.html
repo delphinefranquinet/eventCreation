@@ -39,7 +39,8 @@
 
     <div>
       <input type="submit" class="btn" [disabled]="!eventForm.valid" value="Edit Event" />
-      <div *ngIf="updateError">Unable to edit! Makes sure activities times are within event times! </div>
+      <div *ngIf="updateSucceded">Update succeeded!</div>
+      <div *ngIf="updateFailed">Unable to edit! Makes sure activities times are within event times!</div>
     </div>
   </form>
 </div>
