@@ -68,7 +68,7 @@ public interface EventRepository {
 	List<Activity> findAllActivityByInscription(int idPerson);
 
 	List<Event> findEventByIdEvent(int idEvent);
-
-	boolean deleteOneInscriptionByIdInscription(int idInscription);
+	
+	boolean deleteOneInscriptionByIdInscription(int idActivity, int idPerson);
 
 }

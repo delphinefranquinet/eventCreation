@@ -917,6 +917,7 @@ public class EventRepositoryImpl implements EventRepository {
 						if (rs.next()) {
 
 							Activity activity = new Activity();
+							activity.setId(idActivity);
 							activity.setName(rs.getString("nameActivity"));
 							activity.setDescription(rs.getString("descriptionActivity"));
 							activity.setStartActivity(rs.getTimestamp("startActivity").toLocalDateTime());
@@ -1014,18 +1015,19 @@ public class EventRepositoryImpl implements EventRepository {
 		return deleted;
 	}
 
-	public boolean deleteOneInscriptionByIdInscription(int idInscription) {
+	public boolean deleteOneInscriptionByIdInscription(int idActivity, int idPerson) {
 		boolean deleted = false;
 
-		if (idInscription > 0) {
+		if (idPerson > 0 && idActivity > 0) {
 
-			String sql = "delete from inscription_activity where id_inscription = ? ";
+			String sql = "delete from inscription_activity where id_activity = ? and id_person = ? ";
 
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					PreparedStatement deleteInscriptionStatement = connection.prepareStatement(sql)) {
 				connection.setAutoCommit(false);
 
-				deleteInscriptionStatement.setInt(1, idInscription);
+				deleteInscriptionStatement.setInt(1, idActivity);
+				deleteInscriptionStatement.setInt(2, idPerson);
 				deleteInscriptionStatement.executeUpdate();
 				connection.commit();
 				deleted = deleteInscriptionStatement.getUpdateCount() > 0;

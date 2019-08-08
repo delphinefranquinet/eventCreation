@@ -2,7 +2,6 @@ package be.afelio.teamZDRR.eventCreationJava.servlet;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
@@ -338,7 +337,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		HttpSession session = request.getSession(true);
 		try {
 
 			String path = request.getPathInfo();
@@ -379,14 +378,16 @@ public class EventCreationJavaServlet extends HttpServlet {
 				response.getWriter().write(json);
 
 			} else if (path.startsWith("/deleteInscription")) {
+				
+				int idPerson = (Integer) session.getAttribute("idPerson");
 
 				setHeaders(response);
 
 				String[] parts = path.split("/");
-				String idInscription = parts[2];
-				int id = Integer.parseInt(idInscription);
+				String idActivity = parts[2];
+				int id = Integer.parseInt(idActivity);
 				System.out.println(id);
-				boolean deleted = repository.deleteOneInscriptionByIdInscription(id);
+				boolean deleted = repository.deleteOneInscriptionByIdInscription(id,idPerson);
 
 				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
