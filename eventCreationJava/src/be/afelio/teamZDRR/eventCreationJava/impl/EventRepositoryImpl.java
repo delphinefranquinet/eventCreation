@@ -174,7 +174,7 @@ public class EventRepositoryImpl implements EventRepository {
 	public List<Event> findAllEvents() {
 
 		List<Event> events = new ArrayList<>();
-		String sql = "Select id_event, eventName, description, startdate, enddate, id_person, eventplace From events";
+		String sql = "Select id_event, eventName, description, startdate, enddate, id_person, eventplace From events order by id_event";
 
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql)) {
@@ -211,7 +211,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 		if (idEvent > 0) {
 
-			String sql = "Select eventName, description, startdate, enddate, eventplace From Events Where id_event = ?";
+			String sql = "Select eventName, description, startdate, enddate, eventplace From Events Where id_event = ? order by id_event";
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 
@@ -266,7 +266,7 @@ public class EventRepositoryImpl implements EventRepository {
 				add = updatedRows > 0;
 
 			} catch (java.sql.SQLException sqle) {
-				// throw new RuntimeException(sqle);
+				 throw new RuntimeException(sqle);
 			}
 		}
 
@@ -274,11 +274,12 @@ public class EventRepositoryImpl implements EventRepository {
 
 	}
 
-	public Event updateEventAndActivitiesByIdEvent(int idResponsable, Event newEvent) {
+	public boolean updateEventAndActivitiesByIdEvent(int idResponsable, Event newEvent) {
 
 		List<Activity> activities = new ArrayList<Activity>();
 		activities = newEvent.getActivities();
 		int idEvent = newEvent.getId();
+		boolean confirmation = false;
 
 		String sql = "update Events set eventName = ? , description = ?, startdate= ?, enddate = ?, id_person = "
 				+ idResponsable + ", eventplace = ? Where id_event = " + idEvent;
@@ -298,12 +299,12 @@ public class EventRepositoryImpl implements EventRepository {
 
 				activities = updateActivities(activities);
 			}
+			confirmation = true;
 
 		} catch (java.sql.SQLException sqle) {
-			throw new RuntimeException(sqle);
+		
 		}
-
-		return newEvent;
+		return confirmation;
 	}
 
 	public boolean deleteEventByIdEvent(int idEvent) {
@@ -375,7 +376,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 		if (idResponsable > 0) {
 
-			String sql = "Select eventName, description, startdate, enddate, eventplace, id_event From Events Where id_person = ?";
+			String sql = "Select eventName, description, startdate, enddate, eventplace, id_event From Events Where id_person = ? order by id_event";
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 

@@ -22,10 +22,11 @@ export class ClientSpaceComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.connectedUserID = Number(params.id);
+      // TODO: recup ca via une request au back (get idPerson from session ou un truc du genre)!
       console.log('\"typeof params\": ', typeof params);
       console.log('\"JSON.stringify(params)\": ', JSON.stringify(params));
       console.log('\"params.id\": ' + params.id);
-      console.log('id of connected user is: ' + this.connectedUserID);
+      console.log('id of pseudo-connected user is: ' + this.connectedUserID);
     });
     this.updateAll(false);
   }

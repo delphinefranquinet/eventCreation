@@ -18,6 +18,7 @@ import { EventComponent } from './components/event/event.component';
 import { ClientSpaceComponent } from './components/clientSpace/clientSpace.component';
 import { ActivityInscriptionComponent } from './components/inscription/activityInscription.component';
 import { HomeComponent } from './components/home/home.component';
+import { UpdateEventComponent } from './components/updateEvent/updateEvent.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { HomeComponent } from './components/home/home.component';
     RegisterComponent,
     EventComponent,
     ClientSpaceComponent,
-    ActivityInscriptionComponent
+    ActivityInscriptionComponent,
+    UpdateEventComponent
    ],
   imports: [
     BrowserModule,

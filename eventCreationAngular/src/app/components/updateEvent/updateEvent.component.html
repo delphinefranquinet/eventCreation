@@ -1,9 +1,8 @@
 <div>
-  <a id="a" class="next round" [routerLink]="['/activity']">&#8250;</a>
-  <h2 class="center">Create An event</h2>
+  <h2 class="center">Edit your event</h2>
 </div>
 
-<div class="container">
+<div  *ngIf="eventForm" class="container">
   <div id="mySidenav">
     <a [routerLink]="['/home']" id="home"> Home </a>
     <a [routerLink]="['/clientSpace']" id="clientSpace"> Client Space </a>
@@ -39,9 +38,9 @@
     </div>
 
     <div>
-      <input type="submit" class="btn" [disabled]="!eventForm.valid" value="Create New Event" />
-      <div *ngIf="eventError">Please log in !</div>
+      <input type="submit" class="btn" [disabled]="!eventForm.valid" value="Edit Event" />
+      <div *ngIf="updateSucceded">Update succeeded!</div>
+      <div *ngIf="updateFailed">Unable to edit! Makes sure activities times are within event times!</div>
     </div>
   </form>
 </div>
-o
