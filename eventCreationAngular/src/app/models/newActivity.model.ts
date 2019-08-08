@@ -3,4 +3,5 @@ export class NewActivity {
   public description: string;
   public startActivity: Date;
   public endActivity: Date;
+  public idEvent: number;
 }

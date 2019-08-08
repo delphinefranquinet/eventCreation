@@ -20,9 +20,9 @@ export class ActivityService {
       .pipe(catchError((error: any) => throwError(error.error)));
   }
 
-  public createActivity(activity: NewActivity, linkedEvent: number): Observable<Activity> {
+  public createActivity(activity: NewActivity): Observable<Activity> {
     return this.http
-      .post<Activity>(`${environment.baseUrl}/activity/${linkedEvent}`, activity, { withCredentials: true })
+      .post<Activity>(`${environment.baseUrl}/activity/${activity.idEvent}`, activity, { withCredentials: true })
       .pipe(catchError((error: any) => throwError(error.error)));
   }
 

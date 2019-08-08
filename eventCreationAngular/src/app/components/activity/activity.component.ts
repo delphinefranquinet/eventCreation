@@ -68,8 +68,8 @@ export class ActivityComponent implements OnInit {
     this.activityToCreate.description = this.activityForm.value.description;
     this.activityToCreate.startActivity = this.activityForm.value.startActivity;
     this.activityToCreate.endActivity = this.activityForm.value.endActivity;
-    this.activityService.createActivity(this.activityToCreate, this.eventId).subscribe((activity: Activity) => {
-      /*200*/
+    this.activityToCreate.idEvent = this.eventId;
+    this.activityService.createActivity(this.activityToCreate).subscribe((activity: Activity) => {
       if (activity.id) {
         this.activityForm.reset();
         this.creationSucceded = true;

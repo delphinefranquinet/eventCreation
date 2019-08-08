@@ -4,4 +4,5 @@ export class Activity {
   public description: string;
   public startActivity: Date;
   public endActivity: Date;
+  public idEvent: number;
 }

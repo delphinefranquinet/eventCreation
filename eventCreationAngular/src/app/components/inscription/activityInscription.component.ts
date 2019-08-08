@@ -10,13 +10,13 @@ import { InscriptionService } from '../../services/inscription.service';
 })
 export class ActivityInscriptionComponent implements OnInit {
 
-  public InscriptionError = true;
-  public InscriptionOk = false;
-
   @Input()
   public activity: Activity;
 
+  public InscriptionError = true;
+  public InscriptionOk = false;
   // public activities: Activity[];
+
   constructor(
     private inscriptionService: InscriptionService
   ) { }
@@ -40,9 +40,7 @@ export class ActivityInscriptionComponent implements OnInit {
       } else {
         this.InscriptionOk = true;
       }
-
     }, (banana: any) => {
-
       this.InscriptionError = true;
       this.InscriptionOk = true;
       console.log('inscription not ok');
@@ -50,7 +48,6 @@ export class ActivityInscriptionComponent implements OnInit {
       console.log(banana);
       console.log(JSON.stringify(banana));
     });
-
   }
 }
 
