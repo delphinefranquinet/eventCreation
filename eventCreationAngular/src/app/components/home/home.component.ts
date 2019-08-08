@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { EventService } from '../../../app/services/event.service';
+
 import { Login } from '../../models/login.model';
-import { EventManage } from 'src/app/models/eventManage.model';
+import { EventManage } from '../../models/eventManage.model';
+import { EventService } from '../../../app/services/event.service';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,9 @@ export class HomeComponent implements OnInit {
   public connectionError: boolean;
   public logins: Login;
 
-  constructor(private eventService: EventService) { }
+  constructor(
+    private eventService: EventService
+  ) { }
 
   ngOnInit() {
     this.eventService.getAllEvents().subscribe((eventsAndPersons: any) => {

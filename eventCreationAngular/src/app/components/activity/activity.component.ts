@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { NewActivity } from '../../models/newActivity.model';
@@ -21,16 +21,19 @@ export class ActivityComponent implements OnInit {
   public serverError = false;
   public eventId: number;
 
-  constructor(private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private activityService: ActivityService) {
+  constructor(
+    private route: ActivatedRoute,
+    private fb: FormBuilder,
+    private activityService: ActivityService
+  ) { }
+
+  ngOnInit() {
     this.activityForm = this.fb.group({
       name: this.fb.control('', [Validators.required]),
       description: this.fb.control('', [Validators.required]),
       startActivity: this.fb.control('', [Validators.required]),
       endActivity: this.fb.control('', [Validators.required]),
     });
-  }
-
-  ngOnInit() {
     this.route.params.subscribe((params) => {
       this.eventId = Number(params.id);
     });

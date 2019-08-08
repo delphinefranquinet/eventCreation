@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RegisterService } from '../../services/register.service';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+
 import { Register } from '../../models/register.model';
+import { RegisterService } from '../../services/register.service';
 
 
 @Component({
@@ -19,11 +19,13 @@ export class RegisterComponent implements OnInit {
   public now = new Date();
   public registerError = false;
 
-  constructor(private router: Router, private fb: FormBuilder, private registerService: RegisterService) {
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private registerService: RegisterService
+  ) {
     this.register = new Register();
-
     this.registerForm = this.fb.group({
-
       name: this.fb.control(this.register.name, [Validators.required]),
       firstname: this.fb.control(this.register.firstname, [Validators.required]),
       email: this.fb.control(this.register.email, [Validators.required]),
@@ -32,13 +34,11 @@ export class RegisterComponent implements OnInit {
   }
 
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   next() {
     this.router.navigate(['/home']);
   }
-
 
   public hasNameError() {
     const control = this.registerForm.get('name');
@@ -63,23 +63,16 @@ export class RegisterComponent implements OnInit {
 
   public submitForm() {
     const newValues = this.registerForm.value;
-
     const newRegister = new Register();
-
     newRegister.name = newValues.name;
     newRegister.firstname = newValues.firstname;
     newRegister.email = newValues.email;
     newRegister.password = newValues.password;
     this.register = newRegister;
-
     this.registerService.postActivity(this.register).subscribe((register) => {
       this.connection(register);
     });
-    // postlogin envoie un observale
-    // observable =  la prochaine fois qu'un evenement aura lieu, exécute ca ...(person => console.log(person));
-
   }
-
 
   public connection(event: Register) {
     if (event === null) {
@@ -87,7 +80,6 @@ export class RegisterComponent implements OnInit {
     } else {
       this.registerError = false;
       this.next();
-
     }
   }
 }

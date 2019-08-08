@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { EventManage } from '../../models/eventManage.model';
 import { EventService } from '../../services/event.service';
 import { ActivityService } from 'src/app/services/activity.service';
 import { InscriptionService } from '../../services/inscription.service';
-import { EventManage } from '../../models/eventManage.model';
 
 @Component({
   selector: 'app-event',

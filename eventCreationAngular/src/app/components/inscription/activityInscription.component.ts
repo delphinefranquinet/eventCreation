@@ -17,7 +17,9 @@ export class ActivityInscriptionComponent implements OnInit {
   public activity: Activity;
 
   // public activities: Activity[];
-  constructor(private inscriptionService: InscriptionService) { }
+  constructor(
+    private inscriptionService: InscriptionService
+  ) { }
 
   ngOnInit() {
     // this.route.params.subscribe(params => {

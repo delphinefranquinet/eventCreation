@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { EventService } from '../../services/event.service';
-import { EventManage } from '../../models/eventManage.model';
 import { ActivatedRoute } from '@angular/router';
-import { Activity } from 'src/app/models/activity.model';
-import { ActivityService } from 'src/app/services/activity.service';
+
+import { EventManage } from '../../models/eventManage.model';
+import { Activity } from '../../models/activity.model';
+import { EventService } from '../../services/event.service';
+import { ActivityService } from '../../services/activity.service';
 
 
 @Component({
@@ -17,7 +18,11 @@ export class ClientSpaceComponent implements OnInit {
   public events: EventManage[];
   public activities: Activity[];
 
-  constructor(private eventService: EventService, private route: ActivatedRoute, private activityService: ActivityService) { }
+  constructor(
+    private eventService: EventService,
+    private route: ActivatedRoute,
+    private activityService: ActivityService
+  ) { }
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
