@@ -19,19 +19,54 @@
   background-color: #f44336;
 }
 
-#login {
-  top: 80px;
-  background-color: #2196F3;
+#errorMessage {
+  color: red;
 }
 
-#register {
-  top: 160px;
-  background-color: #f4433681;
+#card {
+  display: grid;
+  padding-left: 40%;
+  padding-right: 50%;
 }
 
+.card {
+  padding: 15px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.title {
+  color: grey;
+  font-size: 18px;
+}
+
+.image-container {
+  background-size: cover;
+  position: relative;
+  height: 300px;
+}
+
+.text {
+  background-color: ghostwhite;
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 auto;
+  padding: 10px;
+  width: 50%;
+  text-align: center;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+}
 
 .button1 {
-  background-color: #2196F3;
+  background-color: rgb(55, 204, 92);
   border: none;
   color: black;
   padding: 10px 20px;
@@ -40,52 +75,4 @@
   display: inline-block;
   margin: 4px 2px;
   border-radius: 16px;
-}
-
-#errorMessage {
-  color: red;
-}
-
-.flip-card {
-  float: left;
-  height: 30%;
-  width: 30%;
-  background-color: transparent;
-  /* border: 1px solid #f1f1f1; */
-  perspective: 1000px; /* Remove this if you don't want the 3D effect */
-}
-
-.flip-card-inner {
-position: relative;
-width: 100%;
-height: 100%;
-text-align: center;
-transition: transform 0.8s;
-transform-style: preserve-3d;
-}
-
-.flip-card:hover .flip-card-inner {
-transform: rotateY(180deg);
-}
-
-.flip-card-front, .flip-card-back {
-position: relative;
-width: 100%;
-height: 100%;
-backface-visibility: hidden;
-}
-
-.flip-card-front {
-font-size: 15px;
-background-color: white;
-color: black;
-margin-bottom: -30%;
-}
-
-.flip-card-back {
-font-size: 15px;
-background-color: white;
-color: red;
-transform: rotateY(180deg);
-margin-top: -10%;
 }

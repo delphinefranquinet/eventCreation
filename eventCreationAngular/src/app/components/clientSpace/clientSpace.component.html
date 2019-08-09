@@ -1,36 +1,30 @@
 <div id="mySidenav">
   <a [routerLink]="['/home']" id="home"> Home </a>
-  <a [routerLink]="['/login']" id="login"> Login </a>
-  <a [routerLink]="['/register']" id="register"> Register </a>
 </div>
 
-<div class="container">
-  <div>
-    <h2>Events YOU manage:</h2>
-  </div>
-  <div *ngFor="let eventItem of events">
-    <app-event
-      [editMode]="true"
-      [eventId]="eventItem.id"
-      (deleted)="updateAll($event)">
-    </app-event>
-  </div>
+<div class="centerEvent">
+  <h2>Events YOU manage:</h2>
   <div id="createEventButton">
     <a [routerLink]="['/createEvent']">
       <button type="button" class="button1">Create an Event</button>
     </a>
   </div>
-</div>
 
+  <div *ngFor="let eventItem of events">
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <div class="image-container">
+            <img src="assets\img\sh.jpg" style="width:300px;height:300px;">
+            <h1 class="text">{{eventItem.name}}</h1>
+          </div>
+        </div>
 
-<div *ngIf="activities" id="inscriptionToActivities">
-  <div>
-    <h2>Where you subscribed:</h2>
-  </div>
-  <div *ngFor="let activity of activities">
-    <h3>{{activity.name}}</h3>
-    <div id="UnsubscribeButton">
-      <button type="button" class="button1" (click)="unsubscribe(activity.id)">Unsubscribe</button>
+        <div class="flip-card-back">
+          <h2 class="text"><a [routerLink]="['/showActivity',eventItem.id]">See the activities and modify if you
+              want</a></h2>
+        </div>
+      </div>
     </div>
   </div>
-</div> -->
+</div>

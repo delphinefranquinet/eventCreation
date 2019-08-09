@@ -1,31 +1,36 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { EventService } from '../../services/event.service';
 import { EventManage } from '../../models/eventManage.model';
+import { Activity } from '../../models/activity.model';
 import { ActivatedRoute } from '@angular/router';
-import { Activity } from 'src/app/models/activity.model';
-import { ActivityService } from 'src/app/services/activity.service';
-
+import { ActivityService } from '../../services/activity.service';
+import { EventService } from '../../services/event.service';
 
 @Component({
-  selector: 'app-clientSpace',
-  templateUrl: './clientSpace.component.html',
-  styleUrls: ['./clientSpace.component.css']
+  selector: 'app-showActivity',
+  templateUrl: './showActivity.component.html',
+  styleUrls: ['./showActivity.component.css']
 })
-export class ClientSpaceComponent implements OnInit {
 
-  public eventItem: EventManage;
-  private connectedUserID: number;
+export class ShowActivityComponent implements OnInit {
+
   public events: EventManage[];
+  public eventItem: EventManage;
   public activities: Activity[];
+  private connectedUserID: number;
 
   @Input()
   public eventId = -1;
+
   constructor(private eventService: EventService, private route: ActivatedRoute, private activityService: ActivityService) { }
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.connectedUserID = Number(params.id);
       // TODO: recup ca via une request au back (get idPerson from session ou un truc du genre)!
+      console.log('\"typeof params\": ', typeof params);
+      console.log('\"JSON.stringify(params)\": ', JSON.stringify(params));
+      console.log('\"params.id\": ' + params.id);
+      console.log('id of pseudo-connected user is: ' + this.connectedUserID);
     });
     this.updateAll(false);
   }
@@ -37,12 +42,6 @@ export class ClientSpaceComponent implements OnInit {
     this.activityService.getInscriptions().subscribe((activities: Activity[]) => {
       this.activities = activities;
       console.log(activities);
-    });
-  }
-
-  private subscribeEvent() {
-    this.eventService.getEventByID(this.eventId).subscribe((selectedEvent: EventManage) => {
-      this.eventItem = selectedEvent;
     });
   }
 }

@@ -10,6 +10,7 @@ import { Person } from '../../models/person.model';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
 
   @Input()
@@ -18,20 +19,17 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public connectionError = false;
 
-
   constructor(private router: Router, private fb: FormBuilder, private loginService: LoginService) {
-
     this.logins = new Login();
-
     this.loginForm = this.fb.group({
       email: this.fb.control(this.logins.email, [Validators.required]),
       password: this.fb.control(this.logins.password, [Validators.required]),
-
     });
   }
 
   ngOnInit() {
   }
+
   next(personId: number) {
     this.router.navigate(['/clientSpace/' + personId]);
   }
@@ -42,12 +40,10 @@ export class LoginComponent implements OnInit {
     newLogin.email = newValues.email;
     newLogin.password = newValues.password;
     this.logins = newLogin;
-
     this.loginService
       .postLogin(this.logins).subscribe(person => this.connection(person));
-      // postlogin envoie un observale
-      // observable =  la prochaine fois qu'un evenement aura lieu, exécute ca ...(person => console.log(person));
-
+    // postlogin envoie un observale
+    // observable =  la prochaine fois qu'un evenement aura lieu, exécute ca ...(person => console.log(person));
   }
 
   public hasLoginError() {
@@ -59,7 +55,6 @@ export class LoginComponent implements OnInit {
     const control = this.loginForm.get('password');
     return control.errors && control.errors.required && control.invalid;
   }
-
 
   public connection(person: Person) {
     if (person === null) {

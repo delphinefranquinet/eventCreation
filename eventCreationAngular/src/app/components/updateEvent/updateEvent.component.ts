@@ -11,6 +11,7 @@ import { Route } from '@angular/compiler/src/core';
   templateUrl: './updateEvent.component.html',
   styleUrls: ['./updateEvent.component.css']
 })
+
 export class UpdateEventComponent implements OnInit {
 
   public eventId: number;

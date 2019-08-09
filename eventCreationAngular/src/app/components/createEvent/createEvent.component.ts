@@ -64,12 +64,11 @@ export class CreateEventComponent implements OnInit {
     this.event.startEvent = this.eventForm.value.startEvent;
     this.event.endEvent = this.eventForm.value.endEvent;
     this.eventService.postEvent(this.event).subscribe((event) => {
-        this.eventForm.reset();
-        this.eventError = true;
-        this.router.navigate(['/activity']);
-      }, () => {
-        this.eventError = false;
-      });
+      this.eventForm.reset();
+      this.eventError = true;
+      this.router.navigate(['/activity']);
+    }, () => {
+      this.eventError = false;
+    });
   }
-
 }

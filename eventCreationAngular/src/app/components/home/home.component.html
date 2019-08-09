@@ -1,13 +1,10 @@
 <div>
   <img width=100% alt="Event Logo" src="\assets\img\evenement-decoration-salle-mulhouse-alsace.jpg">
-
   <div id="mySidenav">
     <div>
       <a [routerLink]="['/login']" id="login"> Login </a>
       <a [routerLink]="['/register']" id="register"> Register </a>
-      <!-- <a [routerLink]="['/clientSpace', persons.persons.id]" id="clientSpace"> Client Space </a> -->
       <a [routerLink]="['/login']" id="clientSpace"> Client Space </a>
-
     </div>
   </div>
 </div>
@@ -21,10 +18,10 @@
 
       </div>
       <div class="flip-card-back">
-          <p>{{event.place}}</p>
-          <p>{{event.startEvent}}</p>
-          <p>{{event.endEvent}}</p>
-       <h2><a [routerLink]="['/event', event.id]">See the activities and subscribe</a></h2>
+        <p>{{event.place}}</p>
+        <p>{{event.startEvent}}</p>
+        <p>{{event.endEvent}}</p>
+        <h2><a [routerLink]="['/event', event.id]">See the activities and subscribe</a></h2>
       </div>
     </div>
   </div>

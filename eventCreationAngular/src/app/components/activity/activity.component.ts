@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
 import { NewActivity } from '../../models/newActivity.model';
 import { Activity } from '../../models/activity.model';
 import { ActivityService } from '../../services/activity.service';
-
 
 @Component({
   selector: 'app-activity',
   templateUrl: './activity.component.html',
   styleUrls: ['./activity.component.css']
 })
+
 export class ActivityComponent implements OnInit {
 
   public activityToCreate = new NewActivity();
@@ -35,10 +34,6 @@ export class ActivityComponent implements OnInit {
       this.eventId = Number(params.id);
     });
   }
-
-  // next(eventId: number) {
-  //   this.router.navigate(['/activity/' + eventId]);
-  // }
 
   public hasNameError() {
     const control = this.activityForm.get('name');
