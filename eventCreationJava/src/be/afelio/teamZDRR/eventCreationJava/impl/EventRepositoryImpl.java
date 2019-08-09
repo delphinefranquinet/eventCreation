@@ -983,7 +983,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 	if (idActivity > 0) {
 
-	    String sql = "Select id_activity, nameActivity, descriptionActivity, startActivity, endActivity From Activities Where id_activity = ? ";
+	    String sql = "Select id_activity, nameActivity, descriptionActivity, startActivity, endActivity, id_event From Activities Where id_activity = ? ";
 
 	    try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password); java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 
@@ -997,6 +997,7 @@ public class EventRepositoryImpl implements EventRepository {
 			activity.setDescription(rs.getString("descriptionActivity"));
 			activity.setStartActivity(rs.getTimestamp("startActivity").toLocalDateTime());
 			activity.setEndActivity(rs.getTimestamp("endActivity").toLocalDateTime());
+			activity.setIdEvent(rs.getInt("id_event"));
 
 		    }
 
