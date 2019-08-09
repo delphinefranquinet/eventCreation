@@ -1,39 +1,63 @@
 <div id="mySidenav">
   <a [routerLink]="['/home']" id="home"> Home </a>
-  <a [routerLink]="['/login']" id="login"> Login </a>
-  <a [routerLink]="['/register']" id="register"> Register </a>
 </div>
 
-<div id="managedEvents">
-  <div>
-    <h2>Events YOU manage:</h2>
-  </div>
-  <div *ngFor="let eventItem of events">
-    <app-event
-      [editMode]="true"
-      [eventId]="eventItem.id"
-      (deleted)="updateAll($event)">
-    </app-event>
-  </div>
+<div class="centerEvent">
+  <h2>Events YOU manage:</h2>
   <div id="createEventButton">
     <a [routerLink]="['/createEvent']">
       <button type="button" class="button1">Create an Event</button>
     </a>
   </div>
 </div>
+<div class="row">
 
+  <div *ngFor="let eventItem of events">
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <div class="image-container">
+            <img src="assets\img\sh.jpg" style="width:300px;height:300px;">
+            <h1 class="text">{{eventItem.name}}</h1>
+          </div>
+        </div>
 
-<div *ngIf="activities" id="inscriptionToActivities">
-  <div>
-    <h2>Where you subscribed:</h2>
-  </div>
-  <div *ngFor="let activity of activities">
-    <h3>{{activity.name}}</h3>
-    <div>{{activity.description}}</div>
-    <div>{{activity.startActivity}}</div>
-    <div>{{activity.endActivity}}</div>
-    <div id="UnsubscribeButton">
-      <button type="button" class="button1" (click)="unsubscribe(activity.id)">Unsubscribe</button>
+        <div class="flip-card-back">
+          <h2 class="text2"><a [routerLink]="['/showActivity', eventItem.id]">See the activities and modify if you
+              want</a></h2>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
+
+<div class="centerEvent">
+    <h2>Activities you subscribed to:</h2>
+</div>
+
+<div class="row">
+  <div *ngFor="let activity of activities">
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <div class="image-container">
+            <img src="assets\img\image.jpg" style="width:300px;height:300px;">
+            <h1 class="text">{{activity.name}}</h1>
+          </div>
+        </div>
+
+        <div class="flip-card-back">
+          <div class="text2">
+            <div>{{activity.description}}</div>
+            <div>{{activity.startActivity}}</div>
+            <div>{{activity.endActivity}}</div>
+            <div>
+              <button type="button" class="button1" (click)="unsubscribe(activity.id)">Unsubscribe</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div>{{inscriptionIsDeleted}}</div> s'affiche sur toutes les activités-->
   </div>
 </div>

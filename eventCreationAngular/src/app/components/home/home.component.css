@@ -1,10 +1,3 @@
-#container {
-
-  position: relative;
-  height: 30%;
-  width: 30%;
-}
-
 #mySidenav a {
   position: absolute;
   left: -10px;
@@ -21,7 +14,6 @@
   left: 0;
 }
 
-
 #login {
   top: 10px;
   background-color: #2196F3;
@@ -36,43 +28,12 @@
   background-color: #eb9515ef;
 }
 
-
-/* Bottom right text */
-.text-block {
-  position: center;
-  bottom: 30px;
-  right: 30px;
-  color: black;
-
-}
-
-.grid-container {
-  display: grid;
-  grid-template-columns: auto auto auto auto;
-  background-color: rgb(247, 243, 240);
-  padding: 20px;
-}
-.grid-item {
-  background-color: rgba(32, 170, 159, 0.8);
-  font-size: 20px;
-  text-align: center;
-  transition: 0.3s;
-  padding: 15px;
-  width: 100px;
-  text-decoration: none;
-  color: white;
-  border-radius: 5px 5px 5px 5px;
-}
-
-
 .flip-card {
-
+    float: left;
+    height: 30%;
+    width: 30%;
     background-color: transparent;
-    width: 300px;
-    height: 200px;
-    border: 1px solid #f1f1f1;
     perspective: 1000px; /* Remove this if you don't want the 3D effect */
-
 }
 
 .flip-card-inner {
@@ -96,15 +57,17 @@
 }
 
 .flip-card-front {
-  background-color: white;
+  font-size: 15px;
+  background-color: transparent;
   color: black;
+  margin-bottom: -30%;
 }
 
 .flip-card-back {
-  background-color: #2980b9;
-  color: white;
+  font-size: 20px;
+  background-color: white;
+  color: red;
+  font-weight: bold;
   transform: rotateY(180deg);
-
+  margin-top: -10%;
 }
-
-

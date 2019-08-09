@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { EventService } from '../../services/event.service';
 import { ActivityService } from 'src/app/services/activity.service';
 import { InscriptionService } from '../../services/inscription.service';
@@ -11,6 +10,7 @@ import { EventManage } from '../../models/eventManage.model';
   templateUrl: './event.component.html',
   styleUrls: ['./event.component.css']
 })
+
 export class EventComponent implements OnInit {
 
   @Input()
@@ -19,25 +19,20 @@ export class EventComponent implements OnInit {
   public eventId = -1;
   @Output()
   public deleted = new EventEmitter<boolean>();
-
   public eventItem: EventManage;
   public connectionError: boolean;
   public displayEventConfirmButton = false;
   public displayActivityConfirmButton = false;
-  public deleteEventButton = 'Delete';
-  public deleteActivityButton = 'Delete';
+  public deleteEventButton = 'Delete Event';
+  public deleteActivityButton = 'Delete Activity';
   public unableToDeleteMessage = '';
-
-  // public activityError: boolean; // to Zahraa: What for?
-  // (I deleted others, check previous commit)
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private inscriptionService: InscriptionService,
     private eventService: EventService,
-    private activityService: ActivityService
-  ) { }
+    private activityService: ActivityService) { }
 
   ngOnInit() {
     if (this.eventId === -1) {
@@ -56,31 +51,21 @@ export class EventComponent implements OnInit {
     });
   }
 
-  /****************************************************************************************************
-  // From Zahraa's commit on Aug 2nd, 16:14 - but I commented it as I don't know what it is used for //
-  ****************************************************************************************************/
-  // public get route(): ActivatedRoute {
-  //   return this._route;
-  // }
-  // public set route(value: ActivatedRoute) {
-  //   this._route = value;
-  // }
-
-  public toggleEventConfirmButton(eventItemID: number) {
-    this.displayEventConfirmButton = !this.displayEventConfirmButton;
-    if (this.deleteEventButton === 'Delete') {
-      this.deleteEventButton = 'Cancel';
-    } else {
-      this.deleteEventButton = 'Delete';
+  public popupConfirm(eventItemID: number) {
+    const confirmed = confirm('Confirm delete');
+    if (confirmed) {
+      this.deleteEvent(eventItemID);
+      this.next(eventItemID);
     }
   }
 
-  public toggleActivityConfirmButton(eventItemID: number) {
-    this.displayActivityConfirmButton = !this.displayActivityConfirmButton;
-    if (this.deleteActivityButton === 'Delete') {
-      this.deleteActivityButton = 'Cancel';
-    } else {
-      this.deleteActivityButton = 'Delete';
+  public next(eventID) {
+    this.router.navigate(['/showActivity', eventID ]);
+  }
+  public popupConfirmActivity(activityToDelete: number) {
+    const confirmed = confirm('Confirm delete');
+    if (confirmed) {
+      this.deleteActivity(activityToDelete);
     }
   }
 
@@ -118,30 +103,4 @@ export class EventComponent implements OnInit {
       this.connectionError = false;
     });
   }
-
-  /****************************************************************************************************
-  // Info for Zahraa (by Roman):                                                                     //
-  // On this commit, I changed the display of the 2 methods below, but didn't actually changed any   //
-  // content, so don't worry ;-)                                                                     //
-  ****************************************************************************************************/
-
-  // public inscription(id: string) {
-  //   if (this.activityError !== null) {
-  //     this.activityService.getInscription(id).subscribe((answer: any) => {
-  //       this.activity = answer;
-  //     });
-  //     this.activityError = true;
-  //   } else {
-  //     this.activityError = false;
-  //   }
-  // }
-
-  // public inscriptionActivity(idInscriptionActivity: InscriptionActivity) {
-  //   if (idInscriptionActivity === null) {
-  //     // Apparently nothing yet...
-  //   } else {
-  //     this.connectionError = false;
-  //   }
-  // }
-
 }

@@ -2,11 +2,11 @@
   <a id="a" class="previous round" [routerLink]="['/createEvent']">&#8249;</a>
   <h2 class="center">Create An activity</h2>
 </div>
+
 <div id="mySidenav">
   <a [routerLink]="['/home']" id="home"> Home </a>
   <a [routerLink]="['/clientSpace']" id="clientSpace"> Client Space </a>
 </div>
-
 
 <form [formGroup]="activityForm" (ngSubmit)="submitForm()">
 
@@ -36,20 +36,20 @@
 
   <div>
     <input type="submit" class="btn" [disabled]="!activityForm.valid" value="Create New Activity" />
-    <div *ngIf="creationSucceded">
+    <!-- <div *ngIf="creationSucceded">
       Your activity has been created!
       <br>
       Do you want to create another activity?
-    </div>
-    <div *ngIf="creationFailed">
+    </div> -->
+    <!-- <div *ngIf="creationFailed">
       Your activity could not be created! :-(
       <br>
       Make sure the activity interval is within its event period.
-    </div>
-    <div *ngIf="serverError">
+    </div> -->
+    <!-- <div *ngIf="serverError">
       Your activity could not be created! :-(
       <br>
       The server isn't responding as expected. Please, contact dev team.
-    </div>
+    </div> -->
   </div>
 </form>

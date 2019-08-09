@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { CreateEventComponent } from './components/createEvent/createEvent.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from '../app/components/login/login.component';
-import { SignInLoginComponent } from './components/signInLogin/signInLogin.component';
 import { LoginService } from './services/login.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { PersonService } from './services/person.service';
@@ -19,6 +18,7 @@ import { ClientSpaceComponent } from './components/clientSpace/clientSpace.compo
 import { ActivityInscriptionComponent } from './components/inscription/activityInscription.component';
 import { HomeComponent } from './components/home/home.component';
 import { UpdateEventComponent } from './components/updateEvent/updateEvent.component';
+import { ShowActivityComponent } from './components/showActivity/showActivity.component';
 
 
 @NgModule({
@@ -27,13 +27,13 @@ import { UpdateEventComponent } from './components/updateEvent/updateEvent.compo
     HomeComponent,
     CreateEventComponent,
     LoginComponent,
-    SignInLoginComponent,
     ActivityComponent,
     RegisterComponent,
     EventComponent,
     ClientSpaceComponent,
     ActivityInscriptionComponent,
-    UpdateEventComponent
+    UpdateEventComponent,
+    ShowActivityComponent
    ],
   imports: [
     BrowserModule,

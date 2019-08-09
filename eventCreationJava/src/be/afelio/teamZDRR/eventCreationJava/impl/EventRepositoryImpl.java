@@ -268,7 +268,7 @@ public class EventRepositoryImpl implements EventRepository {
 				add = updatedRows > 0;
 
 			} catch (java.sql.SQLException sqle) {
-				 throw new RuntimeException(sqle);
+				throw new RuntimeException(sqle);
 			}
 		}
 
@@ -304,7 +304,7 @@ public class EventRepositoryImpl implements EventRepository {
 			confirmation = true;
 
 		} catch (java.sql.SQLException sqle) {
-		
+
 		}
 		return confirmation;
 	}
@@ -339,7 +339,7 @@ public class EventRepositoryImpl implements EventRepository {
 		List<Activity> activities = new ArrayList<Activity>();
 
 		if (idEvent > 0) {
-			String sql = "SELECT id_activity, nameActivity, descriptionActivity, startActivity, endActivity FROM Activities WHERE id_event = ?";
+			String sql = "SELECT id_activity, nameActivity, descriptionActivity, startActivity, endActivity FROM Activities WHERE id_event = ? Order by startactivity asc ";
 
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
@@ -378,7 +378,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 		if (idResponsable > 0) {
 
-			String sql = "Select eventName, description, startdate, enddate, eventplace, id_event From Events Where id_person = ? order by id_event";
+			String sql = "Select eventName, description, startdate, enddate, eventplace, id_event From Events Where id_person = ? order by startdate asc";
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 					java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 
@@ -776,29 +776,6 @@ public class EventRepositoryImpl implements EventRepository {
 		return persons;
 	}
 
-	public boolean deleteOneActivityByIdActivity(int idActivity) {
-		boolean deleted = false;
-
-		if (idActivity > 0) {
-
-			String sql = "delete from activities Where id_activity = ?";
-
-			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
-					PreparedStatement deleteActivityStatement = connection.prepareStatement(sql)) {
-				connection.setAutoCommit(false);
-
-				deleteActivityStatement.setInt(1, idActivity);
-				deleteActivityStatement.executeUpdate();
-				connection.commit();
-				deleted = deleteActivityStatement.getUpdateCount() > 0;
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		}
-
-		return deleted;
-	}
-
 	public List<Integer> findAllIdActivityByIdEvent(int idEvent) {
 
 		List<Integer> idActivities = new ArrayList<Integer>();
@@ -942,6 +919,7 @@ public class EventRepositoryImpl implements EventRepository {
 						if (rs.next()) {
 
 							Activity activity = new Activity();
+							activity.setId(idActivity);
 							activity.setName(rs.getString("nameActivity"));
 							activity.setDescription(rs.getString("descriptionActivity"));
 							activity.setStartActivity(rs.getTimestamp("startActivity").toLocalDateTime());
@@ -1034,7 +1012,54 @@ public class EventRepositoryImpl implements EventRepository {
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
-		}	
+		}
+		return deleted;
+	}
+		
+	public boolean deleteOneActivityByIdActivity(int idActivity) {
+		boolean deleted = false;
+
+		if (idActivity > 0) {
+
+			String sql = "delete from activities Where id_activity = ?";
+
+			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+					PreparedStatement deleteActivityStatement = connection.prepareStatement(sql)) {
+				connection.setAutoCommit(false);
+
+				deleteActivityStatement.setInt(1, idActivity);
+				deleteActivityStatement.executeUpdate();
+				connection.commit();
+				deleted = deleteActivityStatement.getUpdateCount() > 0;
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+
+		return deleted;
+	}
+
+	public boolean deleteOneInscriptionByIdInscription(int idActivity, int idPerson) {
+		boolean deleted = false;
+
+		if (idPerson > 0 && idActivity > 0) {
+
+			String sql = "delete from inscription_activity where id_activity = ? and id_person = ? ";
+
+			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+					PreparedStatement deleteInscriptionStatement = connection.prepareStatement(sql)) {
+				connection.setAutoCommit(false);
+
+				deleteInscriptionStatement.setInt(1, idActivity);
+				deleteInscriptionStatement.setInt(2, idPerson);
+				deleteInscriptionStatement.executeUpdate();
+				connection.commit();
+				deleted = deleteInscriptionStatement.getUpdateCount() > 0;
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+
 		return deleted;
 	}
 }

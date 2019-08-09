@@ -17,4 +17,10 @@ public postInscription(id: number): Observable<boolean> {
     .pipe(catchError((error: any) => throwError(error.error)));
 }
 
+public deleteInscription(id: number): Observable<boolean>{
+  return this.http
+    .delete<any>(`${environment.baseUrl}/deleteInscription/${id}`, {withCredentials: true})
+    .pipe(catchError((error: any) => throwError(error.error)));
+}
+
 }
