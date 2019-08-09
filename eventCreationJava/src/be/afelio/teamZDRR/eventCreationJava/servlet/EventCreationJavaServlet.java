@@ -327,17 +327,18 @@ public class EventCreationJavaServlet extends HttpServlet {
 				setHeaders(response);
 				CreateActivityParameters parameters = mapper.readValue(request.getInputStream(),
 						CreateActivityParameters.class);
-				int idResponsable = (Integer) session.getAttribute("idPerson");
-
+				System.out.println(path);
 				String[] parts = path.split("/");
 				String id = parts[2];
 				int idActivity = Integer.parseInt(id);
 				
 				Activity activity = new Activity();
+				activity.setId(parameters.id);
 				activity.setName(parameters.name);
 				activity.setDescription(parameters.description);
 				activity.setStartActivity(parameters.startActivity);
 				activity.setEndActivity(parameters.endActivity);
+				activity.setId(parameters.idEvent);
 				Activity UpdateActivity = repository.updateOneActivityByIdEvent(idActivity, activity);
 				
 				String json = mapper.writeValueAsString(UpdateActivity); 

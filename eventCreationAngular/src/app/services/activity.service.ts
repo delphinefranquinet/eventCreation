@@ -45,7 +45,7 @@ export class ActivityService {
 
   public updateActivity(activity: Activity): Observable<Activity> {
     return this.http
-      .put<Activity>(`${environment.baseUrl}/updateOneActivity/${activity.id}`, activity, { withCredentials: true })
+      .put<Activity>(`${environment.baseUrl}/updateOneActivity/${activity.id}`, activity)
       .pipe(catchError((error: any) => throwError(error.error)));
     // TODO: Attention que dans le back-end, pour cette requette et probablement pour d'autres,
     // l'action s'effectue sans vérifier que les Credentitials sont corrects
