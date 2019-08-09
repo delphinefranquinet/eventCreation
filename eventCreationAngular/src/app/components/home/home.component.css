@@ -33,7 +33,6 @@
     height: 30%;
     width: 30%;
     background-color: transparent;
-    /* border: 1px solid #f1f1f1; */
     perspective: 1000px; /* Remove this if you don't want the 3D effect */
 }
 
@@ -59,15 +58,16 @@
 
 .flip-card-front {
   font-size: 15px;
-  background-color: white;
+  background-color: transparent;
   color: black;
   margin-bottom: -30%;
 }
 
 .flip-card-back {
-  font-size: 15px;
+  font-size: 20px;
   background-color: white;
   color: red;
+  font-weight: bold;
   transform: rotateY(180deg);
   margin-top: -10%;
 }
