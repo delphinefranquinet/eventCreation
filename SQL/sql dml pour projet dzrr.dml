@@ -1,4 +1,5 @@
 TRUNCATE TABLE persons RESTART IDENTITY cascade;
+TRUNCATE TABLE events RESTART IDENTITY cascade;
 
 insert into persons values (default, 'Franquinet', 'Delphine', 'delphine@nomail.be', '1234' );
 insert into persons values (default, 'Al-Sudani', 'Zahraa', 'zahraa@nomail.be', '1234' );
