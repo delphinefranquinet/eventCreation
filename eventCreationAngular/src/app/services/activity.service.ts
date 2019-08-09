@@ -3,16 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Activity } from '../models/activity.model';
-import { NewActivity } from '../models/newActivity.model';
 import { environment } from '../../environments/environment';
+import { Activity } from '../models/activity.model';
 
 
 @Injectable()
 export class ActivityService {
-
-
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   public getActivity(): Observable<Activity[]> {
     return this.http
@@ -20,7 +19,7 @@ export class ActivityService {
       .pipe(catchError((error: any) => throwError(error.error)));
   }
 
-  public createActivity(activity: NewActivity): Observable<Activity> {
+  public createActivity(activity: Activity): Observable<Activity> {
     return this.http
       .post<Activity>(`${environment.baseUrl}/activity/${activity.idEvent}`, activity, { withCredentials: true })
       .pipe(catchError((error: any) => throwError(error.error)));
@@ -43,8 +42,6 @@ export class ActivityService {
   //     .post<Activity>(`${environment.baseUrl}/activity/${id}`, id, { withCredentials: true })
   //     .pipe(catchError((error: any) => throwError(error.error)));
   // }
-
-
 
   // public updateActivity(payload: Activity): Observable<Activity> {
   //   return this.http
