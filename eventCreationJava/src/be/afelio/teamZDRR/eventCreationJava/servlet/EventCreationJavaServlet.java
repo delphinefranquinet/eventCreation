@@ -228,6 +228,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 						CreatePersonParameters.class);
 
 				Person newPerson = new Person();
+				newPerson.setId(parameters.id);
 				newPerson.setName(parameters.name);
 				newPerson.setFirstname(parameters.firstname);
 				newPerson.setEmail(parameters.email);
@@ -380,6 +381,21 @@ public class EventCreationJavaServlet extends HttpServlet {
 				int id = Integer.parseInt(idActivity);
 				System.out.println(id);
 				boolean deleted = repository.deleteOneActivityByIdActivity(id);
+				
+				response.setContentType("application/json"); 
+				response.setCharacterEncoding("UTF-8");
+				String json = mapper.writeValueAsString(deleted); 
+				response.getWriter().write(json);
+			
+			}else if (path.startsWith("/deletePerson")){
+				
+				setHeaders(response);
+				
+				String[] parts = path.split("/");
+				String name = parts[2];
+				String firstname = parts[3];
+				
+				boolean deleted = repository.deleteOnePersonByNameAndFirstName(name, firstname);
 				
 				response.setContentType("application/json"); 
 				response.setCharacterEncoding("UTF-8");

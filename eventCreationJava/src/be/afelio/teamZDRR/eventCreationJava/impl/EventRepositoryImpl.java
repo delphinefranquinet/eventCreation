@@ -32,7 +32,7 @@ public class EventRepositoryImpl implements EventRepository {
 
 		Person person = null;
 
-		String sql = "Select id_person, namePerson, firstnamePerson From persons Where email = ? AND password = ?";
+		String sql = "Select id_person, namePerson, firstnamePerson, email, password From persons Where email = ? AND password = ?";
 		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
 				java.sql.PreparedStatement query = connection.prepareStatement(sql);) {
 			query.setString(1, email);
@@ -57,6 +57,8 @@ public class EventRepositoryImpl implements EventRepository {
 		person.setId(rs.getInt("id_person"));
 		person.setName(rs.getString("namePerson"));
 		person.setFirstname(rs.getString("firstnamePerson"));
+		person.setEmail(rs.getString("email"));
+		person.setPassword(rs.getString("password"));
 		return person;
 	}
 
@@ -1012,5 +1014,27 @@ public class EventRepositoryImpl implements EventRepository {
 		System.out.println(events);
 
 		return events;
+	}
+
+	public boolean deleteOnePersonByNameAndFirstName(String name, String firstname) {
+		boolean deleted = false;
+		if (name != null && firstname != null) {
+
+			String sql = "delete from persons Where nameperson = ? AND firstnameperson = ?";
+
+			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(url, user, password);
+					PreparedStatement deletePersonStatement = connection.prepareStatement(sql)) {
+				connection.setAutoCommit(false);
+
+				deletePersonStatement.setString(1, name);
+				deletePersonStatement.setString(1, firstname);
+				deletePersonStatement.executeUpdate();
+				connection.commit();
+				deleted = deletePersonStatement.getUpdateCount() > 0;
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}	
+		return deleted;
 	}
 }
