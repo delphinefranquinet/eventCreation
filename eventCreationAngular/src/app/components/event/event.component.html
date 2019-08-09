@@ -25,9 +25,9 @@
       </a>
     </div>
     <div id="deleteEventButton">
-      <button type="button" class="buttonFromZahraa" (click)="toggleEventConfirmButton()">{{deleteEventButton}}</button>
-      <button *ngIf="displayEventConfirmButton" type="button" class="buttonFromZahraa"
-        (click)="deleteEvent(eventItem.id)">Confirm</button>
+      <button type="button" class="buttonFromZahraa" (click)="popupConfirm(eventItem.id)">{{deleteEventButton}}</button>
+      <!-- <button *ngIf="displayEventConfirmButton" type="button" class="buttonFromZahraa"
+        (click)="deleteEvent(eventItem.id)">Confirm</button> -->
       <p id="errorMessage">{{unableToDeleteMessage}}</p>
     </div>
   </div>
@@ -43,14 +43,14 @@
     <br>
     <div *ngIf="editMode" id="deleteActivityButton">
       <button type="button" class="buttonFromZahraa"
-        (click)="toggleActivityConfirmButton()">{{deleteActivityButton}}</button>
-      <button *ngIf="displayActivityConfirmButton" type="button" class="buttonFromZahraa"
-        (click)="deleteActivity(activity.id)">Confirm</button>
+        (click)="popupConfirmActivity(activity.id)">{{deleteActivityButton}}</button>
+      <!-- <button *ngIf="displayActivityConfirmButton" type="button" class="buttonFromZahraa"
+        (click)="deleteActivity(activity.id)">Confirm</button> -->
       <p id="errorMessage">{{unableToDeleteMessage}}</p>
     </div>
     <div *ngIf="!editMode">
       <app-activityInscription [activity]="activity"></app-activityInscription>
-      <!-- <button type="button" class="button" (click)="inscription(activity.id)">
+     <!-- <button type="button" class="button" (click)="inscription(activity.id)">
         <a [routerLink]="['/activityInscription', activity.id]"> Inscription </a>
       </button> -->
     </div>

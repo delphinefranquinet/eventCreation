@@ -117,8 +117,10 @@ public class EventCreationJavaServlet extends HttpServlet {
 			// TODO
 
 		} else if (path.startsWith("/allActivityInscription")) {
-
+			System.out.println("hello");
+			
 			Integer idPerson = (Integer) session.getAttribute("idPerson");
+			System.out.println(idPerson);
 
 			List<Activity> listActivities = repository.findAllActivityByInscription(idPerson);
 			String json = mapper.writeValueAsString(listActivities);

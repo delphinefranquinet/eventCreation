@@ -66,21 +66,17 @@ export class EventComponent implements OnInit {
   //   this._route = value;
   // }
 
-  public toggleEventConfirmButton(eventItemID: number) {
-    this.displayEventConfirmButton = !this.displayEventConfirmButton;
-    if (this.deleteEventButton === 'Delete') {
-      this.deleteEventButton = 'Cancel';
-    } else {
-      this.deleteEventButton = 'Delete';
+  public popupConfirm(eventItemID: number) {
+    const confirmed = confirm('Confirm delete');
+    if (confirmed) {
+      this.deleteEvent(eventItemID);
     }
   }
 
-  public toggleActivityConfirmButton(eventItemID: number) {
-    this.displayActivityConfirmButton = !this.displayActivityConfirmButton;
-    if (this.deleteActivityButton === 'Delete') {
-      this.deleteActivityButton = 'Cancel';
-    } else {
-      this.deleteActivityButton = 'Delete';
+  public popupConfirmActivity(activityToDelete: number) {
+    const confirmed = confirm('Confirm delete');
+    if (confirmed) {
+      this.deleteActivity(activityToDelete);
     }
   }
 
