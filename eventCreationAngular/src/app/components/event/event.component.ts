@@ -55,9 +55,13 @@ export class EventComponent implements OnInit {
     const confirmed = confirm('Confirm delete');
     if (confirmed) {
       this.deleteEvent(eventItemID);
+      this.next(eventItemID);
     }
   }
 
+  public next(eventID) {
+    this.router.navigate(['/showActivity', eventID ]);
+  }
   public popupConfirmActivity(activityToDelete: number) {
     const confirmed = confirm('Confirm delete');
     if (confirmed) {
