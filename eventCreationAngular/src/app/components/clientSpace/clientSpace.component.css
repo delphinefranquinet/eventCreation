@@ -64,6 +64,10 @@ padding: -5% 0% 0% 50%;
   transform: translate(-50%, -50%);
   mix-blend-mode: normal;
 }
+.centerEvent {
+text-align: center;
+padding: 10px 60px 0px 0px;
+}
 
 .text2 {
   background-color: ghostwhite;

@@ -1,7 +1,7 @@
 <div id="mySidenav">
   <a [routerLink]="['/home']" id="home"> Home </a>
 </div>
-<!--
+
 <div class="centerEvent">
   <h2>Events YOU manage:</h2>
   <div id="createEventButton">
@@ -9,7 +9,7 @@
       <button type="button" class="button1">Create an Event</button>
     </a>
   </div>
-</div> -->
+</div>
 <div class="row">
 
   <div *ngFor="let eventItem of events">
@@ -23,7 +23,7 @@
         </div>
 
         <div class="flip-card-back">
-          <h2 class="text2"><a [routerLink]="['/showActivity',eventItem.id]">See the activities and modify if you
+          <h2 class="text2"><a [routerLink]="['/showActivity', eventItem.id]">See the activities and modify if you
               want</a></h2>
         </div>
       </div>
@@ -31,9 +31,9 @@
   </div>
 </div>
 
-<!-- <div class="centerEvent">
+<div class="centerEvent">
     <h2>Activities you subscribed to:</h2>
-</div> -->
+</div>
 
 <div class="row">
   <div *ngFor="let activity of activities">
@@ -51,9 +51,10 @@
             <div>{{activity.description}}</div>
             <div>{{activity.startActivity}}</div>
             <div>{{activity.endActivity}}</div>
-            <!-- <div><button type="button" class="button1" (click)="unsubscribe(activity.id)">Unsubscribe</button></div> -->
+            <div>
+              <button type="button" class="button1" (click)="unsubscribe(activity.id)">Unsubscribe</button>
+            </div>
           </div>
-
         </div>
       </div>
     </div>

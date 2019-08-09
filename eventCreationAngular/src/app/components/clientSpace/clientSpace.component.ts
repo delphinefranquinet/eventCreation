@@ -14,7 +14,6 @@ import { InscriptionService } from 'src/app/services/inscription.service';
 })
 export class ClientSpaceComponent implements OnInit {
 
-  public eventItem: EventManage;
   private connectedUserID: number;
   public events: EventManage[];
   public activities: Activity[];

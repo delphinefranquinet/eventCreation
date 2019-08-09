@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { EventManage } from '../../models/eventManage.model';
 import { Activity } from '../../models/activity.model';
 import { ActivatedRoute } from '@angular/router';
-import { ActivityService } from '../../services/activity.service';
 import { EventService } from '../../services/event.service';
 
 @Component({
@@ -13,35 +12,29 @@ import { EventService } from '../../services/event.service';
 
 export class ShowActivityComponent implements OnInit {
 
-  public events: EventManage[];
-  public eventItem: EventManage;
+  public event: EventManage;
   public activities: Activity[];
-  private connectedUserID: number;
+  private eventID: number;
 
   @Input()
   public eventId = -1;
 
-  constructor(private eventService: EventService, private route: ActivatedRoute, private activityService: ActivityService) { }
+  constructor(
+    private eventService: EventService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
-      this.connectedUserID = Number(params.id);
+      this.eventID = Number(params.id);
+      this.updateAll(false);
       // TODO: recup ca via une request au back (get idPerson from session ou un truc du genre)!
-      console.log('\"typeof params\": ', typeof params);
-      console.log('\"JSON.stringify(params)\": ', JSON.stringify(params));
-      console.log('\"params.id\": ' + params.id);
-      console.log('id of pseudo-connected user is: ' + this.connectedUserID);
     });
-    this.updateAll(false);
   }
 
   public updateAll(isDeleted: boolean): void {
-    this.eventService.getEventsByIdResponsable(this.connectedUserID).subscribe((updatedEvents) => {
-      this.events = updatedEvents;
-    });
-    this.activityService.getInscriptions().subscribe((activities: Activity[]) => {
-      this.activities = activities;
-      console.log(activities);
+    this.eventService.getEventByID(this.eventID).subscribe((selectedEvent) => {
+      this.event = selectedEvent;
     });
   }
 }
