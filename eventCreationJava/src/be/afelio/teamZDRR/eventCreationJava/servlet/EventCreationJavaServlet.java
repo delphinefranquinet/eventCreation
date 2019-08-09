@@ -93,10 +93,11 @@ public class EventCreationJavaServlet extends HttpServlet {
 
 		} else if (path.startsWith("/clientSpace")) {
 
-			String[] parts = path.split("/");
+			/*String[] parts = path.split("/");
 			String idResponsable = parts[2];
-			int id = Integer.parseInt(idResponsable);
-			List<Event> events = repository.findEventAndAllActivityByIdResponsable(id);
+			int id = Integer.parseInt(idResponsable);*/
+			Integer idPerson = (Integer) session.getAttribute("idPerson");
+			List<Event> events = repository.findEventAndAllActivityByIdResponsable(idPerson);
 			String json = mapper.writeValueAsString(events);
 			setHeaders(response);
 			response.setContentType("application/json");
