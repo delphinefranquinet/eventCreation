@@ -34,7 +34,7 @@ export class UpdateActivityComponent implements OnInit {
 
   public submitEditedActivity(editedActivity: Activity) {
     this.activityService.updateActivity(editedActivity).subscribe((answer: Activity) => {
-      if (answer === editedActivity) { // Back-end always sends back the activity if no Exception was arised
+      if (answer.id === editedActivity.id) { // Back-end always sends back the activity if no exception was arised
         this.activity = answer; // Is this line really useful?
         this.reactionMessageToUser =
           'Activity seems successfully edited!'
