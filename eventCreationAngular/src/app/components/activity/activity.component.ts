@@ -1,5 +1,5 @@
 import { Component, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { Activity } from '../../models/activity.model';
 import { ActivityService } from '../../services/activity.service';
@@ -21,7 +21,6 @@ export class ActivityComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private activityService: ActivityService
   ) { }
 
