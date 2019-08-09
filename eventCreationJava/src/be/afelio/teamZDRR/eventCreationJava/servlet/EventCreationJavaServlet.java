@@ -128,6 +128,19 @@ public class EventCreationJavaServlet extends HttpServlet {
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json); 
 			
+		} else if (path.startsWith("/oneActivity")){
+		    
+		    	String[] parts = path.split("/");
+			String idActivity = parts[2];
+			int id = Integer.parseInt(idActivity);
+			Activity activity = repository.findOneActivityByIdActivity(id);
+			String json = mapper.writeValueAsString(activity);
+			setHeaders(response);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(json); 
+		    
+		    
 		} else {
 			response.setStatus(401);
 		}
@@ -150,7 +163,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 				Person person = repository.connexion(parameters.email, parameters.password);
 
 				if (person != null) {
-					session.setAttribute("idPerson", person.getId()); // pour récupérer l'id du responsable
+					session.setAttribute("idPerson", person.getId()); // pour rï¿½cupï¿½rer l'id du responsable
 					System.out.println("idPerson " + session.getAttribute("idPerson"));
 					
 				}

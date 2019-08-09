@@ -68,5 +68,6 @@ public interface EventRepository {
 	
 	List<Event> findEventByIdEvent (int idEvent);
 	
+	 Activity findOneActivityByIdActivity(int idActivity);
 	
 }
