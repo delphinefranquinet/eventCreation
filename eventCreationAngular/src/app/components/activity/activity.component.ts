@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NewActivity } from '../../models/newActivity.model';
 import { Activity } from '../../models/activity.model';
 import { ActivityService } from '../../services/activity.service';
+import { Action } from 'rxjs/internal/scheduler/Action';
 
 @Component({
   selector: 'app-activity',
@@ -56,6 +57,7 @@ export class ActivityComponent implements OnInit {
   }
 
   public submitForm() {
+
     this.activityToCreate.name = this.activityForm.value.name;
     this.activityToCreate.description = this.activityForm.value.description;
     this.activityToCreate.startActivity = this.activityForm.value.startActivity;
@@ -64,18 +66,13 @@ export class ActivityComponent implements OnInit {
       /*200*/
       if (activity.id) {
         this.activityForm.reset();
-        this.creationSucceded = true;
-        this.creationFailed = false;
-        this.serverError = false;
+        alert('Your activity has been created !Do you want to create another activity?');
       } else {
-        this.creationSucceded = false;
-        this.creationFailed = true;
-        this.serverError = false;
+        alert(' Your activity could not be created! Make sure the activity interval is within the event period.');
       }
     }, () => {
-      this.creationSucceded = false;
-      this.creationFailed = false;
       this.serverError = true;
+      alert(' Your activity could not be created! The server isn\'t responding as expected. Please, contact dev team.');
     });
   }
 }
