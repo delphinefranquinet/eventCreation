@@ -18,7 +18,7 @@ export class SignInLoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.activityService.getActivity().subscribe((activities) => {
+    this.activityService.getActivities().subscribe((activities) => {
       this.activities = activities;
     });
   }

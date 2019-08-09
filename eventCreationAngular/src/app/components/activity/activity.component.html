@@ -1,6 +1,6 @@
 <div id="mySidenav">
   <a [routerLink]="['/home']" id="home"> Home </a>
-  <a [routerLink]="['/clientSpace']" id="clientSpace"> Client Space </a>
+  <!-- <a [routerLink]="['/clientSpace']" id="clientSpace"> Client Space </a> -->
 </div>
 
 <div *ngIf="activityComponentIsReady">
@@ -9,9 +9,9 @@
   </div>
 
   <app-activity-form
-    [title]="'Create An activity'"
+    [title]="'Create an activity'"
     [activity]="activity"
-    [submitButtonText]="'Create New Activity'"
+    [submitButtonText]="'Create new activity'"
     [reactionMessageToUser]="reactionMessageToUser"
     (activitySubmitter)="submitNewActivity($event)"
   ></app-activity-form>

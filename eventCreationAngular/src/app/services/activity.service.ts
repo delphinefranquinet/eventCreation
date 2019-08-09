@@ -13,7 +13,7 @@ export class ActivityService {
     private http: HttpClient
   ) { }
 
-  public getActivity(): Observable<Activity[]> {
+  public getActivities(): Observable<Activity[]> {
     return this.http
       .get<Activity[]>(`${environment.baseUrl}/activity`, { withCredentials: true })
       .pipe(catchError((error: any) => throwError(error.error)));
