@@ -1,15 +1,3 @@
-CREATE TABLE Activities (
-    id_activity SERIAL PRIMARY KEY,
-    nameActivity varchar(50) NOT NULL,
-    descriptionActivity varchar(300) NOT NULL,
-    startActivity timestamp with time zone NOT NULL,
-    endActivity timestamp with time zone NOT NULL,
-    id_event int NOT NULL,
-    CONSTRAINT checktimerelation CHECK (((endActivity - startActivity) >= '00:00:00'::interval)),
-    CONSTRAINT UK_nameActivity_startActivity UNIQUE (nameActivity, startActivity)
-
-);
-
 CREATE TABLE Events (
     id_event serial PRIMARY KEY ,
     eventName varchar(50) NOT NULL,
@@ -22,10 +10,30 @@ CREATE TABLE Events (
     CONSTRAINT UK_eventName_startDate_eventPlace UNIQUE (eventName, startDate, eventPlace)
 );
 
+CREATE TABLE Activities (
+    id_activity SERIAL PRIMARY KEY,
+    nameActivity varchar(50) NOT NULL,
+    descriptionActivity varchar(300) NOT NULL,
+    startActivity timestamp with time zone NOT NULL,
+    endActivity timestamp with time zone NOT NULL,
+    id_event int NOT NULL,
+    CONSTRAINT checktimerelation CHECK (((endActivity - startActivity) >= '00:00:00'::interval)),
+    CONSTRAINT UK_nameActivity_startActivity UNIQUE (nameActivity, startActivity),
+	CONSTRAINT Deletecascade
+		FOREIGN KEY (id_event)
+		REFERENCES Events(id_event)
+		ON DELETE CASCADE
+);
+
+
 CREATE TABLE Inscription_activity (
     id_inscription serial PRIMARY KEY ,
     id_person int NOT NULL,
-    id_activity int NOT NULL
+    id_activity int NOT NULL,
+	CONSTRAINT Deletecascade
+		FOREIGN KEY (id_activity)
+		REFERENCES activities(id_activity)
+		ON DELETE CASCADE
 );
 
 CREATE TABLE persons (

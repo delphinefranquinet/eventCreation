@@ -50,9 +50,11 @@ export class UpdateEventComponent implements OnInit {
         this.eventForm.reset();
         this.updateSucceded = true;
         this.updateFailed = false;
+        alert('Update Succeded');
       } else {
         this.updateSucceded = false;
         this.updateFailed = true;
+        alert('Update failed');
       }
       this.router.navigate(['/clientSpace']);
       // TODO:

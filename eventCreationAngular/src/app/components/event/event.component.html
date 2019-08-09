@@ -15,12 +15,24 @@
     <h5>{{eventItem.startEvent}}</h5>
     <h5>{{eventItem.endEvent}}</h5>
 
-    <div *ngIf="editMode" id="eventButtons">
-      <div id="newActivityButton">
-        <a [routerLink]="['/activity', eventItem.id]">
-          <button type="button" class="button1"> Create new activity</button>
-        </a>
-      </div>
+  <div *ngIf="editMode" id="eventButtons">
+    <div id="newActivityButton">
+      <a [routerLink]="['/activity', eventItem.id]">
+        <button type="button" class="button1"> Create new activity</button>
+      </a>
+    </div>
+    <div id="updateEventButton">
+      <a [routerLink]="['/updateEvent', eventItem.id]">
+        <button type="button" class="button1">Edit</button>
+      </a>
+    </div>
+    <div id="deleteEventButton">
+      <button type="button" class="button1" (click)="popupConfirm(eventItem.id)">{{deleteEventButton}}</button>
+      <!-- <button *ngIf="displayEventConfirmButton" type="button" class="button1"
+        (click)="deleteEvent(eventItem.id)">Confirm</button> -->
+      <p id="errorMessage">{{unableToDeleteMessage}}</p>
+    </div>
+  </div>
 
       <div id="updateEventButton">
         <a [routerLink]="['/updateEvent', eventItem.id]">
@@ -35,6 +47,24 @@
         <div id="errorMessage">{{unableToDeleteMessage}}</div>
       </div>
 
+  <div *ngFor="let activity of eventItem.activities">
+    <h3>{{activity.name}}</h3>
+    <div class="price">{{activity.description}}</div>
+    <div>{{activity.startActivity}}</div>
+    <div>{{activity.endActivity}}</div>
+    <br>
+    <div *ngIf="editMode" id="deleteActivityButton">
+      <button type="button" class="button1"
+        (click)="popupConfirmActivity(activity.id)">{{deleteActivityButton}}</button>
+      <!-- <button *ngIf="displayActivityConfirmButton" type="button" class="button1"
+        (click)="deleteActivity(activity.id)">Confirm</button> -->
+      <p id="errorMessage">{{unableToDeleteMessage}}</p>
+    </div>
+    <div *ngIf="!editMode">
+      <app-activityInscription [activity]="activity"></app-activityInscription>
+     <!-- <button type="button" class="button" (click)="inscription(activity.id)">
+        <a [routerLink]="['/activityInscription', activity.id]"> Inscription </a>
+      </button> -->
     </div>
 
     <div *ngFor="let activity of eventItem.activities" class="card">
