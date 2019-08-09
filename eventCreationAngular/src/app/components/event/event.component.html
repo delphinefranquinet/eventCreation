@@ -42,11 +42,18 @@
     <div>{{activity.endActivity}}</div>
     <br>
     <div *ngIf="editMode" id="deleteActivityButton">
-      <button type="button" class="buttonFromZahraa"
-        (click)="toggleActivityConfirmButton()">{{deleteActivityButton}}</button>
-      <button *ngIf="displayActivityConfirmButton" type="button" class="buttonFromZahraa"
-        (click)="deleteActivity(activity.id)">Confirm</button>
-      <p id="errorMessage">{{unableToDeleteMessage}}</p>
+      <div id="updateActivityButton">
+        <a [routerLink]="['/updateActivity', activity.id]">
+          <button type="button" class="buttonFromZahraa">Edit</button>
+        </a>
+      </div>
+      <div id="deleteActivityButton">
+        <button type="button" class="buttonFromZahraa"
+          (click)="toggleActivityConfirmButton()">{{deleteActivityButton}}</button>
+        <button *ngIf="displayActivityConfirmButton" type="button" class="buttonFromZahraa"
+          (click)="deleteActivity(activity.id)">Confirm</button>
+        <p id="errorMessage">{{unableToDeleteMessage}}</p>
+      </div>
     </div>
     <div *ngIf="!editMode">
       <app-activityInscription [activity]="activity"></app-activityInscription>

@@ -1,11 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { EventManage } from 'src/app/models/eventManage.model';
 import { Activity } from '../../../models/activity.model';
 import { EventService } from 'src/app/services/event.service';
-import { ActivityService } from '../../../services/activity.service';
 
 @Component({
   selector: 'app-activity-form',
@@ -31,9 +29,7 @@ export class ActivityFormComponent implements OnInit {
   public activityForm: FormGroup;
 
   constructor(
-    private route: ActivatedRoute,
     private fb: FormBuilder,
-    private activityService: ActivityService,
     private eventService: EventService
   ) { }
 

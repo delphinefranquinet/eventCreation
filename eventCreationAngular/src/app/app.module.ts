@@ -23,6 +23,7 @@ import { CreateEventComponent } from './components/createEvent/createEvent.compo
 import { UpdateEventComponent } from './components/updateEvent/updateEvent.component';
 import { ActivityFormComponent } from './components/forms/activity-form/activity-form.component';
 import { ActivityComponent } from './components/activity/activity.component';
+import { UpdateActivityComponent } from './components/update-activity/update-activity.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ActivityComponent } from './components/activity/activity.component';
     CreateEventComponent,
     UpdateEventComponent,
     ActivityFormComponent,
-    ActivityComponent
+    ActivityComponent,
+    UpdateActivityComponent
    ],
   imports: [
     AppRoutingModule,

@@ -11,6 +11,7 @@ import { ClientSpaceComponent } from './components/clientSpace/clientSpace.compo
 import { CreateEventComponent } from './components/createEvent/createEvent.component';
 import { UpdateEventComponent } from './components/updateEvent/updateEvent.component';
 import { ActivityComponent } from './components/activity/activity.component';
+import { UpdateActivityComponent } from './components/update-activity/update-activity.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'createEvent', component: CreateEventComponent },
   { path: 'updateEvent/:id', component: UpdateEventComponent },
   { path: 'activity/:id', component: ActivityComponent },
+  { path: 'updateActivity/:id', component: UpdateActivityComponent },
   { path: '**', redirectTo: '/home' }
 ];
 

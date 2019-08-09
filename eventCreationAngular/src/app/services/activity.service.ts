@@ -19,6 +19,12 @@ export class ActivityService {
       .pipe(catchError((error: any) => throwError(error.error)));
   }
 
+  public getOneActivityById(id: number): Observable<Activity> {
+    return this.http
+      .get<Activity>(`${environment.baseUrl}/oneActivity/${id}`)
+      .pipe(catchError((error: any) => throwError(error.error)));
+  }
+
   public createActivity(activity: Activity): Observable<Activity> {
     return this.http
       .post<Activity>(`${environment.baseUrl}/activity/${activity.idEvent}`, activity, { withCredentials: true })
@@ -37,15 +43,17 @@ export class ActivityService {
       .pipe(catchError((error: any) => throwError(error.error)));
   }
 
+  public updateActivity(activity: Activity): Observable<Activity> {
+    return this.http
+      .put<Activity>(`${environment.baseUrl}/updateOneActivity/${activity.id}`, activity, { withCredentials: true })
+      .pipe(catchError((error: any) => throwError(error.error)));
+    // TODO: Attention que dans le back-end, pour cette requette et probablement pour d'autres,
+    // l'action s'effectue sans vérifier que les Credentitials sont corrects
+  }
+
   // public postActivityByInscriptionID(id: string): Observable<Activity> {
   //   return this.http
   //     .post<Activity>(`${environment.baseUrl}/activity/${id}`, id, { withCredentials: true })
-  //     .pipe(catchError((error: any) => throwError(error.error)));
-  // }
-
-  // public updateActivity(payload: Activity): Observable<Activity> {
-  //   return this.http
-  //     .put<Activity>(`${environment.baseUrl}/activity/${payload}`, payload)
   //     .pipe(catchError((error: any) => throwError(error.error)));
   // }
 }
