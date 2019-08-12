@@ -1,11 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { EventService } from '../../services/event.service';
 import { EventManage } from '../../models/eventManage.model';
-import { ActivatedRoute } from '@angular/router';
 import { Activity } from 'src/app/models/activity.model';
 import { ActivityService } from 'src/app/services/activity.service';
 import { InscriptionService } from 'src/app/services/inscription.service';
-
 
 @Component({
   selector: 'app-clientSpace',
@@ -14,7 +12,6 @@ import { InscriptionService } from 'src/app/services/inscription.service';
 })
 export class ClientSpaceComponent implements OnInit {
 
-  private connectedUserID: number;
   public events: EventManage[];
   public activities: Activity[];
   public isDeleted: boolean;
@@ -22,21 +19,16 @@ export class ClientSpaceComponent implements OnInit {
 
   constructor(
     private eventService: EventService,
-    private route: ActivatedRoute,
     private activityService: ActivityService,
     private inscriptionService: InscriptionService
   ) { }
 
   ngOnInit() {
-    this.route.params.subscribe((params) => {
-      this.connectedUserID = Number(params.id);
-      // TODO: recup ca via une request au back (get idPerson from session ou un truc du genre)!
-    });
     this.updateAll(false);
   }
 
   public updateAll(isDeleted: boolean): void {
-    this.eventService.getEventsByIdResponsable(this.connectedUserID).subscribe((updatedEvents) => {
+    this.eventService.getEventsByIdResponsable().subscribe((updatedEvents: EventManage[]) => {
       this.events = updatedEvents;
     });
     this.activityService.getInscriptions().subscribe((activities: Activity[]) => {
@@ -44,6 +36,7 @@ export class ClientSpaceComponent implements OnInit {
       console.log(activities);
     });
   }
+
   public unsubscribe(isUnsubscribe: number): any {
     this.inscriptionService.deleteInscription(isUnsubscribe).subscribe((isDeleted: boolean) => {
       if (isDeleted) {
@@ -55,6 +48,5 @@ export class ClientSpaceComponent implements OnInit {
         console.log('UNEXPECTED: \"response\" is not \"true\"!');
       }
     });
-
   }
 }
