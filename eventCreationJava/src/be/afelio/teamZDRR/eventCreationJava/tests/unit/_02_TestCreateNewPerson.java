@@ -1,4 +1,4 @@
-package be.afelio.teamZDRR.eventCreationJava.tests;
+package be.afelio.teamZDRR.eventCreationJava.tests.unit;
 
 import static org.junit.jupiter.api.Assertions.*;
 

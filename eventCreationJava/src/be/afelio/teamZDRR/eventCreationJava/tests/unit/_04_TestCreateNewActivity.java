@@ -1,10 +1,10 @@
-package be.afelio.teamZDRR.eventCreationJava.tests;
+package be.afelio.teamZDRR.eventCreationJava.tests.unit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class _03_TestCreateNewEvent {
+class _04_TestCreateNewActivity {
 
 	@Test
 	void test() {

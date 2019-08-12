@@ -1,4 +1,4 @@
-package be.afelio.teamZDRR.eventCreationJava.tests;
+package be.afelio.teamZDRR.eventCreationJava.tests.unit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,7 +19,7 @@ class _05_TestFindEventAndAllActivityByIdEvent {
 		Event expected = new Event();
 		expected.setId(6);
 		expected.setName("Barbecue Afelio");
-		expected.setDescription("On a réussi le projet donc on est content (1 activité / pas d'inscrit)");
+		expected.setDescription("On a rï¿½ussi le projet donc on est content (1 activitï¿½ / pas d'inscrit)");
 		expected.setStartEvent(LocalDateTime.of(2019, 8, 9, 18, 00, 00));
 		expected.setEndEvent(LocalDateTime.of(2019, 8, 9, 22, 00, 00));
 		expected.setIdResponsable(4);
