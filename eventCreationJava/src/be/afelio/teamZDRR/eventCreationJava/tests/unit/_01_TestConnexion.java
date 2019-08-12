@@ -26,12 +26,14 @@ class _01_TestConnexion {
 		Person actual = repository.connexion("delphine@nomail.be", "1234");
 		
 		assertNotNull(actual);
-		assertEquals(expected.getId(), expected.getId());
+		
+		assertEquals(expected.getId(), actual.getId());
 		assertEquals(expected.getName(), actual.getName());
 		assertEquals(expected.getFirstname(), actual.getFirstname());
 		assertEquals(expected.getEmail(), actual.getEmail());
 		assertEquals(expected.getPassword(), actual.getPassword());
 		
+		assertEquals(expected, actual);
 	}
 	
 	@Test

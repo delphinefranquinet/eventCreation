@@ -25,10 +25,9 @@ class _05_TestFindEventAndAllActivityByIdEvent {
 		expected.setIdResponsable(4);
 		expected.setPlace("Afelio");
 		
-		
-		
 		Event actual = repository.findEventAndAllActivityByIdEvent(6);
 		
+		assertEquals(expected, actual);	
 	}
 
 }
