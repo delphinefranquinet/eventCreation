@@ -4,6 +4,7 @@ import { EventManage } from '../../models/eventManage.model';
 import { Activity } from 'src/app/models/activity.model';
 import { ActivityService } from 'src/app/services/activity.service';
 import { InscriptionService } from 'src/app/services/inscription.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-clientSpace',
@@ -18,6 +19,7 @@ export class ClientSpaceComponent implements OnInit {
   public inscriptionIsDeleted: string;
 
   constructor(
+    private router: Router,
     private eventService: EventService,
     private activityService: ActivityService,
     private inscriptionService: InscriptionService
@@ -30,6 +32,8 @@ export class ClientSpaceComponent implements OnInit {
   public updateAll(isDeleted: boolean): void {
     this.eventService.getEventsByIdResponsable().subscribe((updatedEvents: EventManage[]) => {
       this.events = updatedEvents;
+    }, () => { // If server doesn't responds, it's probably because it hasn't got a session yet.
+      this.router.navigate(['/login']); // Using a guard would be better tho...
     });
     this.activityService.getInscriptions().subscribe((activities: Activity[]) => {
       this.activities = activities;
