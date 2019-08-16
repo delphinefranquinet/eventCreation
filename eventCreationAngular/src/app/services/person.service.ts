@@ -7,7 +7,7 @@ import { Login } from '../models/login.model';
 
 @Injectable()
 export class PersonService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   public getLogin(): Observable<Login[]> {
     return this.http
@@ -21,15 +21,15 @@ export class PersonService {
       .pipe(catchError((error: any) => throwError(error.error)));
   }
 
-  /*public updateLogin(payload: Login): Observable<Login> {
-    return this.http
-      .put<Login>(`${environment.baseUrl}/something/${payload.password}`, payload)
-      .pipe(catchError((error: any) => throwError(error.error)));
-  }
+  // public updateLogin(payload: Login): Observable<Login> {
+  //   return this.http
+  //     .put<Login>(`${environment.baseUrl}/something/${payload.password}`, payload)
+  //     .pipe(catchError((error: any) => throwError(error.error)));
+  // }
 
-  public removeLogin(payload: Login): Observable<Login> {
-    return this.http
-      .delete<any>(`${environment.baseUrl}/something/${payload.email}`)
-      .pipe(catchError((error: any) => throwError(error.error)));
-  }*/
+  // public removeLogin(payload: Login): Observable<Login> {
+  //   return this.http
+  //     .delete<any>(`${environment.baseUrl}/something/${payload.email}`)
+  //     .pipe(catchError((error: any) => throwError(error.error)));
+  // }
 }
