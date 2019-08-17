@@ -12,8 +12,14 @@ export class InscriptionService {
   constructor(private http: HttpClient) { }
 
 
-public getInscription(id: number): Observable<boolean> {
-  return this.http.get<boolean>(`${environment.baseUrl}/activityInscription/${id}`)
+public postInscription(id: number): Observable<boolean> {
+  return this.http.post<boolean>(`${environment.baseUrl}/activityInscription/${id}`, id, {withCredentials: true})
+    .pipe(catchError((error: any) => throwError(error.error)));
+}
+
+public deleteInscription(id: number): Observable<boolean>{
+  return this.http
+    .delete<any>(`${environment.baseUrl}/deleteInscription/${id}`, {withCredentials: true})
     .pipe(catchError((error: any) => throwError(error.error)));
 }
 

@@ -1,0 +1,17 @@
+<div id="mySidenav">
+  <a [routerLink]="['/home']" id="home"> Home </a>
+  <a [routerLink]="['/clientSpace']" id="clientSpace"> Client Space </a>
+</div>
+
+<div *ngIf="updateActivityComponentIsReady">
+  <div>
+    <a id="a" class="previous round" [routerLink]="['/updateEvent', activity.idEvent]">&#8249;</a>
+  </div>
+
+  <app-activity-form
+    [title]="'Edit an activity'"
+    [activity]="activity"
+    [submitButtonText]="'Edit activity'"
+    (activitySubmitter)="submitEditedActivity($event)"
+  ></app-activity-form>
+</div>

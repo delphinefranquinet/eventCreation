@@ -1,11 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
-import { NewActivity } from '../../models/newActivity.model';
 import { Activity } from '../../models/activity.model';
 import { ActivityService } from '../../services/activity.service';
-
 
 @Component({
   selector: 'app-activity',
@@ -14,73 +11,34 @@ import { ActivityService } from '../../services/activity.service';
 })
 export class ActivityComponent implements OnInit {
 
-  public activityToCreate = new NewActivity();
-  public activityForm: FormGroup;
-  public creationSucceded = false;
-  public creationFailed = false;
-  public serverError = false;
-  public eventId: number;
+  @Output()
+  public activity = new Activity();
 
-  constructor(private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private activityService: ActivityService) {
-    this.activityForm = this.fb.group({
-      name: this.fb.control('', [Validators.required]),
-      description: this.fb.control('', [Validators.required]),
-      startActivity: this.fb.control('', [Validators.required]),
-      endActivity: this.fb.control('', [Validators.required]),
-    });
-  }
+  public activityComponentIsReady = false;
+
+  constructor(
+    private route: ActivatedRoute,
+    private activityService: ActivityService
+  ) { }
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
-      this.eventId = Number(params.id);
+      this.activity.idEvent = Number(params.id);
+      this.activityComponentIsReady = true;
     });
   }
 
-  // next(eventId: number) {
-  //   this.router.navigate(['/activity/' + eventId]);
-  // }
-
-  public hasNameError() {
-    const control = this.activityForm.get('name');
-    return control.errors && control.errors.required;
-  }
-
-  public hasStartActivityError() {
-    const control = this.activityForm.get('startActivity');
-    return control.errors && control.errors.required;
-  }
-
-  public hasEndActivityError() {
-    const control = this.activityForm.get('endActivity');
-    return control.errors && control.errors.required;
-  }
-
-  public hasDescriptionError() {
-    const control = this.activityForm.get('description');
-    return control.errors && control.errors.required;
-  }
-
-  public submitForm() {
-    this.activityToCreate.name = this.activityForm.value.name;
-    this.activityToCreate.description = this.activityForm.value.description;
-    this.activityToCreate.startActivity = this.activityForm.value.startActivity;
-    this.activityToCreate.endActivity = this.activityForm.value.endActivity;
-    this.activityService.createActivity(this.activityToCreate, this.eventId).subscribe((activity: Activity) => {
-      /*200*/
-      if (activity.id) {
-        this.activityForm.reset();
-        this.creationSucceded = true;
-        this.creationFailed = false;
-        this.serverError = false;
+  public submitNewActivity(activityToCreate: Activity) {
+    this.activityService.createActivity(activityToCreate).subscribe((answer: Activity) => {
+      if (answer.id) { // Back-end always sends back an activity, but it includes an id property if and only if it has been created in DB
+        this.activity = answer; // Is this line really useful?
+        alert('Your activity has been created!\nDo you want to create another activity?');
       } else {
-        this.creationSucceded = false;
-        this.creationFailed = true;
-        this.serverError = false;
+        alert('Your activity could not be created! :-(\nMake sure the activity interval is within its event period.');
       }
     }, () => {
-      this.creationSucceded = false;
-      this.creationFailed = false;
-      this.serverError = true;
+      alert('Your activity could not be created! :-(\nThe server isn\'t responding as expected. Please, contact dev team.');
     });
   }
+
 }

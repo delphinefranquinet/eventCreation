@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ActivityService } from '../../services/activity.service';
+import { Component, OnInit, Input } from '@angular/core';
 import { Activity } from '../../models/activity.model';
 import { InscriptionService } from '../../services/inscription.service';
 
@@ -9,46 +7,37 @@ import { InscriptionService } from '../../services/inscription.service';
   templateUrl: './activityInscription.component.html',
   styleUrls: ['./activityInscription.component.css']
 })
+
 export class ActivityInscriptionComponent implements OnInit {
 
-  public activityId: number;
-  public activityName: string;
-  public activityStart: Date;
-  public activityEnd: Date;
-  public activityError: boolean;
+  @Input()
   public activity: Activity;
-  public descreption: string;
-  public connectionError: boolean;
-  // public activities: Activity[];
-  constructor(private route: ActivatedRoute, private inscriptionService: InscriptionService, private activityService: ActivityService) { }
 
-  ngOnInit() {
-    this.route.params.subscribe(params => {
-      const id: string = params.id;
+  public InscriptionError = true;
+  public InscriptionOk = false;
 
-      this.activityService.postActivityByInscriptionID(id).subscribe(
-        activity => {
-          // this.activity = activity;
+  constructor(
+    private inscriptionService: InscriptionService
+  ) { }
 
-          this.activityId = activity.id;
-          this.activityName = activity.name;
-          this.descreption = activity.description;
-          this.activityStart = activity.startActivity;
-          this.activityEnd = activity.endActivity;
+  ngOnInit() { }
 
-
-        }
-      );
+  public inscription(activityId: number) {
+    this.inscriptionService.postInscription(activityId).subscribe((inscription: boolean) => {
+      if (inscription === true) {
+        this.InscriptionError = false;
+        this.InscriptionOk = false;
+        console.log('inscription ok');
+      } else {
+        this.InscriptionOk = true;
+      }
+    }, (banana: any) => {
+      this.InscriptionError = true;
+      this.InscriptionOk = true;
+      console.log('inscription not ok');
+      console.log(typeof banana);
+      console.log(banana);
+      console.log(JSON.stringify(banana));
     });
-
-
-    }
-    public inscription(activityId: number) {
-      this.inscriptionService.getInscription(activityId).subscribe(inscription => {
-        this.connectionError = true;
-      }, () => {
-      this.connectionError = false;
-      });
-
-    }
   }
+}

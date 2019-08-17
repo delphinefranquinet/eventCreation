@@ -2,21 +2,9 @@ DROP TABLE persons;
 
 DROP TABLE Inscription_activity;
 
-DROP TABLE Events;
-
 DROP TABLE Activities;
 
-CREATE TABLE Activities (
-    id_activity SERIAL PRIMARY KEY,
-    nameActivity varchar(50) NOT NULL,
-    descriptionActivity varchar(300) NOT NULL,
-    startActivity timestamp with time zone NOT NULL,
-    endActivity timestamp with time zone NOT NULL,
-    id_event int NOT NULL,
-    CONSTRAINT checktimerelation CHECK (((endActivity - startActivity) >= '00:00:00'::interval)),
-    CONSTRAINT UK_nameActivity_startActivity UNIQUE (nameActivity, startActivity)
-
-);
+DROP TABLE Events;
 
 CREATE TABLE Events (
     id_event serial PRIMARY KEY ,
@@ -30,10 +18,30 @@ CREATE TABLE Events (
     CONSTRAINT UK_eventName_startDate_eventPlace UNIQUE (eventName, startDate, eventPlace)
 );
 
+CREATE TABLE Activities (
+    id_activity SERIAL PRIMARY KEY,
+    nameActivity varchar(50) NOT NULL,
+    descriptionActivity varchar(300) NOT NULL,
+    startActivity timestamp with time zone NOT NULL,
+    endActivity timestamp with time zone NOT NULL,
+    id_event int NOT NULL,
+    CONSTRAINT checktimerelation CHECK (((endActivity - startActivity) >= '00:00:00'::interval)),
+    CONSTRAINT UK_nameActivity_startActivity UNIQUE (nameActivity, startActivity),
+	CONSTRAINT Deletecascade
+		FOREIGN KEY (id_event)
+		REFERENCES Events(id_event)
+		ON DELETE CASCADE
+);
+
+
 CREATE TABLE Inscription_activity (
     id_inscription serial PRIMARY KEY ,
     id_person int NOT NULL,
-    id_activity int NOT NULL
+    id_activity int NOT NULL,
+	CONSTRAINT Deletecascade
+		FOREIGN KEY (id_activity)
+		REFERENCES activities(id_activity)
+		ON DELETE CASCADE
 );
 
 CREATE TABLE persons (
@@ -44,8 +52,8 @@ CREATE TABLE persons (
     password varchar(50) NOT NULL
 );
 
-
 TRUNCATE TABLE persons RESTART IDENTITY cascade;
+TRUNCATE TABLE events RESTART IDENTITY cascade;
 
 insert into persons values (default, 'Franquinet', 'Delphine', 'delphine@nomail.be', '1234' );
 insert into persons values (default, 'Al-Sudani', 'Zahraa', 'zahraa@nomail.be', '1234' );
@@ -70,7 +78,7 @@ insert into Events values (default, 'Démonstration H2O', 'Démonstration chez Vir
 
 insert into Events values (default, 'Détente et Bien-être', 'Initiation au Yoga et Tai Chi (1 activité)', '2019-07-19 10:30:00+02', '2019-07-19 12:45:00+02', 1 , 'Spa');
 
-insert into Events values (default, 'Nouvel-an chez Léon', 'Pas d''activités', '2019-12-31 19:00:00+02', '2020-01-01 02:30:00+02', 1 , 'Restaurant chez Léon, Boulevard de la Sauvenière 42, 4000 Liège');
+insert into Events values (default, 'Nouvel an chez Léon', 'Pas d''activités', '2019-12-31 19:00:00+02', '2020-01-01 02:30:00+02', 1 , 'Restaurant chez Léon, Boulevard de la Sauvenière 42, 4000 Liège');
 
 insert into Events values (default, 'Barbecue Afelio', 'On a réussi le projet donc on est content (1 activité / pas d''inscrit)', '2019-08-09 18:00:00+02', '2019-08-09 22:00:00+02', 4 , 'Afelio');
 
@@ -78,9 +86,9 @@ insert into Events values (default, 'Barbecue Afelio', 'On a réussi le projet do
 
 insert into Activities values (default, 'Muse', 'Muse live tour Europe 2019 (13 inscrits)', '2019-06-30 22:30:00+02', '2019-07-01 01:00:00+02', 1 );
 
-insert into Activities values (default, 'Greta Van Fleet', 'Young American''s band plyaing Led Zeppelin style music(3 inscrits)', '2019-06-30 20:30:00+02', '2019-06-30 22:00:00+02', 1 );
+insert into Activities values (default, 'Greta Van Fleet', 'Young American''s band playing Led Zeppelin style music(3 inscrits)', '2019-06-30 20:30:00+02', '2019-06-30 22:00:00+02', 1 );
 
-insert into Activities values (default, 'Metallica', 'Metallica live orchestra(4 inscrits)', '2019-06-29 22:00:00+02', '2019-07-01 00:30:00+02', 1 );
+insert into Activities values (default, 'Metallica', 'Metallica live orchestra(4 inscrits)', '2019-06-29 22:00:00+02', '2019-06-30 00:30:00+02', 1 );
 
 insert into Activities values (default, 'Pink', 'Pop icon 2019 (0 inscrit)', '2019-06-30 22:30:00+02', '2019-07-01 01:00:00+02', 1 );
 
@@ -92,7 +100,7 @@ insert into Activities values (default, 'Stage 9-12 ans', 'Avec Olivier (pas d''
 
 insert into Activities values (default, 'Démonstration H2O chez Virginie', 'Limité à 20 personnes (3 inscrits)', '2019-07-19 10:30:00+02', '2019-07-19 12:45:00+02', 3 );
 
-insert into Activities values (default, 'Stage yoga débutant', 'Ouvert à tous', '2019-07-01 08:30:00+02', '2019-07-05 20:00:00+02', 4 );
+insert into Activities values (default, 'Stage yoga débutant', 'Ouvert à tous', '2019-07-01 10:30:00+02', '2019-07-01 12:30:00+02', 4 );
 
 insert into Activities values (default, 'Barbecue Afelio', 'Réussite du projet Event Iscription (pas d''inscrit)','2019-08-09 18:00:00+02', '2019-08-09 22:00:00+02', 6 );
 

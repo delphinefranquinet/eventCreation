@@ -1,4 +1,4 @@
-package be.afelio.teamZDRR.eventCreationJava.tests;
+package be.afelio.teamZDRR.eventCreationJava.tests.unit;
 
 import be.afelio.teamZDRR.eventCreationJava.impl.EventRepositoryImpl;
 import be.afelio.teamZDRR.eventCreationJava.model.EventRepository;

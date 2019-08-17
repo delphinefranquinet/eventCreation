@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { EventService } from '../../services/event.service';
+import { Router } from '@angular/router';
+
 import { EventManage } from '../../models/eventManage.model';
-import { ActivatedRoute } from '@angular/router';
+import { Activity } from '../../models/activity.model';
+import { EventService } from '../../services/event.service';
+import { InscriptionService } from '../../services/inscription.service';
+import { ActivityService } from '../../services/activity.service';
 
 
 @Component({
@@ -11,25 +15,44 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ClientSpaceComponent implements OnInit {
 
-  private connectedUserID: number;
   public events: EventManage[];
+  public activities: Activity[];
+  public isDeleted: boolean;
+  public inscriptionIsDeleted: string;
 
-  constructor(private eventService: EventService, private route: ActivatedRoute) { }
+  constructor(
+    private router: Router,
+    private eventService: EventService,
+    private activityService: ActivityService,
+    private inscriptionService: InscriptionService
+  ) { }
 
   ngOnInit() {
-    this.route.params.subscribe((params) => {
-      this.connectedUserID = Number(params.id);
-      console.log('\"typeof params\": ', typeof params);
-      console.log('\"JSON.stringify(params)\": ', JSON.stringify(params));
-      console.log('\"params.id\": ' + params.id);
-      console.log('id of connected user is: ' + this.connectedUserID);
-    });
     this.updateAll(false);
   }
 
   public updateAll(isDeleted: boolean): void {
-    this.eventService.getEventsByIdResponsable(this.connectedUserID).subscribe((updatedEvents) => {
+    this.eventService.getEventsByIdResponsable().subscribe((updatedEvents: EventManage[]) => {
       this.events = updatedEvents;
+    }, () => { // If server doesn't responds, it's probably because it hasn't got a session yet.
+      this.router.navigate(['/login']); // Using a guard would be better tho...
+    });
+    this.activityService.getInscriptions().subscribe((activities: Activity[]) => {
+      this.activities = activities;
+      console.log(activities);
+    });
+  }
+
+  public unsubscribe(isUnsubscribe: number): any {
+    this.inscriptionService.deleteInscription(isUnsubscribe).subscribe((isDeleted: boolean) => {
+      if (isDeleted) {
+        this.updateAll(false);
+        this.inscriptionIsDeleted = 'You are unsubscribed from this activity.';
+        console.log('\"response\": \"true\"');
+      } else {
+        this.inscriptionIsDeleted = 'Unexpected error! Please, contact developers.';
+        console.log('UNEXPECTED: \"response\" is not \"true\"!');
+      }
     });
   }
 

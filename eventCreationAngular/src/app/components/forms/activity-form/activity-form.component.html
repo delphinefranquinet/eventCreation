@@ -1,0 +1,36 @@
+<div *ngIf="activityFormComponentIsReady">
+  <div>
+    <h2 class="center">{{title}}</h2>
+  </div>
+
+  <form [formGroup]="activityForm" (ngSubmit)="submitFormToParent()">
+
+    <div for="name" class="input-container">
+      <input class="input-field" placeholder="Name of activity" type="text" id="name" name="name"
+        formControlName="name" />
+      <span *ngIf="hasNameError()">*</span>
+    </div>
+
+    <div for="description" class="input-container">
+      <input class="input-field" placeholder="Description" type="text" id="description" name="description"
+        formControlName="description" />
+      <span *ngIf="hasDescriptionError()">*</span>
+    </div>
+
+    <div for="startActivity" class="input-container">
+      <input class="input-field" placeholder="Begins at" type="datetime-local" id="startActivity" name="startActivity"
+        formControlName="startActivity" />
+      <span *ngIf="hasStartActivityError()">*</span>
+    </div>
+
+    <div for="endActivity" class="input-container">
+      <input class="input-field" placeholder="Ends at" type="datetime-local" id="endActivity" name="endActivity"
+        formControlName="endActivity" />
+      <span *ngIf="hasEndActivityError()">*</span>
+    </div>
+
+    <div>
+      <button type="submit" class="btn" [disabled]="!activityForm.valid">{{submitButtonText}}</button>
+    </div>
+  </form>
+</div>

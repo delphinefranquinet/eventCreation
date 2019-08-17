@@ -1,55 +1,17 @@
-<div>
-  <a id="a" class="previous round" [routerLink]="['/createEvent']">&#8249;</a>
-  <h2 class="center">Create An activity</h2>
-</div>
 <div id="mySidenav">
   <a [routerLink]="['/home']" id="home"> Home </a>
   <a [routerLink]="['/clientSpace']" id="clientSpace"> Client Space </a>
 </div>
 
-
-<form [formGroup]="activityForm" (ngSubmit)="submitForm()">
-
-  <div for="name" class="input-container">
-    <input class="input-field" placeholder="Name of activity" type="text" id="name" name="name"
-      formControlName="name" />
-    <span *ngIf="hasNameError()">*</span>
-  </div>
-
-  <div for="description" class="input-container">
-    <input class="input-field" placeholder="Description" type="text" id="description" name="description"
-      formControlName="description" />
-    <span *ngIf="hasDescriptionError()">*</span>
-  </div>
-
-  <div for="startActivity" class="input-container">
-    <input class="input-field" placeholder="Begins at" type="datetime-local" id="startActivity" name="startActivity"
-      formControlName="startActivity" />
-    <span *ngIf="hasStartActivityError()">*</span>
-  </div>
-
-  <div for="endActivity" class="input-container">
-    <input class="input-field" placeholder="Ends at" type="datetime-local" id="endActivity" name="endActivity"
-      formControlName="endActivity" />
-    <span *ngIf="hasEndActivityError()">*</span>
-  </div>
-
+<div *ngIf="activityComponentIsReady">
   <div>
-    <input type="submit" class="btn" [disabled]="!activityForm.valid" value="Create New Activity" />
-    <div *ngIf="creationSucceded">
-      Your activity has been created!
-      <br>
-      Do you want to create another activity?
-    </div>
-    <div *ngIf="creationFailed">
-      Your activity could not be created! :-(
-      <br>
-      Make sure the activity interval is within its event period.
-    </div>
-    <div *ngIf="serverError">
-      Your activity could not be created! :-(
-      <br>
-      The server isn't responding as expected. Please, contact dev team.
-    </div>
+    <a id="a" class="previous round" [routerLink]="['/createEvent']">&#8249;</a>
   </div>
-</form>
+
+  <app-activity-form
+    [title]="'Create an activity'"
+    [activity]="activity"
+    [submitButtonText]="'Create new activity'"
+    (activitySubmitter)="submitNewActivity($event)"
+  ></app-activity-form>
+</div>

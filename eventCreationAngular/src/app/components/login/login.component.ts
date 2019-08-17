@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
 import { Login } from '../../models/login.model';
-import { LoginService } from '../../../app/services/login.service';
 import { Person } from '../../models/person.model';
+import { LoginService } from '../../../app/services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -18,23 +19,19 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public connectionError = false;
 
-
-  constructor(private router: Router, private fb: FormBuilder, private loginService: LoginService) {
-
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private loginService: LoginService
+  ) {
     this.logins = new Login();
-
     this.loginForm = this.fb.group({
       email: this.fb.control(this.logins.email, [Validators.required]),
       password: this.fb.control(this.logins.password, [Validators.required]),
-
     });
   }
 
-  ngOnInit() {
-  }
-  next(personId: number) {
-    this.router.navigate(['/clientSpace/' + personId]);
-  }
+  ngOnInit() { }
 
   public submitForm() {
     const newValues = this.loginForm.value;
@@ -42,12 +39,9 @@ export class LoginComponent implements OnInit {
     newLogin.email = newValues.email;
     newLogin.password = newValues.password;
     this.logins = newLogin;
-
-    this.loginService
-      .postLogin(this.logins).subscribe(person => this.connection(person));
-      // postlogin envoie un observale
-      // observable =  la prochaine fois qu'un evenement aura lieu, exécute ca ...(person => console.log(person));
-
+    this.loginService.postLogin(this.logins).subscribe((person: Person) => {
+      this.connection(person);
+    });
   }
 
   public hasLoginError() {
@@ -60,13 +54,12 @@ export class LoginComponent implements OnInit {
     return control.errors && control.errors.required && control.invalid;
   }
 
-
   public connection(person: Person) {
-    if (person === null) {
-      this.connectionError = true;
-    } else {
+    if (person !== null) {
       this.connectionError = false;
-      this.next(person.id);
+      this.router.navigate(['/clientSpace']);
+    } else {
+      this.connectionError = true;
     }
   }
 }
