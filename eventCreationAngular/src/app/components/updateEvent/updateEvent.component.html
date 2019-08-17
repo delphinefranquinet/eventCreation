@@ -1,13 +1,13 @@
+<div id="mySidenav">
+  <a [routerLink]="['/home']" id="home"> Home </a>
+  <a [routerLink]="['/clientSpace']" id="clientSpace"> Client Space </a>
+</div>
+
 <div>
   <h2 class="center">Edit your event</h2>
 </div>
 
 <div *ngIf="eventForm" class="container">
-  <div id="mySidenav">
-    <a [routerLink]="['/home']" id="home"> Home </a>
-    <a [routerLink]="['/clientSpace']" id="clientSpace"> Client Space </a>
-  </div>
-
   <form [formGroup]="eventForm" (ngSubmit)="submitForm()">
     <div for="name" class="input-container">
       <input class="input-field" placeholder="Name of event" type="text" id="name" name="name" formControlName="name" />
@@ -38,9 +38,7 @@
     </div>
 
     <div>
-      <input type="submit" class="btn" [disabled]="!eventForm.valid" value="Edit Event" />
-      <div *ngIf="updateSucceded">Update succeeded!</div>
-      <div *ngIf="updateFailed">Unable to edit! Makes sure activities times are within event times!</div>
+      <button type="submit" class="btn" [disabled]="!eventForm.valid">Edit Event</button>
     </div>
   </form>
 </div>

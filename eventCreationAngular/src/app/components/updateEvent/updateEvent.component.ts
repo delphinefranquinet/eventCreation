@@ -13,11 +13,8 @@ import { EventService } from 'src/app/services/event.service';
 
 export class UpdateEventComponent implements OnInit {
 
-  public eventId: number;
-  public eventItem: EventManage;
+  public eventItem = new EventManage();
   public eventForm: FormGroup;
-  public updateSucceded = false;
-  public updateFailed = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,8 +25,8 @@ export class UpdateEventComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
-      this.eventId = params.id;
-      this.eventService.getEventByID(this.eventId).subscribe((selectedEvent: EventManage) => {
+      this.eventItem.id = params.id;
+      this.eventService.getEventByID(this.eventItem.id).subscribe((selectedEvent: EventManage) => {
         this.eventItem = selectedEvent;
         this.eventForm = this.fb.group({
           name: this.fb.control(this.eventItem.name, [Validators.required]),
@@ -51,19 +48,11 @@ export class UpdateEventComponent implements OnInit {
     this.eventService.updateEvent(this.eventItem).subscribe((isUpdated: boolean) => {
       console.log(isUpdated);
       if (isUpdated) {
-        this.eventForm.reset();
-        this.updateSucceded = true;
-        this.updateFailed = false;
-        alert('Update Succeded');
+        alert('Update Succeeded!');
+        this.router.navigate(['/showActivity/' + this.eventItem.id]);
       } else {
-        this.updateSucceded = false;
-        this.updateFailed = true;
-        alert('Update failed');
+        alert('Unable to edit! Makes sure activities times are within event times!');
       }
-      // this.router.navigate(['/clientSpace']);
-      // TODO:
-      // Va être redirigé vers home, mais devrait être redirigé vers clientSpace/${id}
-      // Sauf que l'id en question, on est sensé le choper via un request en back qui n'est pas encore faite...
     });
   }
 
