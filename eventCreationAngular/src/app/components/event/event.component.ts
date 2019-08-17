@@ -32,7 +32,7 @@ export class EventComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.eventItem.id === 0) {
+    if (isNaN(this.eventItem.id)) {
       this.route.params.subscribe(params => {
         this.eventItem.id = params.id;
         this.subscribeEvent();

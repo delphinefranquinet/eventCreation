@@ -18,7 +18,6 @@ export class ActivityFormComponent implements OnInit {
   public activity: Activity;
   @Input()
   public submitButtonText: string;
-
   @Output()
   public activitySubmitter = new EventEmitter<Activity>();
 
@@ -80,4 +79,5 @@ export class ActivityFormComponent implements OnInit {
     this.activity.endActivity = this.activityForm.value.endActivity;
     this.activitySubmitter.emit(this.activity);
   }
+
 }

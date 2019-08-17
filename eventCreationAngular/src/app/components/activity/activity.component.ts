@@ -32,24 +32,12 @@ export class ActivityComponent implements OnInit {
     this.activityService.createActivity(activityToCreate).subscribe((answer: Activity) => {
       if (answer.id) { // Back-end always sends back an activity, but it includes an id property if and only if it has been created in DB
         this.activity = answer; // Is this line really useful?
-        alert(
-          'Your activity has been created!'
-          + '<br />'
-          + 'Do you want to create another activity?'
-        );
+        alert('Your activity has been created!\nDo you want to create another activity?');
       } else {
-        alert(
-          'Your activity could not be created! :-('
-          + '<br />'
-          + 'Make sure the activity interval is within its event period.'
-        );
+        alert('Your activity could not be created! :-(\nMake sure the activity interval is within its event period.');
       }
     }, () => {
-      alert(
-        'Your activity could not be created! :-('
-        + '<br />'
-        + 'The server isn\'t responding as expected. Please, contact dev team.'
-      );
+      alert('Your activity could not be created! :-(\nThe server isn\'t responding as expected. Please, contact dev team.');
     });
   }
 
