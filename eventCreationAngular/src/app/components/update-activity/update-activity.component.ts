@@ -32,6 +32,7 @@ export class UpdateActivityComponent implements OnInit {
     });
   }
 
+  // TODO: gerer les message avec des popup à la Romain et virer la variable inutile
   public submitEditedActivity(editedActivity: Activity) {
     this.activityService.updateActivity(editedActivity).subscribe((answer: Activity) => {
       if (answer.id === editedActivity.id) { // Back-end always sends back the activity if no exception was arised

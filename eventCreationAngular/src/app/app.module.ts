@@ -15,7 +15,6 @@ import { ActivityService } from './services/activity.service';
 import { HomeComponent } from './components/home/home.component';
 import { EventComponent } from './components/event/event.component';
 import { RegisterComponent } from './components/register/register.component';
-import { SignInLoginComponent } from './components/signInLogin/signInLogin.component';
 import { LoginComponent } from './components/login/login.component';
 import { ActivityInscriptionComponent } from './components/inscription/activityInscription.component';
 import { ClientSpaceComponent } from './components/clientSpace/clientSpace.component';
@@ -23,6 +22,7 @@ import { CreateEventComponent } from './components/createEvent/createEvent.compo
 import { UpdateEventComponent } from './components/updateEvent/updateEvent.component';
 import { ActivityFormComponent } from './components/forms/activity-form/activity-form.component';
 import { ActivityComponent } from './components/activity/activity.component';
+import { ShowActivityComponent } from './components/showActivity/showActivity.component';
 import { UpdateActivityComponent } from './components/update-activity/update-activity.component';
 
 @NgModule({
@@ -31,7 +31,6 @@ import { UpdateActivityComponent } from './components/update-activity/update-act
     HomeComponent,
     EventComponent,
     RegisterComponent,
-    SignInLoginComponent,
     LoginComponent,
     ActivityInscriptionComponent,
     ClientSpaceComponent,
@@ -39,6 +38,7 @@ import { UpdateActivityComponent } from './components/update-activity/update-act
     UpdateEventComponent,
     ActivityFormComponent,
     ActivityComponent,
+    ShowActivityComponent,
     UpdateActivityComponent
    ],
   imports: [

@@ -19,7 +19,6 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public connectionError = false;
 
-
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -34,17 +33,13 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() { }
 
-  next(personId: number) {
-    this.router.navigate(['/clientSpace/' + personId]);
-  }
-
   public submitForm() {
     const newValues = this.loginForm.value;
     const newLogin = new Login();
     newLogin.email = newValues.email;
     newLogin.password = newValues.password;
     this.logins = newLogin;
-    this.loginService.postLogin(this.logins).subscribe((person) => {
+    this.loginService.postLogin(this.logins).subscribe((person: Person) => {
       this.connection(person);
     });
   }
@@ -60,11 +55,11 @@ export class LoginComponent implements OnInit {
   }
 
   public connection(person: Person) {
-    if (person === null) {
-      this.connectionError = true;
-    } else {
+    if (person !== null) {
       this.connectionError = false;
-      this.next(person.id);
+      this.router.navigate(['/clientSpace']);
+    } else {
+      this.connectionError = true;
     }
   }
 }

@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-
 import { Activity } from '../../models/activity.model';
 import { InscriptionService } from '../../services/inscription.service';
 
@@ -8,6 +7,7 @@ import { InscriptionService } from '../../services/inscription.service';
   templateUrl: './activityInscription.component.html',
   styleUrls: ['./activityInscription.component.css']
 })
+
 export class ActivityInscriptionComponent implements OnInit {
 
   @Input()
@@ -15,21 +15,12 @@ export class ActivityInscriptionComponent implements OnInit {
 
   public InscriptionError = true;
   public InscriptionOk = false;
-  // public activities: Activity[];
 
   constructor(
     private inscriptionService: InscriptionService
   ) { }
 
-  ngOnInit() {
-    // this.route.params.subscribe(params => {
-    //   const id: string = params.id;
-
-    //   this.activityService.postActivityByInscriptionID(id).subscribe((activity: Activity) => {
-    //     this.activity = activity;
-    //   });
-    // });
-  }
+  ngOnInit() { }
 
   public inscription(activityId: number) {
     this.inscriptionService.postInscription(activityId).subscribe((inscription: boolean) => {
@@ -50,5 +41,3 @@ export class ActivityInscriptionComponent implements OnInit {
     });
   }
 }
-
-

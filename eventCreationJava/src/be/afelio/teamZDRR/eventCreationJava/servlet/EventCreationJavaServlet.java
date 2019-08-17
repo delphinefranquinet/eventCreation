@@ -2,7 +2,6 @@ package be.afelio.teamZDRR.eventCreationJava.servlet;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
@@ -38,12 +37,11 @@ public class EventCreationJavaServlet extends HttpServlet {
 
 		try {
 			Class.forName("org.postgresql.Driver"); // charger la class (driver) postgres
-			String path = getServletContext().getRealPath("/WEB-INF/database.properties"); // je demande le chemin au
-																							// contexte / il cr�e le
+			String path = getServletContext().getRealPath("/WEB-INF/database.properties"); // je demande le chemin																							// contexte / il cr�e le
 																							// chemin vers le fichier
-			Properties properties = new Properties(); // properties cl� et valeurs sont des string, il est capable de
-														// lire les fichier qui ont un format adapt�
-			try ( // le fichier pourrait �tre absent try() = closable
+			Properties properties = new Properties();
+			// properties clé et valeurs sont des string, il est capable de lire les fichier qui ont un format adapté
+			try ( // le fichier pourrait être absent try() = closable
 					java.io.InputStream in = new FileInputStream(path); // objet capable de lire le fichier
 			) {
 				properties.load(in); // va aller chercher le contenu du fichier pour remplir
@@ -55,11 +53,11 @@ public class EventCreationJavaServlet extends HttpServlet {
 			repository = new EventRepositoryImpl(user, password, url);
 		} catch (Exception e) {
 			throw new ServletException(e);
-		} 
+		}
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException { // tu recuperes des donn�es et je n'envoie rien
+			throws ServletException, IOException { // tu recuperes des données et je n'envoie rien
 
 		HttpSession session = request.getSession(true);
 		String path = request.getPathInfo();
@@ -68,16 +66,16 @@ public class EventCreationJavaServlet extends HttpServlet {
 		if (path.startsWith("/home")) {
 
 			List<Event> events = repository.findAllEvents();
-			List <Person> persons = repository.findAllPerson(); 
+			List<Person> persons = repository.findAllPerson();
 			EventsAndPersons eventsAndPersons = new EventsAndPersons();
 			eventsAndPersons.setEvents(events);
 			eventsAndPersons.setPersons(persons);
 			System.out.println(eventsAndPersons);
-			String json = mapper.writeValueAsString(eventsAndPersons); 
+			String json = mapper.writeValueAsString(eventsAndPersons);
 			setHeaders(response);
-			response.setContentType("application/json"); 
+			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write(json); 
+			response.getWriter().write(json);
 
 		} else if (path.startsWith("/event")) {
 
@@ -89,22 +87,23 @@ public class EventCreationJavaServlet extends HttpServlet {
 			setHeaders(response);
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write(json); 
+			response.getWriter().write(json);
 
 		} else if (path.startsWith("/clientSpace")) {
 
-			String[] parts = path.split("/");
+			/*String[] parts = path.split("/");
 			String idResponsable = parts[2];
-			int id = Integer.parseInt(idResponsable);
-			List<Event> events = repository.findEventAndAllActivityByIdResponsable(id);
+			int id = Integer.parseInt(idResponsable);*/
+			Integer idPerson = (Integer) session.getAttribute("idPerson");
+			List<Event> events = repository.findEventAndAllActivityByIdResponsable(idPerson);
 			String json = mapper.writeValueAsString(events);
 			setHeaders(response);
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
-		
-		}else if (path.startsWith("/search")) {
-			
+
+		} else if (path.startsWith("/search")) {
+
 			String[] parts = path.split("/");
 			String EventName = parts[2];
 			List<Event> events = repository.findEventAndAllActivityByEventName(EventName);
@@ -113,15 +112,17 @@ public class EventCreationJavaServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
-		
-		} else if (path.startsWith("/search")){
-			// TODO 
 
-		} else if (path.startsWith("/allActivityInscription")){
+		} else if (path.startsWith("/search")) {
+			// TODO
+
+		} else if (path.startsWith("/allActivityInscription")) {
+			System.out.println("hello");
 			
 			Integer idPerson = (Integer) session.getAttribute("idPerson");
+			System.out.println(idPerson);
 
-			List <Activity> listActivities = repository.findAllActivityByInscription(idPerson);
+			List<Activity> listActivities = repository.findAllActivityByInscription(idPerson);
 			String json = mapper.writeValueAsString(listActivities);
 			setHeaders(response);
 			response.setContentType("application/json");
@@ -147,10 +148,11 @@ public class EventCreationJavaServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException { // tu envoies des donn�es // tu vas cr�er
-		HttpSession session = request.getSession(true);// endroit de memorisation qui dure plusieurs requetes et qui est
-														// li� au client (5 clients, chacun aura sa sesssion) (espace
-														// memoire)
+			throws ServletException, IOException {
+	    	// tu envoies des données // tu vas créer
+		HttpSession session = request.getSession(true);
+		// endroit de memorisation qui dure plusieurs requetes et qui est
+		// lié au client (5 clients, chacun aura sa sesssion) (espace memoire)
 		try {
 			String path = request.getPathInfo();
 			ObjectMapper mapper = new ObjectMapper();
@@ -163,16 +165,16 @@ public class EventCreationJavaServlet extends HttpServlet {
 				Person person = repository.connexion(parameters.email, parameters.password);
 
 				if (person != null) {
-					session.setAttribute("idPerson", person.getId()); // pour r�cup�rer l'id du responsable
+					session.setAttribute("idPerson", person.getId()); // pour récupérer l'id du responsable
 					System.out.println("idPerson " + session.getAttribute("idPerson"));
-					
+
 				}
 
 				String json = mapper.writeValueAsString(person); // convertir en format json
 				setHeaders(response);
 				response.setContentType("application/json"); // le type du contenu est du json
-				response.setCharacterEncoding("UTF-8");// ce sera �crit en utf8
-				response.getWriter().write(json); // on �crit le json dans la r�ponse
+				response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
+				response.getWriter().write(json); // on écrit le json dans la réponse
 
 			} else if (path.startsWith("/createEvent")) {
 
@@ -193,15 +195,13 @@ public class EventCreationJavaServlet extends HttpServlet {
 					event.setPlace(parameters.place);
 					event = repository.createNewEvent(event);
 
-					session.setAttribute("idEvent", event.getId());
-
-					String json = mapper.writeValueAsString(event); 
+					String json = mapper.writeValueAsString(event);
 					System.out.println(json);
 					response.setContentType("application/json");
 					response.setCharacterEncoding("UTF-8");
-					response.getWriter().write(json); 
+					response.getWriter().write(json);
 				} else {
-					response.setStatus(401); 
+					response.setStatus(401);
 				}
 			} else if (path.startsWith("/activity/")) {
 
@@ -224,11 +224,11 @@ public class EventCreationJavaServlet extends HttpServlet {
 					activity.setIdEvent(idEvent);
 					activity = repository.createNewActivity(activity);
 
-					String json = mapper.writeValueAsString(activity); 
+					String json = mapper.writeValueAsString(activity);
 					System.out.println(json);
 					response.setContentType("application/json");
 					response.setCharacterEncoding("UTF-8");
-					response.getWriter().write(json); 
+					response.getWriter().write(json);
 				} else {
 					response.setStatus(401);
 				}
@@ -240,22 +240,22 @@ public class EventCreationJavaServlet extends HttpServlet {
 						CreatePersonParameters.class);
 
 				Person newPerson = new Person();
+				newPerson.setId(parameters.id);
 				newPerson.setName(parameters.name);
 				newPerson.setFirstname(parameters.firstname);
 				newPerson.setEmail(parameters.email);
 				newPerson.setPassword(parameters.password);
-				
+
 				newPerson = repository.createNewPerson(newPerson);
-				
+
 				session.setAttribute("idPerson", newPerson.getId());
-				
 
 				String json = mapper.writeValueAsString(newPerson);
 				System.out.println(json);
-				response.setContentType("application/json"); 
+				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
-				response.getWriter().write(json); 
-				
+				response.getWriter().write(json);
+
 			} else if (path.startsWith("/activityInscription")) {
 				Integer idPerson = (Integer) session.getAttribute("idPerson");
 				if (idPerson != null) {
@@ -263,33 +263,30 @@ public class EventCreationJavaServlet extends HttpServlet {
 					String id = parts[2];
 					Integer idActivity = Integer.parseInt(id);
 					setHeaders(response);
-					
-					boolean activityInscription = repository.createNewInscriptionActivity(idPerson, idActivity);
-					
-					response.setContentType("application/json"); 
-					response.setCharacterEncoding("UTF-8");
-					String json = mapper.writeValueAsString(activityInscription); 
-					response.getWriter().write(json);
-					
-					/*try {
-						if (repository.createNewInscriptionActivity(idPerson, idActivity)) {
-							response.getWriter().write("true");
-						} else {
-							response.getWriter().write("false");
-						}
 
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}*/
+					boolean activityInscription = repository.createNewInscriptionActivity(idPerson, idActivity);
+
+					response.setContentType("application/json");
+					response.setCharacterEncoding("UTF-8");
+					String json = mapper.writeValueAsString(activityInscription);
+					response.getWriter().write(json);
+
+					/*
+					 * try { if (repository.createNewInscriptionActivity(idPerson, idActivity)) {
+					 * response.getWriter().write("true"); } else {
+					 * response.getWriter().write("false"); }
+					 * 
+					 * } catch (SQLException e) { e.printStackTrace(); }
+					 */
 				}
-			} 
-				
+			}
+
 		} catch (Exception e) {
 			response.setStatus(500);
 			e.printStackTrace(); // affiche une exception sur le canal d'erreur (console)
 		}
 	}
-	
+
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("EventCreationJavaServlet.doPut()");
@@ -298,14 +295,14 @@ public class EventCreationJavaServlet extends HttpServlet {
 		try {
 			String path = request.getPathInfo();
 			ObjectMapper mapper = new ObjectMapper();
-			
+
 			if (path.startsWith("/updateEvent")) {
 				setHeaders(response);
 				CreateEventParameters parameters = mapper.readValue(request.getInputStream(),
 						CreateEventParameters.class);
-				
+
 				int idResponsable = (Integer) session.getAttribute("idPerson");
-				
+
 				Event event = new Event();
 				event.setName(parameters.name);
 				event.setDescription(parameters.description);
@@ -317,12 +314,12 @@ public class EventCreationJavaServlet extends HttpServlet {
 				event.setActivities(parameters.activities);
 				boolean confirmation = repository.updateEventAndActivitiesByIdEvent(idResponsable, event);
 
-				String json = mapper.writeValueAsString(confirmation); 
+				String json = mapper.writeValueAsString(confirmation);
 				System.out.println(json);
-				response.setContentType("application/json"); 
+				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
 				response.getWriter().write(json);
-				
+
 			} else if (path.startsWith("/updateOneActivity")) {
 				setHeaders(response);
 				CreateActivityParameters parameters = mapper.readValue(request.getInputStream(),
@@ -331,7 +328,7 @@ public class EventCreationJavaServlet extends HttpServlet {
 				String[] parts = path.split("/");
 				String id = parts[2];
 				int idActivity = Integer.parseInt(id);
-				
+
 				Activity activity = new Activity();
 				activity.setId(parameters.id);
 				activity.setName(parameters.name);
@@ -340,67 +337,97 @@ public class EventCreationJavaServlet extends HttpServlet {
 				activity.setEndActivity(parameters.endActivity);
 				activity.setIdEvent(parameters.idEvent);
 				Activity UpdateActivity = repository.updateOneActivityByIdEvent(idActivity, activity);
-				
-				String json = mapper.writeValueAsString(UpdateActivity); 
+
+				String json = mapper.writeValueAsString(UpdateActivity);
 				System.out.println(json);
-				response.setContentType("application/json"); 
+				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
 				response.getWriter().write(json);
-				
+
 			}
 
 		} catch (Exception e) {
 			response.setStatus(500);
 			e.printStackTrace(); // affiche une exception sur le canal d'erreur (console)
 		}
-		
-		
+
 	}
-	
+
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		HttpSession session = request.getSession(true);
 		try {
-			
+
 			String path = request.getPathInfo();
 			ObjectMapper mapper = new ObjectMapper();
 			System.out.println("EventCreationJavaServlet.doDelete()");
 
 			if (path.startsWith("/deleteEvent")) {
 				setHeaders(response);
-				
+
 				String[] parts = path.split("/");
 				String idEvent = parts[2];
 				int id = Integer.parseInt(idEvent);
-				
-				//int idEvent = request.getPathInfo().lastIndexOf("/");
+
+				// int idEvent = request.getPathInfo().lastIndexOf("/");
 				System.out.println(id);
-				
+
 				boolean deleted = repository.deleteEventByIdEvent(id);
-				
+
 				response.setContentType("application/json"); // le type du contenu est du json
-				response.setCharacterEncoding("UTF-8");// ce sera �crit en utf8
-				//String.format("{\"deleted\": %s}", deleted);
-				String json = mapper.writeValueAsString(deleted); 
+				response.setCharacterEncoding("UTF-8");// ce sera écrit en utf8
+				// String.format("{\"deleted\": %s}", deleted);
+				String json = mapper.writeValueAsString(deleted);
 				response.getWriter().write(json);
-				
-			}else if (path.startsWith("/deleteActivity")){
-				
+
+			} else if (path.startsWith("/deleteActivity")) {
+
 				setHeaders(response);
-				
+
 				String[] parts = path.split("/");
 				String idActivity = parts[2];
 				int id = Integer.parseInt(idActivity);
 				System.out.println(id);
 				boolean deleted = repository.deleteOneActivityByIdActivity(id);
+
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				String json = mapper.writeValueAsString(deleted);
+				response.getWriter().write(json);
+
+			} else if (path.startsWith("/deleteInscription")) {
+				
+				int idPerson = (Integer) session.getAttribute("idPerson");
+
+				setHeaders(response);
+
+				String[] parts = path.split("/");
+				String idActivity = parts[2];
+				int id = Integer.parseInt(idActivity);
+				System.out.println(id);
+				boolean deleted = repository.deleteOneInscriptionByIdInscription(id,idPerson);
+
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				String json = mapper.writeValueAsString(deleted);
+				response.getWriter().write(json);
+			
+			}else if (path.startsWith("/deletePerson")){
+				
+				setHeaders(response);
+				
+				String[] parts = path.split("/");
+				String name = parts[2];
+				String firstname = parts[3];
+				
+				boolean deleted = repository.deleteOnePersonByNameAndFirstName(name, firstname);
 				
 				response.setContentType("application/json"); 
 				response.setCharacterEncoding("UTF-8");
 				String json = mapper.writeValueAsString(deleted); 
 				response.getWriter().write(json);
 			}
-			
-			
+
 		} catch (Exception e) {
 			response.setStatus(500);
 			e.printStackTrace(); // affiche une exception sur le canal d'erreur (console)
@@ -419,13 +446,13 @@ public class EventCreationJavaServlet extends HttpServlet {
 		response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
 		response.addHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, DELETE, OPTIONS");
 		response.addHeader("Access-Control-Allow-Credentials", "true");
-		response.addHeader("Access-Control-Allow-Headers", "content-type"); // pour que ca soit accept� par tous les
-																			// browser content-type pour le headers
+		response.addHeader("Access-Control-Allow-Headers", "content-type");
+		// pour que ca soit accepté par tous les browser content-type pour le headers
 	}
 
 }
 
-// response.addHeader("", "*"); //"la cl�""*"n'importe lequel
+// response.addHeader("", "*"); //"la clé""*"n'importe lequel
 // Access-Control-Allow-Origin = dns + port
 // Access-Control-Allow-Headers = accepte les headers
 // Access-Control-Allow-Methods = accepte les differentes methodes, post get ...

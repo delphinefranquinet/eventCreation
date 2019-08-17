@@ -10,6 +10,7 @@ import { EventService } from 'src/app/services/event.service';
   templateUrl: './updateEvent.component.html',
   styleUrls: ['./updateEvent.component.css']
 })
+
 export class UpdateEventComponent implements OnInit {
 
   public eventId: number;
@@ -53,9 +54,11 @@ export class UpdateEventComponent implements OnInit {
         this.eventForm.reset();
         this.updateSucceded = true;
         this.updateFailed = false;
+        alert('Update Succeded');
       } else {
         this.updateSucceded = false;
         this.updateFailed = true;
+        alert('Update failed');
       }
       // this.router.navigate(['/clientSpace']);
       // TODO:

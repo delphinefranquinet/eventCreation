@@ -18,8 +18,6 @@ export class ActivityFormComponent implements OnInit {
   public activity: Activity;
   @Input()
   public submitButtonText: string;
-  @Input()
-  public reactionMessageToUser = '';
 
   @Output()
   public activitySubmitter = new EventEmitter<Activity>();

@@ -1,32 +1,27 @@
-
 <div id="mySidenav">
-    <a [routerLink]="['/home']" id="home"> Home </a>
-  </div>
+  <a [routerLink]="['/home']" id="home"> Home </a>
+</div>
 
-
-
-
-<form [formGroup]= "registerForm" (ngSubmit)="submitForm()" style="max-width:500px;margin:auto">
-
+<form [formGroup]="registerForm" (ngSubmit)="submitForm()" style="max-width:500px;margin:auto">
   <div for="name" class="input-container">
-    <input class="input-field" placeholder="name" type="text" id="name" name="name" formControlName="name"/>
+    <input class="input-field" placeholder="name" type="text" id="name" name="name" formControlName="name" />
   </div>
 
   <div for="firstname" class="input-container">
-      <input  class="input-field" placeholder="firstname" type="text" id="firstname" name="firstname" formControlName="firstname"/>
+    <input class="input-field" placeholder="firstname" type="text" id="firstname" name="firstname"
+      formControlName="firstname" />
   </div>
 
- <div for="email" class="input-container">
-    <input  class="input-field" placeholder="email" type="text" id="email" name="email" formControlName="email"/>
+  <div for="email" class="input-container">
+    <input class="input-field" placeholder="email" type="text" id="email" name="email" formControlName="email" />
   </div>
 
   <div for="password" class="input-container">
-    <input  class="input-field" placeholder="Password" type="password" id="password" name="password" formControlName="password"/>
+    <input class="input-field" placeholder="Password" type="password" id="password" name="password"
+      formControlName="password" />
   </div>
 
   <div>
-    <input type="button" class="btn" type="submit" [disabled]="!registerForm.valid" value="Send"/>
+    <input type="button" class="btn" type="submit" [disabled]="!registerForm.valid" value="Send" />
   </div>
-  </form>
-
-
+</form>

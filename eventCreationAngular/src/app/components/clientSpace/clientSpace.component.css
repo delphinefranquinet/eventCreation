@@ -19,28 +19,8 @@
   background-color: #f44336;
 }
 
-#login {
-  top: 80px;
-  background-color: #4CAF50;
-}
-
-#register {
-  top: 170px;
-  background-color: #2196F3;
-}
-
-#managedEvents {
-  text-align: center;
-  margin: 1em 15%;
-  border-color: purple;
-  border-style: dashed;
-}
-
-#inscriptionToActivities{
-  text-align: center;
-  margin: 1em 15%;
-  border-color: purple;
-  border-style: dashed;
+#createEventButton {
+  padding: -5% 0% 0% 50%;
 }
 
 .button1 {
@@ -63,6 +43,99 @@
   opacity: 0.5;
 }
 
-#createEventButton {
-  margin: 1em 0;
+.image-container {
+  position: relative;
+  height: 300px;
+}
+
+.text {
+  background-color: ghostwhite;
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 auto;
+  padding: 10px;
+  margin-top: 15%;
+  width: 50%;
+  text-align: center;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: normal;
+}
+
+.centerEvent {
+  text-align: center;
+  padding: 10px;
+  clear: both;
+}
+
+.text2 {
+  background-color: ghostwhite;
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 auto;
+  padding: 10px;
+  width: 34%;
+  text-align: center;
+  position: absolute;
+  top: 30%;
+  left: 69%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  mix-blend-mode: normal;
+}
+
+.row:after {
+  top: 20%;
+  content: "";
+  display: table;
+  clear: both;
+  padding: 10% 0% 10% 0%;
+}
+
+.flip-card {
+  float: left;
+  padding: 1.5%;
+  max-height: 50%;
+  width: 30%;
+  background-color: transparent;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.flip-card-front {
+  font-size: 15px;
+  background-color: transparent;
+  color: black;
+}
+
+.flip-card-back {
+  font-size: 15px;
+  background-color: transparent;
+  color: white;
+  transform: rotateY(180deg);
+  margin-top: -50%;
+  padding: 30%;
 }

@@ -5,14 +5,12 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Register } from '../../models/register.model';
 import { RegisterService } from '../../services/register.service';
 
-
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-
 
   public register: Register;
   public registerForm: FormGroup;
@@ -32,7 +30,6 @@ export class RegisterComponent implements OnInit {
       password: this.fb.control(this.register.password, [Validators.required]),
     });
   }
-
 
   ngOnInit() { }
 
@@ -60,7 +57,6 @@ export class RegisterComponent implements OnInit {
     return control.errors && control.errors.required;
   }
 
-
   public submitForm() {
     const newValues = this.registerForm.value;
     const newRegister = new Register();
@@ -73,7 +69,7 @@ export class RegisterComponent implements OnInit {
       this.connection(register);
     });
   }
-
+  
   public connection(event: Register) {
     if (event === null) {
       this.registerError = true;

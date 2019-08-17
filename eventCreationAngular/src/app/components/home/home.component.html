@@ -1,37 +1,28 @@
 <div>
   <img width=100% alt="Event Logo" src="\assets\img\evenement-decoration-salle-mulhouse-alsace.jpg">
-
   <div id="mySidenav">
     <div>
       <a [routerLink]="['/login']" id="login"> Login </a>
       <a [routerLink]="['/register']" id="register"> Register </a>
-      <!-- <a [routerLink]="['/clientSpace', persons.persons.id]" id="clientSpace"> Client Space </a> -->
-      <a [routerLink]="['/login']" id="clientSpace"> Client Space </a>
-
+      <a [routerLink]="['/clientSpace']" id="clientSpace"> Client Space </a>
     </div>
   </div>
 </div>
 
-<div *ngFor="let event of events" class="flip-card" id="container">
-  <div class="flip-card-inner">
-      <a [routerLink]="['/event', event.id]">
+<div *ngFor="let event of events">
+  <div class="flip-card">
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
         <h1>{{event.name}}</h1>
         <img id="left" src="assets\img\Events.jpg" alt="Avatar" style="width:200px;height:200px;">
-      </a>
-    <div class="flip-card-front">
 
-      <p>{{event.description}}</p>
-      <p>{{event.place}}</p>
-      <p>{{event.startEvent}}</p>
-      <p>{{event.endEvent}}</p>
-    </div>
-    <div class="flip-card-back">
-        <img id="left" src="assets\img\Events.jpg" alt="Avatar" style="width:200px;height:200px;">
-      <p>{{event.description}}</p>
-      <p>{{event.place}}</p>
-      <p>{{event.startEvent}}</p>
-      <p>{{event.endEvent}}</p>
+      </div>
+      <div class="flip-card-back">
+        <div>{{event.place}}</div>
+        <div>{{event.startEvent}}</div>
+        <div>{{event.endEvent}}</div>
+        <h2><a [routerLink]="['/event', event.id]">See the activities and subscribe</a></h2>
+      </div>
     </div>
   </div>
-
 </div>

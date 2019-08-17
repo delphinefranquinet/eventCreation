@@ -1,0 +1,12 @@
+<div id="mySidenav">
+  <a [routerLink]="['/home']" id="home"> Home </a>
+  <a [routerLink]="['/clientSpace']" id="clientSpace"> Client Space </a>
+</div>
+
+<div *ngIf="eventItem">
+  <app-event
+    [editMode]="true"
+    [eventItem]="eventItem"
+    (deleted)="updateAll($event)"
+  > </app-event>
+</div>
