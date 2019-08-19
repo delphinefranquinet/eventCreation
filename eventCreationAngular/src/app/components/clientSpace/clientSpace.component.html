@@ -3,68 +3,69 @@
 </div>
 
 <div *ngIf="!clientSpaceComponentIsReady">
-    <app-loading></app-loading>
+  <app-loading></app-loading>
 </div>
 
 <div *ngIf="clientSpaceComponentIsReady">
-<div class="centerEvent" id="managedEvents">
-  <div>
-    <h2>Events YOU manage:</h2>
-  </div>
-
-  <div id="createEventButton">
-    <a [routerLink]="['/createEvent']"><button type="button" class="button1">Create an Event</button></a>
-  </div>
-
-  <div *ngFor="let eventItem of events">
-    <div class="flip-card">
-      <div class="flip-card-inner">
-        <div class="flip-card-front">
-          <div class="image-container">
-            <img src="assets\img\sh.jpg" style="width:300px;height:300px;">
-            <h1 class="text">{{eventItem.name}}</h1>
-          </div>
-        </div>
-
-        <div class="flip-card-back">
-          <h2 class="text2"><a [routerLink]="['/showActivity', eventItem.id]">See the activities and modify if you want</a></h2>
-        </div>
-      </div>
+  <div class="centerEvent" id="managedEvents">
+    <div>
+      <h2>Events YOU manage:</h2>
     </div>
-  </div>
-</div>
 
-<div *ngIf="activities" class="centerEvent" id="inscriptionToActivities">
-  <div>
-    <h2>Activities you subscribed to:</h2>
-  </div>
+    <div id="createEventButton">
+      <a [routerLink]="['/createEvent']"><button type="button" class="button1">Create an Event</button></a>
+    </div>
 
-  <div class="row">
-    <div *ngFor="let activity of activities">
+    <div *ngFor="let eventItem of events">
       <div class="flip-card">
         <div class="flip-card-inner">
           <div class="flip-card-front">
             <div class="image-container">
-              <img src="assets\img\image.jpg" style="width:300px;height:300px;">
-              <h1 class="text">{{activity.name}}</h1>
+              <img src="assets\img\sh.jpg" style="width:300px;height:300px;">
+              <h1 class="text">{{eventItem.name}}</h1>
             </div>
           </div>
 
           <div class="flip-card-back">
-            <div class="text2">
-              <div>{{activity.description}}</div>
-              <div>{{activity.startActivity}}</div>
-              <div>{{activity.endActivity}}</div>
+            <h2 class="text2"><a [routerLink]="['/showActivity', eventItem.id]">See the activities and modify if you
+                want</a></h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-              <div>
-                <button type="button" class="button1" (click)="unsubscribe(activity.id)">Unsubscribe</button>
+  <div *ngIf="activities" class="centerEvent" id="inscriptionToActivities">
+    <div>
+      <h2>Activities you subscribed to:</h2>
+    </div>
+
+    <div class="row">
+      <div *ngFor="let activity of activities">
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="image-container">
+                <img src="assets\img\image.jpg" style="width:300px;height:300px;">
+                <h1 class="text">{{activity.name}}</h1>
+              </div>
+            </div>
+
+            <div class="flip-card-back">
+              <div class="text2">
+                <div>{{activity.description}}</div>
+                <div>{{activity.startActivity}}</div>
+                <div>{{activity.endActivity}}</div>
+
+                <div>
+                  <button type="button" class="button1" (click)="unsubscribe(activity.id)">Unsubscribe</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <!-- <div>{{inscriptionIsDeleted}}</div> s'affiche sur toutes les activités-->
       </div>
-      <!-- <div>{{inscriptionIsDeleted}}</div> s'affiche sur toutes les activités-->
     </div>
   </div>
-</div>
 </div>
