@@ -19,6 +19,7 @@ export class ClientSpaceComponent implements OnInit {
   public activities: Activity[];
   public isDeleted: boolean;
   public inscriptionIsDeleted: string;
+  public clientSpaceComponentIsReady = false;
 
   constructor(
     private router: Router,
@@ -34,12 +35,13 @@ export class ClientSpaceComponent implements OnInit {
   public updateAll(isDeleted: boolean): void {
     this.eventService.getEventsByIdResponsable().subscribe((updatedEvents: EventManage[]) => {
       this.events = updatedEvents;
+      this.activityService.getInscriptions().subscribe((activities: Activity[]) => {
+        this.activities = activities;
+        console.log(activities);
+        this.clientSpaceComponentIsReady = true;
+      });
     }, () => { // If server doesn't responds, it's probably because it hasn't got a session yet.
       this.router.navigate(['/login']); // Using a guard would be better tho...
-    });
-    this.activityService.getInscriptions().subscribe((activities: Activity[]) => {
-      this.activities = activities;
-      console.log(activities);
     });
   }
 

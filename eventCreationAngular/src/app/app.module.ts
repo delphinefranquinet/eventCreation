@@ -24,6 +24,7 @@ import { ActivityFormComponent } from './components/forms/activity-form/activity
 import { ActivityComponent } from './components/activity/activity.component';
 import { ShowActivityComponent } from './components/showActivity/showActivity.component';
 import { UpdateActivityComponent } from './components/update-activity/update-activity.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { UpdateActivityComponent } from './components/update-activity/update-act
     ActivityFormComponent,
     ActivityComponent,
     ShowActivityComponent,
-    UpdateActivityComponent
+    UpdateActivityComponent,
+    LoadingComponent
    ],
   imports: [
     AppRoutingModule,

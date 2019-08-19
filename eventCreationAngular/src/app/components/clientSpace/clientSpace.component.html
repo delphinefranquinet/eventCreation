@@ -2,6 +2,11 @@
   <a [routerLink]="['/home']" id="home"> Home </a>
 </div>
 
+<div *ngIf="!clientSpaceComponentIsReady">
+    <app-loading></app-loading>
+</div>
+
+<div *ngIf="clientSpaceComponentIsReady">
 <div class="centerEvent" id="managedEvents">
   <div>
     <h2>Events YOU manage:</h2>
@@ -61,4 +66,5 @@
       <!-- <div>{{inscriptionIsDeleted}}</div> s'affiche sur toutes les activités-->
     </div>
   </div>
+</div>
 </div>
