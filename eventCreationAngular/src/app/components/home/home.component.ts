@@ -11,6 +11,7 @@ import { EventService } from '../../../app/services/event.service';
 export class HomeComponent implements OnInit {
 
   public events: EventManage[];
+  public homeComponentIsReady = false;
 
   constructor(
     private eventService: EventService
@@ -20,6 +21,7 @@ export class HomeComponent implements OnInit {
     this.eventService.getAllEvents().subscribe((eventsAndPersons: any) => {
       this.events = eventsAndPersons.events;
       console.log(JSON.stringify(eventsAndPersons));
+      this.homeComponentIsReady = true;
     });
   }
 

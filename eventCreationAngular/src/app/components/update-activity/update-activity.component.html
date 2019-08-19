@@ -3,6 +3,10 @@
   <a [routerLink]="['/clientSpace']" id="clientSpace"> Client Space </a>
 </div>
 
+<div *ngIf="!updateActivityComponentIsReady">
+  <app-loading></app-loading>
+</div>
+
 <div *ngIf="updateActivityComponentIsReady">
   <div>
     <a id="a" class="previous round" [routerLink]="['/updateEvent', activity.idEvent]">&#8249;</a>

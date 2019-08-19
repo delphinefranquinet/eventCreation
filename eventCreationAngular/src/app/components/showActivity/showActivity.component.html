@@ -3,10 +3,12 @@
   <a [routerLink]="['/clientSpace']" id="clientSpace"> Client Space </a>
 </div>
 
-<div *ngIf="eventItem">
-  <app-event
-    [editMode]="true"
-    [eventItem]="eventItem"
-    (deleted)="updateAll($event)"
-  > </app-event>
+<div *ngIf="!showActivityComponentIsReady">
+  <app-loading></app-loading>
+</div>
+
+<div *ngIf="showActivityComponentIsReady">
+  <div *ngIf="eventItem">
+    <app-event [editMode]="true" [eventItem]="eventItem" (deleted)="updateAll($event)"> </app-event>
+  </div>
 </div>

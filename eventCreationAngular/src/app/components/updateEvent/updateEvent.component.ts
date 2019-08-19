@@ -15,6 +15,7 @@ export class UpdateEventComponent implements OnInit {
 
   public eventItem = new EventManage();
   public eventForm: FormGroup;
+  public updateEventComponentIsReady = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,6 +36,7 @@ export class UpdateEventComponent implements OnInit {
           startEvent: this.fb.control(this.eventItem.startEvent, [Validators.required]),
           endEvent: this.fb.control(this.eventItem.endEvent, [Validators.required])
         });
+        this.updateEventComponentIsReady = true;
       });
     });
   }

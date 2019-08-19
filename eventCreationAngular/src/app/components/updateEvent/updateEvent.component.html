@@ -3,42 +3,48 @@
   <a [routerLink]="['/clientSpace']" id="clientSpace"> Client Space </a>
 </div>
 
-<div>
-  <h2 class="center">Edit your event</h2>
+<div *ngIf="!updateEventComponentIsReady">
+  <app-loading></app-loading>
 </div>
 
-<div *ngIf="eventForm" class="container">
-  <form [formGroup]="eventForm" (ngSubmit)="submitForm()">
-    <div for="name" class="input-container">
-      <input class="input-field" placeholder="Name of event" type="text" id="name" name="name" formControlName="name" />
-      <span *ngIf="hasNameError()">*</span>
-    </div>
+<div *ngIf="updateEventComponentIsReady">
+  <div>
+    <h2 class="center">Edit your event</h2>
+  </div>
 
-    <div for="description" class="input-container">
-      <input class="input-field" placeholder="Description" type="text" id="description" name="description"
-        formControlName="description" />
-      <span *ngIf="hasDescriptionError()">*</span>
-    </div>
+  <div *ngIf="eventForm" class="container">
+    <form [formGroup]="eventForm" (ngSubmit)="submitForm()">
+      <div for="name" class="input-container">
+        <input class="input-field" placeholder="Name of event" type="text" id="name" name="name" formControlName="name" />
+        <span *ngIf="hasNameError()">*</span>
+      </div>
 
-    <div for="place" class="input-container">
-      <input class="input-field" placeholder="place" type="text" id="place" name="place" formControlName="place" />
-      <span *ngIf="hasPlaceEventError()">*</span>
-    </div>
+      <div for="description" class="input-container">
+        <input class="input-field" placeholder="Description" type="text" id="description" name="description"
+          formControlName="description" />
+        <span *ngIf="hasDescriptionError()">*</span>
+      </div>
 
-    <div for="startEvent" class="input-container">
-      <input class="input-field" placeholder="Begins at" type="datetime-local" id="startEvent" name="startEvent"
-        formControlName="startEvent" />
-      <span *ngIf="hasStartEventError()">*</span>
-    </div>
+      <div for="place" class="input-container">
+        <input class="input-field" placeholder="place" type="text" id="place" name="place" formControlName="place" />
+        <span *ngIf="hasPlaceEventError()">*</span>
+      </div>
 
-    <div for="endEvent" class="input-container">
-      <input class="input-field" placeholder="Ends at" type="datetime-local" id="endEvent" name="endEvent"
-        formControlName="endEvent" />
-      <span *ngIf="hasEndEventError()">*</span>
-    </div>
+      <div for="startEvent" class="input-container">
+        <input class="input-field" placeholder="Begins at" type="datetime-local" id="startEvent" name="startEvent"
+          formControlName="startEvent" />
+        <span *ngIf="hasStartEventError()">*</span>
+      </div>
 
-    <div>
-      <button type="submit" class="btn" [disabled]="!eventForm.valid">Edit Event</button>
-    </div>
-  </form>
+      <div for="endEvent" class="input-container">
+        <input class="input-field" placeholder="Ends at" type="datetime-local" id="endEvent" name="endEvent"
+          formControlName="endEvent" />
+        <span *ngIf="hasEndEventError()">*</span>
+      </div>
+
+      <div>
+        <button type="submit" class="btn" [disabled]="!eventForm.valid">Edit Event</button>
+      </div>
+    </form>
+  </div>
 </div>

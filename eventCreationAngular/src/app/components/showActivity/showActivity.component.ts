@@ -13,6 +13,7 @@ import { EventService } from '../../services/event.service';
 export class ShowActivityComponent implements OnInit {
 
   public eventItem = new EventManage();
+  public showActivityComponentIsReady = false;
 
   constructor(
     private eventService: EventService,
@@ -24,6 +25,7 @@ export class ShowActivityComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.eventItem.id = Number(params.id);
       this.updateAll(false);
+      this.showActivityComponentIsReady = true;
     });
   }
 

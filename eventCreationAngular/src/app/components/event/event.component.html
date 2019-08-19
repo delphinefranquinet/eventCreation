@@ -2,6 +2,10 @@
   <a [routerLink]="['/home']" id="home"> Home </a>
 </div>
 
+<div *ngIf="!eventComponentIsReady">
+  <app-loading></app-loading>
+</div>
+
 <div *ngIf="eventComponentIsReady" class="card">
   <div class="image-container">
     <img src="assets\img\sh.jpg" style="width:300px;height:300px;">
