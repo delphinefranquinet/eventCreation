@@ -1,0 +1,5 @@
+p { /* Fait à la va-vite pour centrer "Loading...", fort possiblement améliorable dans l'écriture... */
+  margin: 0;
+  margin-left: calc(50% - 5ch); /* 5ch est la moitié des 10ch de "Loading..." */
+  padding: 0;
+}
