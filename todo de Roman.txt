@@ -1,0 +1,14 @@
+Petites modifs envisagées:
+
+1) Afficher les titres des composants avant leur chargement
+2) S'occuper de l'espace de l'image de la page home
+3) Refactor les composants (= les ranger: avoir un dossier "pages" par exemple)
+
+Puis:
+
+- Activity update: si erreur par rapport aux dates de l'event, informer l'utilisateur de celles-ci
+- ClientSpace: Si pas d'Event/Activité, signaler "pas encore d'Event/Activité" ou équivalent
+- Register: avoir un champ de confirmation de mot de passe
+- Changer les css en scss
+- Créer un composant pour le flip-flop et déterminer la stratégie à avoir pour les composants Event, ClientSpace et Home
+- Loading: Mario de Delphine (voir le code sur Slack)
