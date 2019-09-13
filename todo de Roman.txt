@@ -1,3 +1,11 @@
+Modifs proposées par Julien Houbrechts, axées UX:
+- Trier les évenements par date (page home et clientSpace)
+- Date visible sur la face avant des flip-flops
+- Tout le flip-flop doit être cliquable
+- Ne pas proposer la flèche "<" dans les interfaces de création: switcher d'un event à une activité n'est pas dans le flow de l'utilisateur à ce moment là.
+- Proposer en revanche un retour en arrière; proposer de ne pas créer d'autre activité; cleaner les champs sinon.
+- [opti] lors de la création d'une activité/event: préremplir la date de fin après la complétion de la date de début.
+
 Petites modifs envisagées:
 
 1) Afficher les titres des composants avant leur chargement
