@@ -11,4 +11,3 @@ Puis:
 - Register: avoir un champ de confirmation de mot de passe
 - Changer les css en scss
 - Créer un composant pour le flip-flop et déterminer la stratégie à avoir pour les composants Event, ClientSpace et Home
-- Loading: Mario de Delphine (voir le code sur Slack)
