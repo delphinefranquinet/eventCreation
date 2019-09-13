@@ -125,6 +125,12 @@ public class EventCreationJavaServlet extends HttpServlet {
 			List<Activity> listActivities = repository.findAllActivityByInscription(idPerson);
 			String json = mapper.writeValueAsString(listActivities);
 			setHeaders(response);
+			try {
+			    Thread.sleep(2000);
+			} catch (InterruptedException e) {
+			    // TODO Auto-generated catch block
+			    e.printStackTrace();
+			}
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json); 
