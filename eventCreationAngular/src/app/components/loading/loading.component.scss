@@ -1,0 +1,67 @@
+#main { /* Fait à la va-vite pour centrer le tout, fort possiblement améliorable dans l'écriture... */
+  margin: 0;
+  margin-left: calc(50% - 5ch); /* 5ch est la moitié des 10ch de "Loading..." */
+  padding: 0;
+}
+
+/* La suite provient de ce que Delphine à envoyé sur slack */
+/* mais "body" semble être inutilisé
+body{
+  background: #000;
+  width: 168px;
+  margin: 0 auto;
+  border: black dotted 2px;
+}*/
+.rotate{
+  background: url('https://martindrapeau.github.io/backbone-game-engine/docs/super-mario-sprite.png') 0 0 no-repeat;
+  width: 32px;
+  height: 68px;
+  margin: auto;
+  float: left;
+}
+.clockwise, .anticlockwise{
+  color: #000;
+  cursor: pointer;
+  font-size: 40px;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+.clockwise{
+  float: right;
+}
+.clockwise:hover ~ .rotate{
+  animation: rotate-clockwise 6s steps(21) infinite;
+}
+.auto{
+  margin-top: 40px;
+}
+.auto:checked ~ .rotate{
+  animation: rotate-clockwise 6s steps(21) infinite;
+}
+.auto:checked ~ .clockwise{
+  color: #fff;
+}
+.auto:checked ~ .anticlockwise{
+  color: #fff;
+}
+.anticlockwise:hover ~ .rotate{
+  animation: rotate-anticlockwise 6s steps(21) infinite;
+}
+.auto{
+  display: inline-block;
+  margin-left: 0;
+}
+.auto-rotate{
+  color: #333;
+  font-weight: bold;
+  font-family: sans-serif;
+  clear: both;
+}
+@keyframes rotate-clockwise {
+  0% {background-position: 0 0; }
+  100% {background-position: -672px 0; }
+}
+@keyframes rotate-anticlockwise {
+  0% {background-position: -672px 0; }
+  100% {background-position: 0 0; }
+}
